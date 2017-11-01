@@ -28,12 +28,8 @@ public class Page {
 					int v2Index = spineOrder.indexOf(v2);
 					int iIndex = spineOrder.indexOf(i);
 					int jIndex = spineOrder.indexOf(j);
-					if(!isVertexShared(v1Index, v2Index, iIndex, jIndex)){
-						if((isBetween(v1Index,v2Index,iIndex) && !isBetween(v1Index,v2Index,jIndex)) ||
-								(isBetween(v1Index,v2Index,jIndex) && !isBetween(v1Index,v2Index,iIndex))	
-								) {
-							newCrossings = newCrossings + 1;
-						}
+					if(isCrossing(v1Index, v2Index, iIndex, jIndex)){
+						newCrossings = newCrossings + 1;
 					}
 				}
 			}
@@ -41,23 +37,31 @@ public class Page {
 		return newCrossings;
 	}
 	
-	private boolean isBetween(int v1, int v2, int candidate) {
-		if(v1 < v2) {
-			return (v1 < candidate) && (candidate < v2);
+	private boolean isCrossing(int newV1, int newV2, int v1, int v2) {
+		if(newV1 < newV2) {
+			if(v1 < v2) {
+				return ((newV1 < v1) && (v1 < newV2) && (newV2 < v2)) ||
+						   ((v1 < newV1) && (newV1 <  v2) && (v2 < newV2));					
+			} else {
+				return ((newV1 < v2) && (v2 < newV2) && (newV2 < v1)) ||
+						   ((v2 < newV1) && (newV1 <  v1) && (v1 < newV2));			
+			}
 		} else {
-			return (v2 < candidate) && (candidate < v1);
+			if(v1 < v2) {
+				return ((newV2 < v1) && (v1 < newV1) && (newV1 < v2)) ||
+						   ((v1 < newV2) && (newV2 <  v2) && (v2 < newV1));					
+			} else {
+				return ((newV2 < v2) && (v2 < newV1) && (newV1 < v1)) ||
+						   ((v2 < newV2) && (newV2 <  v1) && (v1 < newV1));			
+			}		
 		}
 	}
-	
-	private boolean isVertexShared(int v1, int v2, int candidate1, int candidate2) {
-		return v1 == candidate1 || v1 == candidate2 || v2 == candidate1 || v2 == candidate2;
-	}
-	
+		
 	public void addEdge(int v1, int v2) {
 		this.adjacencyMatrix[v1][v2] = true;
 		this.adjacencyMatrix[v2][v1] = true;
 	}
-	
+		
 	public void addNewCrossings(int crossingIncrease) {
 		crossingN += crossingIncrease;
 	}
