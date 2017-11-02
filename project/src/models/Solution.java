@@ -21,13 +21,21 @@ public class Solution {
 			pageList.add(new Page(vertexNumber));
 		}
 	}
-		
-	public void addEdgeToPage(int v1, int v2, int pageN) {
-		pageList.get(pageN).addEdge(v1,v2);
+			
+	public int calculateCrossingIncrease_M(int v1, int v2, int pageN) {
+		return pageList.get(pageN).calculateCrossingIncrease_M(v1, v2, spineOrder);
 	}
 	
-	public int calculateCrossingIncrease(int v1, int v2, int pageN) {
-		return pageList.get(pageN).calculateCrossingIncrease(v1, v2, spineOrder);
+	public int calculateCrossingIncrease_L(int v1, int v2, int pageN) {
+		return pageList.get(pageN).calculateCrossingIncrease_L(v1, v2, spineOrder);
+	}
+	
+	public void addEdgeToPage_M(int v1, int v2, int pageN) {
+		pageList.get(pageN).addEdge_M(v1,v2);
+	}
+	
+	public void addEdgeToPage_L(int v1, int v2, int pageN) {
+		pageList.get(pageN).addEdge_L(v1,v2);
 	}
 	
 	public void addNewCrossings(int crossingIncrease, int pageN) {

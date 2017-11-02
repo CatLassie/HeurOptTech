@@ -15,8 +15,13 @@ public class Tester {
 		// GraphPrinter.printGraphData(path);
 		
 		Solution x = new Solution(4, 2);
-		System.out.println(new Solution(4, 2));
-		// System.out.println(x.getPageList());
+		// System.out.println(new Solution(4, 2));
+		try {
+			System.out.println(KPMPInstance.readInstance(path).getAdjacencyList());
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	

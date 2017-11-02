@@ -17,11 +17,12 @@ public class Main {
 		// GraphPrinter.printGraphData(path);
 		
 		try {
-			KPMPInstance k = KPMPInstance.readInstance(path);
+			KPMPInstance k = KPMPInstance.readInstance(pathK4);
 			Solution initialSolution = Greedy.generateSolution(k);
 			// System.out.println(initialSolution);
 			for(int  i = 0; i < initialSolution.getPageList().size(); i++) {
-				System.out.println(initialSolution.getPageList().get(i).getCrossingN());	
+				System.out.println(initialSolution.getPageList().get(i).getCrossingN());
+				System.out.println(initialSolution.getPageList().get(i).getAdjacencyList());
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
