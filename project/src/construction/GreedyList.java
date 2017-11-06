@@ -2,6 +2,7 @@ package construction;
 
 import models.Solution;
 import parser.KPMPInstance;
+import util.Utilities;
 
 public class GreedyList implements IGreedy {
 	
@@ -16,7 +17,9 @@ public class GreedyList implements IGreedy {
 			addedAdjacencyList.add(new ArrayList<Integer>());
 		}
 		*/
-		
+		 
+		// Utilities.sortAdjacencyList(kpmpInstance.getAdjacencyList());
+				
 		int e = 1;
 		for(int i = 0; i < kpmpInstance.getAdjacencyList().size(); i++) {
 			for(int j = 0; j < kpmpInstance.getAdjacencyList().get(i).size(); j++) {
@@ -25,7 +28,7 @@ public class GreedyList implements IGreedy {
 				int v2 = kpmpInstance.getAdjacencyList().get(i).get(j);
 				//addedAdjacencyList.get(v1).add(v2);
 				
-				System.out.println("EDGE #" + e++ +" vertices: " + v1 + " " + v2 );
+				// System.out.println("EDGE #" + e++ +" vertices: " + v1 + " " + v2 );
 				
 				// check is edge is alreay in the list
 				boolean edgeIsInList = false;
