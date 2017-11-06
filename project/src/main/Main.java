@@ -3,6 +3,9 @@ package main;
 import java.io.FileNotFoundException;
 
 import construction.Greedy;
+import construction.GreedyList;
+import construction.GreedyMatrix;
+import construction.IGreedy;
 import models.Solution;
 import parser.KPMPInstance;
 
@@ -17,8 +20,10 @@ public class Main {
 		// GraphPrinter.printGraphData(path);
 		
 		try {
-			KPMPInstance k = KPMPInstance.readInstance(pathK4);
-			Solution initialSolution = Greedy.generateSolution(k);
+			KPMPInstance k = KPMPInstance.readInstance(path);
+			IGreedy greedy = new GreedyList();
+		
+			Solution initialSolution = greedy.generateSolution(k);
 			// System.out.println(initialSolution);
 			for(int  i = 0; i < initialSolution.getPageList().size(); i++) {
 				System.out.println(initialSolution.getPageList().get(i).getCrossingN());
@@ -28,6 +33,8 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 		
 	}
 	
