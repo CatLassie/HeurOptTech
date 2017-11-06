@@ -17,12 +17,15 @@ public class GreedyList implements IGreedy {
 		}
 		*/
 		
+		int e = 1;
 		for(int i = 0; i < kpmpInstance.getAdjacencyList().size(); i++) {
 			for(int j = 0; j < kpmpInstance.getAdjacencyList().get(i).size(); j++) {
 				
 				int v1 = i;
 				int v2 = kpmpInstance.getAdjacencyList().get(i).get(j);
 				//addedAdjacencyList.get(v1).add(v2);
+				
+				System.out.println("EDGE #" + e++ +" vertices: " + v1 + " " + v2 );
 				
 				// check is edge is alreay in the list
 				boolean edgeIsInList = false;
@@ -40,7 +43,10 @@ public class GreedyList implements IGreedy {
 				int bestPage = 0;
 				int minCrossingIncrease = -1;
 
-				for(int k = 0; k < solution.getPageList().size(); k++) {					
+				for(int k = 0; k < solution.getPageList().size(); k++) {
+					
+					// System.out.println("storinka #" + (k+1));
+					
 					int crossingIncrease = solution.calculateCrossingIncrease_L(v1,v2,k);
 					if(minCrossingIncrease == -1 || crossingIncrease < minCrossingIncrease) {
 						bestPage = k;

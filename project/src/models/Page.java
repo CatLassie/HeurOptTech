@@ -49,11 +49,16 @@ public class Page {
 		for(int i = 0; i < adjacencyList.size(); i++) {
 			for(int j = 0; j < adjacencyList.get(i).size(); j++) {
 				
+				int w1 = i;
+				int w2 = adjacencyList.get(i).get(j);
+				
+				// System.out.println("checking... " + w1 + " " + w2);
+				
 				// if(isEdgeInList(v1, v2)) {
 					int v1Index = spineOrder.indexOf(v1);
 					int v2Index = spineOrder.indexOf(v2);
-					int iIndex = spineOrder.indexOf(i);
-					int jIndex = spineOrder.indexOf(j);
+					int iIndex = spineOrder.indexOf(w1);
+					int jIndex = spineOrder.indexOf(w2);
 					if(isCrossing(v1Index, v2Index, iIndex, jIndex)){
 						newCrossings = newCrossings + 1;
 					}
