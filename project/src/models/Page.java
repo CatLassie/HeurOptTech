@@ -11,6 +11,7 @@ public class Page {
 	// added
 	// incremental evaluation? OMG !
 	private int crossingN = 0;
+	private int edgeN = 0;
 
 	public Page(int vertexNumber) {
 		this.adjacencyMatrix = new boolean[vertexNumber][vertexNumber];
@@ -93,6 +94,7 @@ public class Page {
 	public void addEdge_L(int v1, int v2) {
 		this.adjacencyList.get(v1).add(v2);
 		// this.adjacencyList.get(v2).add(this.adjacencyList.get(v2).size(),v1);
+		this.edgeN++;
 	}
 
 	public void addNewCrossings(int crossingIncrease) {
@@ -117,6 +119,10 @@ public class Page {
 
 	public void setAdjacencyList(List<List<Integer>> adjacencyList) {
 		this.adjacencyList = adjacencyList;
+	}
+	
+	public int getEdgeN() {
+		return this.edgeN;
 	}
 
 	public String toString() {
