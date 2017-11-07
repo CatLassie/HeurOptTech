@@ -3,6 +3,7 @@ package main;
 import java.io.FileNotFoundException;
 
 import construction.GreedyList;
+import construction.GreedyListConcurrent;
 import construction.GreedyMatrix;
 import construction.IGreedy;
 import models.Solution;
@@ -20,7 +21,7 @@ public class Main {
 		
 		try {
 			KPMPInstance k = KPMPInstance.readInstance(path);
-			IGreedy greedy = new GreedyList();
+			IGreedy greedy = new GreedyListConcurrent();
 			
 			long startTimeNano = System.nanoTime();
 			long startTime = System.currentTimeMillis();
@@ -41,8 +42,6 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 		
 	}
 	

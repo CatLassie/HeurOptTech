@@ -1,12 +1,14 @@
 package construction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import models.Solution;
 import parser.KPMPInstance;
+import util.CalculateIncreaseRunner;
 import util.Utilities;
 
-public class GreedyList implements IGreedy {
+public class GreedyListConcurrent implements IGreedy {
 	
 	public Solution generateSolution(KPMPInstance kpmpInstance) {
 		Solution solution = new Solution(kpmpInstance.getNumVertices(), kpmpInstance.getK());
@@ -24,11 +26,26 @@ public class GreedyList implements IGreedy {
 				//greedily decide to which page to add the edge
 				int bestPage = 0;
 				int minCrossingIncrease = -1;
+				List<CalculateIncreaseRunner> cIR = new ArrayList<>();
+				List<Thread> workers = new ArrayList<>();
 				
 				for(int k = 0; k < solution.getPageList().size(); k++) {
 					//System.out.println("page #" + (k+1));
-					int crossingIncrease = solution.calculateCrossingIncrease_L(v1,v2,k);
-					// System.out.println(crossingIncrease);
+					CalculateIncreaseRunner c = new CalculateIncreaseRunner(solution,v1,v2,k);
+					Thread t = new Thread(c);
+					t.start();
+					cIR.add(c);
+					workers.add(t);
+				}
+				
+				for(int k = 0; k < solution.getPageList().size(); k++) {
+					try {
+						workers.get(k).join();
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+					int crossingIncrease = cIR.get(k).getCurrentCrossingIncrease();
+					//System.out.println(crossingIncrease);
 					if(minCrossingIncrease == -1 || crossingIncrease < minCrossingIncrease) {
 						bestPage = k;
 						minCrossingIncrease = crossingIncrease;
