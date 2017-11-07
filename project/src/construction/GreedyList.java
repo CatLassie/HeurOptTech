@@ -1,5 +1,7 @@
 package construction;
 
+import java.util.List;
+
 import models.Solution;
 import parser.KPMPInstance;
 import util.Utilities;
@@ -18,19 +20,22 @@ public class GreedyList implements IGreedy {
 		}
 		*/
 		 
-		// Utilities.sortAdjacencyList(kpmpInstance.getAdjacencyList());
+		Utilities.sortAdjacencyList(kpmpInstance.getAdjacencyList());
 				
 		int e = 1;
 		for(int i = 0; i < kpmpInstance.getAdjacencyList().size(); i++) {
-			for(int j = 0; j < kpmpInstance.getAdjacencyList().get(i).size(); j++) {
+			List<Integer> innerList = kpmpInstance.getAdjacencyList().get(i);
+
+			for(int j = innerList.size()-1; (j >= 0) && (innerList.get(j) > i); j--) {
 				
 				int v1 = i;
 				int v2 = kpmpInstance.getAdjacencyList().get(i).get(j);
 				//addedAdjacencyList.get(v1).add(v2);
 				
-				// System.out.println("EDGE #" + e++ +" vertices: " + v1 + " " + v2 );
+				 System.out.println("EDGE #" + e++ +" vertices: " + v1 + " " + v2 );
 				
 				// check is edge is alreay in the list
+				/*
 				boolean edgeIsInList = false;
 				
 				for(int k = 0; k < solution.getPageList().size(); k++) {
@@ -38,17 +43,18 @@ public class GreedyList implements IGreedy {
 						edgeIsInList = true;
 					}
 				}
+				*/
 				
 				// edgeIsInList = addedAdjacencyList.get(v2).contains(v1);
 				
-				if(!edgeIsInList){	
+				// if(!edgeIsInList){	
 				//greedily decide to which page to add the edge
 				int bestPage = 0;
 				int minCrossingIncrease = -1;
 
 				for(int k = 0; k < solution.getPageList().size(); k++) {
 					
-					// System.out.println("storinka #" + (k+1));
+					//System.out.println("page #" + (k+1));
 					
 					int crossingIncrease = solution.calculateCrossingIncrease_L(v1,v2,k);
 					if(minCrossingIncrease == -1 || crossingIncrease < minCrossingIncrease) {
@@ -61,9 +67,10 @@ public class GreedyList implements IGreedy {
 				solution.addNewCrossings(minCrossingIncrease, bestPage);
 				//System.out.println(minCrossingIncrease);
 				
-				}
+				// }
 
 			}
+			
 		}
 		return solution;
 	}
