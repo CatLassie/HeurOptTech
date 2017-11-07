@@ -1,25 +1,17 @@
 package construction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import models.Solution;
 import parser.KPMPInstance;
+import util.CalculateIncreaseRunner;
 import util.Utilities;
 
 public class GreedyList implements IGreedy {
 	
 	public Solution generateSolution(KPMPInstance kpmpInstance) {
-		
 		Solution solution = new Solution(kpmpInstance.getNumVertices(), kpmpInstance.getK());
-		
-		// keep track of added edges
-		/*
-		List<List<Integer>> addedAdjacencyList = new ArrayList<List<Integer>>();
-		for(int i = 0; i < kpmpInstance.getNumVertices(); i++) {
-			addedAdjacencyList.add(new ArrayList<Integer>());
-		}
-		*/
-		 
 		Utilities.sortAdjacencyList(kpmpInstance.getAdjacencyList());
 				
 		int e = 1;
@@ -30,33 +22,47 @@ public class GreedyList implements IGreedy {
 				
 				int v1 = i;
 				int v2 = kpmpInstance.getAdjacencyList().get(i).get(j);
-				//addedAdjacencyList.get(v1).add(v2);
 				
-				 System.out.println("EDGE #" + e++ +" vertices: " + v1 + " " + v2 );
+				// System.out.println("EDGE #" + e++ +" vertices: " + v1 + " " + v2 );
 				
-				// check is edge is alreay in the list
-				/*
-				boolean edgeIsInList = false;
-				
-				for(int k = 0; k < solution.getPageList().size(); k++) {
-					if(solution.getPageList().get(k).isEdgeInList(v1, v2)){
-						edgeIsInList = true;
-					}
-				}
-				*/
-				
-				// edgeIsInList = addedAdjacencyList.get(v2).contains(v1);
-				
-				// if(!edgeIsInList){	
 				//greedily decide to which page to add the edge
 				int bestPage = 0;
 				int minCrossingIncrease = -1;
-
+				
+				List<CalculateIncreaseRunner> cIR = new ArrayList<>();
+				List<Thread> workers = new ArrayList<>();
+				
 				for(int k = 0; k < solution.getPageList().size(); k++) {
 					
 					//System.out.println("page #" + (k+1));
 					
+					CalculateIncreaseRunner c = new CalculateIncreaseRunner(solution,v1,v2,k);
+					Thread t = new Thread(c);
+					t.start();
+					cIR.add(c);
+					workers.add(t);
+					
+					/*
 					int crossingIncrease = solution.calculateCrossingIncrease_L(v1,v2,k);
+					// System.out.println(crossingIncrease);
+					if(minCrossingIncrease == -1 || crossingIncrease < minCrossingIncrease) {
+						bestPage = k;
+						minCrossingIncrease = crossingIncrease;
+					}
+					*/
+					
+				}
+				
+				for(int k = 0; k < solution.getPageList().size(); k++) {
+					
+					try {
+						workers.get(k).join();
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+					
+					int crossingIncrease = cIR.get(k).getCurrentCrossingIncrease();
+					//System.out.println(crossingIncrease);
 					if(minCrossingIncrease == -1 || crossingIncrease < minCrossingIncrease) {
 						bestPage = k;
 						minCrossingIncrease = crossingIncrease;
@@ -65,10 +71,8 @@ public class GreedyList implements IGreedy {
 				
 				solution.addEdgeToPage_L(v1, v2, bestPage);
 				solution.addNewCrossings(minCrossingIncrease, bestPage);
-				//System.out.println(minCrossingIncrease);
+				//System.out.println("min: " + minCrossingIncrease);
 				
-				// }
-
 			}
 			
 		}
