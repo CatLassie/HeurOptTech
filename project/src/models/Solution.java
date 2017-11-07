@@ -58,6 +58,14 @@ public class Solution {
 		this.pageList = pageList;
 	}
 	
+	public int getCrossingN () {
+		int sum = 0;
+		for(Page page : pageList) {
+			sum += page.getCrossingN();
+		}
+		return sum;
+	}
+	
 	public String toString() {
 		String solution = "";
 		solution += "Spine order is: " + spineOrder + "\n";

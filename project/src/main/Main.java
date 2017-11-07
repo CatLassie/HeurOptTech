@@ -33,9 +33,10 @@ public class Main {
 			System.out.println("GREEDY TOOK: " + diffSec + " sec " + (endTimeNano - startTimeNano)); 
 
 			for(int  i = 0; i < initialSolution.getPageList().size(); i++) {
-				System.out.println(initialSolution.getPageList().get(i).getCrossingN());
-				//System.out.println(initialSolution.getPageList().get(i).getAdjacencyList());
+				System.out.println("page #"+(i+1)+" : " + initialSolution.getPageList().get(i).getCrossingN());
+				// System.out.println(initialSolution.getPageList().get(i).getAdjacencyList());
 			}
+			System.out.println("TOTAL CROSSINGS: "+initialSolution.getCrossingN());
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
