@@ -5,7 +5,8 @@ import java.io.FileNotFoundException;
 import construction.GreedyList;
 import construction.GreedyListConcurrent;
 import construction.GreedyMatrix;
-import construction.IGreedy;
+import construction.IConstruction;
+import construction.RandomizedList;
 import models.Solution;
 import parser.KPMPInstance;
 
@@ -21,7 +22,8 @@ public class Main {
 		
 		try {
 			KPMPInstance k = KPMPInstance.readInstance(path);
-			IGreedy greedy = new GreedyListConcurrent();
+			IConstruction greedy = new GreedyListConcurrent();
+			// greedy = new RandomizedList();
 			
 			long startTimeNano = System.nanoTime();
 			long startTime = System.currentTimeMillis();
@@ -35,7 +37,8 @@ public class Main {
 
 			for(int  i = 0; i < initialSolution.getPageList().size(); i++) {
 				System.out.println("page #"+(i+1)+" : " + initialSolution.getPageList().get(i).getCrossingN());
-				// System.out.println(initialSolution.getPageList().get(i).getAdjacencyList());
+				//System.out.println(initialSolution.getPageList().get(i).getAdjacencyList());
+				//System.out.println(initialSolution.getPageList().get(i).getEdgeN());
 			}
 			System.out.println("TOTAL CROSSINGS: "+initialSolution.getCrossingN());
 		} catch (FileNotFoundException e) {

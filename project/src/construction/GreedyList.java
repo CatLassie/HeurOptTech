@@ -6,7 +6,7 @@ import models.Solution;
 import parser.KPMPInstance;
 import util.Utilities;
 
-public class GreedyList implements IGreedy {
+public class GreedyList implements IConstruction {
 	
 	public Solution generateSolution(KPMPInstance kpmpInstance) {
 		Solution solution = new Solution(kpmpInstance.getNumVertices(), kpmpInstance.getK());

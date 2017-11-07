@@ -3,7 +3,7 @@ package construction;
 import models.Solution;
 import parser.KPMPInstance;
 
-public class GreedyMatrix implements IGreedy {
+public class GreedyMatrix implements IConstruction {
 
 	public Solution generateSolution(KPMPInstance kpmpInstance) {
 

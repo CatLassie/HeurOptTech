@@ -8,13 +8,13 @@ import parser.KPMPInstance;
 import util.CalculateIncreaseRunner;
 import util.Utilities;
 
-public class GreedyListConcurrent implements IGreedy {
+public class GreedyListConcurrent implements IConstruction {
 	
 	public Solution generateSolution(KPMPInstance kpmpInstance) {
 		Solution solution = new Solution(kpmpInstance.getNumVertices(), kpmpInstance.getK());
-		Utilities.sortAdjacencyList(kpmpInstance.getAdjacencyList());
-				
+		Utilities.sortAdjacencyList(kpmpInstance.getAdjacencyList());		
 		int e = 1;
+		
 		for(int i = 0; i < kpmpInstance.getAdjacencyList().size(); i++) {
 			List<Integer> innerList = kpmpInstance.getAdjacencyList().get(i);
 			for(int j = innerList.size()-1; (j >= 0) && (innerList.get(j) > i); j--) {
@@ -57,6 +57,7 @@ public class GreedyListConcurrent implements IGreedy {
 				//System.out.println("min: " + minCrossingIncrease);
 			}
 		}
+		
 		return solution;
 	}
 
