@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import construction.GreedyList;
 import construction.GreedyListConcurrent;
 import construction.GreedyMatrix;
+import construction.GreedyPageMatrix;
 import construction.IConstruction;
 import construction.IConstructionAlternate;
 import construction.RandomizedPageMatrix;
@@ -14,7 +15,7 @@ import parser.KPMPInstance;
 
 public class MainAlternate {
 
-	private static String path = "C:/Users/prjabc/Desktop/uni/P/2017W/Heuristic Optimization Techniques/Assignment1/instances.tar/instances/automatic-10.txt";
+	private static String path = "C:/Users/prjabc/Desktop/uni/P/2017W/Heuristic Optimization Techniques/Assignment1/instances.tar/instances/automatic-7.txt";
 	private static String pathK4 = "C:/Users/prjabc/Desktop/uni/P/2017W/Heuristic Optimization Techniques/Assignment1/instances.tar/instances/k4.txt";
 	
 	public static void main(String[] args) {
@@ -25,6 +26,7 @@ public class MainAlternate {
 		try {
 			KPMPInstance k = KPMPInstance.readInstance(path);			
 			IConstructionAlternate construction = new RandomizedPageMatrix();
+			construction = new GreedyPageMatrix();
 			
 			long startTimeNano = System.nanoTime();
 			long startTime = System.currentTimeMillis();

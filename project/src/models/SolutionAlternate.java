@@ -8,9 +8,11 @@ public class SolutionAlternate {
 	private List<Integer> spineOrder;
 	private int[][] adjacencyMatrix;
 	private List<Integer> crossingsList;
+	private int pageNumber;
 	
 	public SolutionAlternate(int vertexNumber, int pageNumber) {
-		spineOrder = new ArrayList<>();		
+		spineOrder = new ArrayList<>();
+		this.pageNumber = pageNumber;
 		for(int i = 0; i < vertexNumber; i++) {
 			spineOrder.add(i);
 		}
@@ -37,6 +39,29 @@ public class SolutionAlternate {
 			}
 		}
 		return newCrossings;
+	}
+	
+	public List<Integer> calculateCrossingIncreaseArray(int v1, int v2) {
+		List<Integer> crossingsIncreaseList = new ArrayList<>();
+		for(int i = 0; i < pageNumber; i++) { crossingsIncreaseList.add(0); }
+		int newCrossings = 0;
+		for (int i = 0; i < adjacencyMatrix.length; i++) {
+			for (int j = i + 1; j < adjacencyMatrix[i].length; j++) {
+				int pageN = adjacencyMatrix[i][j];
+				if (pageN > 0) {
+					// crossingsIncreaseList = new ArrayList<>(pageNumber);
+					int v1Index = spineOrder.indexOf(v1);
+					int v2Index = spineOrder.indexOf(v2);
+					int iIndex = spineOrder.indexOf(i);
+					int jIndex = spineOrder.indexOf(j);
+					if (isCrossing(v1Index, v2Index, iIndex, jIndex)) {
+						newCrossings = crossingsIncreaseList.get(pageN-1) + 1;
+						crossingsIncreaseList.set(pageN-1, newCrossings);
+					}
+				}
+			}
+		}
+		return crossingsIncreaseList;
 	}
 	
 	private boolean isCrossing(int newV1, int newV2, int v1, int v2) {
