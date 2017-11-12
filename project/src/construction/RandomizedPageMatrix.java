@@ -15,7 +15,7 @@ public class RandomizedPageMatrix implements IConstructionAlternate {
 		int pageNumber = kpmpInstance.getK();
 		boolean[][] matrix = kpmpInstance.getAdjacencyMatrix();
 		
-		SolutionAlternate solution = new SolutionAlternate(vertexNumber, pageNumber);
+		SolutionAlternate solution = new SolutionAlternate(vertexNumber, pageNumber, true);
 		
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = i + 1; j < matrix[i].length; j++) {

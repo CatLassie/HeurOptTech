@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SolutionAlternate {
@@ -10,7 +11,7 @@ public class SolutionAlternate {
 	private List<Integer> crossingsList;
 	private int pageNumber;
 	
-	public SolutionAlternate(int vertexNumber, int pageNumber) {
+	public SolutionAlternate(int vertexNumber, int pageNumber, boolean isRandom) {
 		spineOrder = new ArrayList<>();
 		this.pageNumber = pageNumber;
 		this.adjacencyMatrix = new int[vertexNumber][vertexNumber];
@@ -24,8 +25,12 @@ public class SolutionAlternate {
 		for(int i = 0; i < pageNumber; i++) {
 			crossingsList.add(0);
 		}
+		if(isRandom) {
+			Collections.shuffle(spineOrder);	
+		}
+		// System.out.println("spine order is: " + spineOrder);
 	}
-	
+		
 	public int calculateCrossingIncrease(int v1, int v2, int pageN) {
 		int newCrossings = 0;
 		for (int i = 0; i < adjacencyMatrix.length; i++) {
