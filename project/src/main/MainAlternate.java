@@ -9,6 +9,8 @@ import construction.GreedyPageMatrix;
 import construction.IConstruction;
 import construction.IConstructionAlternate;
 import construction.RandomizedPageMatrix;
+import localSearch.ILocalSearch;
+import localSearch.LocalSearch;
 import models.Solution;
 import models.SolutionAlternate;
 import parser.KPMPInstance;
@@ -24,7 +26,12 @@ public class MainAlternate {
 		// GraphPrinter.printGraphData(path);
 		
 		try {
-			KPMPInstance k = KPMPInstance.readInstance(path);			
+			KPMPInstance k = KPMPInstance.readInstance(path);		
+			
+			
+			
+			// CONSTRUCTION HEURISTIC
+			
 			IConstructionAlternate construction = new RandomizedPageMatrix();
 			construction = new GreedyPageMatrix();
 			
@@ -36,13 +43,36 @@ public class MainAlternate {
 			long endTimeNano = System.nanoTime();
 			long endTime = System.currentTimeMillis();
 			double diffSec = ((double) endTime - startTime)/1000;
-			System.out.println("GREEDY TOOK: " + diffSec + " sec " + (endTimeNano - startTimeNano)); 
+			System.out.println("CONSTRUCTION TOOK: " + diffSec + " sec " + (endTimeNano - startTimeNano)); 
 			
 			for(int  i = 0; i < initialSolution.getCrossingsList().size(); i++) {
 				System.out.println("page #"+(i+1)+" : " + initialSolution.getCrossingsList().get(i));
 			}
-			System.out.println("TOTAL CROSSINGS: "+initialSolution.getTotalCrossings());
+			System.out.println("INITIAL SOLUTION TOTAL CROSSINGS: "+initialSolution.getTotalCrossings());
 			// System.out.println("PAGE MATRIX: "+initialSolution);
+			
+			
+			
+			// LOCAL SEARCH
+			
+			ILocalSearch localSearch = new LocalSearch(initialSolution);
+			
+			startTimeNano = System.nanoTime();
+			startTime = System.currentTimeMillis();
+			
+			SolutionAlternate bestSolution = localSearch.search();
+			
+			endTimeNano = System.nanoTime();
+			endTime = System.currentTimeMillis();
+			diffSec = ((double) endTime - startTime)/1000;
+			System.out.println("LOCAL SEARCH TOOK: " + diffSec + " sec " + (endTimeNano - startTimeNano)); 
+			
+			for(int  i = 0; i < bestSolution.getCrossingsList().size(); i++) {
+				System.out.println("page #"+(i+1)+" : " + bestSolution.getCrossingsList().get(i));
+			}
+			System.out.println("BEST SOLUTION TOTAL CROSSINGS: "+bestSolution.getTotalCrossings());
+			
+			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
