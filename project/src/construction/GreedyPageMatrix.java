@@ -12,13 +12,16 @@ import util.Utilities;
 public class GreedyPageMatrix implements IConstructionAlternate {
 
 	public SolutionAlternate generateSolution(KPMPInstance kpmpInstance) {
+		int vertexNumber = kpmpInstance.getNumVertices();
 		int pageNumber = kpmpInstance.getK();
-		SolutionAlternate solution = new SolutionAlternate(kpmpInstance.getNumVertices(), kpmpInstance.getK());
+		boolean[][] matrix = kpmpInstance.getAdjacencyMatrix();
 
-		for (int i = 0; i < kpmpInstance.getAdjacencyMatrix().length; i++) {
-			for (int j = i + 1; j < kpmpInstance.getAdjacencyMatrix()[i].length; j++) {
+		SolutionAlternate solution = new SolutionAlternate(vertexNumber, pageNumber);
 
-				boolean currentEdge = kpmpInstance.getAdjacencyMatrix()[i][j];
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = i + 1; j < matrix[i].length; j++) {
+
+				boolean currentEdge = matrix[i][j];
 				if (currentEdge) {
 					// greedily decide to which page to add the edge
 					List<Integer> crossingIncrease = solution.calculateCrossingIncreaseArray(i, j);
@@ -30,7 +33,7 @@ public class GreedyPageMatrix implements IConstructionAlternate {
 					minCrossingIncrease = copyCrossingIncrease.get(0);
 					bestPage = crossingIncrease.indexOf(minCrossingIncrease);
 
-					solution.addEdge(i, j, bestPage + 1);
+					solution.addEdge(i, j, bestPage);
 					solution.addNewCrossings(minCrossingIncrease, bestPage);
 					// System.out.println(minCrossingIncrease);
 				}

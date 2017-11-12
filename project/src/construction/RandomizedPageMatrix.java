@@ -11,22 +11,25 @@ import util.Utilities;
 public class RandomizedPageMatrix implements IConstructionAlternate {
 	
 	public SolutionAlternate generateSolution(KPMPInstance kpmpInstance) {
+		int vertexNumber = kpmpInstance.getNumVertices();
 		int pageNumber = kpmpInstance.getK();
-		SolutionAlternate solution = new SolutionAlternate(kpmpInstance.getNumVertices(), kpmpInstance.getK());
+		boolean[][] matrix = kpmpInstance.getAdjacencyMatrix();
 		
-		for (int i = 0; i < kpmpInstance.getAdjacencyMatrix().length; i++) {
-			for (int j = i + 1; j < kpmpInstance.getAdjacencyMatrix()[i].length; j++) {
+		SolutionAlternate solution = new SolutionAlternate(vertexNumber, pageNumber);
+		
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = i + 1; j < matrix[i].length; j++) {
 
-				boolean currentEdge = kpmpInstance.getAdjacencyMatrix()[i][j];
+				boolean currentEdge = matrix[i][j];
 				if (currentEdge) {
 															
-					int randomPage = ThreadLocalRandom.current().nextInt(1, pageNumber+1);
+					int randomPage = ThreadLocalRandom.current().nextInt(0, pageNumber);
 					// System.out.println("page #" + randomPage);
 					int crossingIncrease = solution.calculateCrossingIncrease(i,j,randomPage);
 					// System.out.println(crossingIncrease);
 
 					solution.addEdge(i, j, randomPage);
-					solution.addNewCrossings(crossingIncrease, randomPage-1);
+					solution.addNewCrossings(crossingIncrease, randomPage);
 					// System.out.println(minCrossingIncrease);
 				}
 				

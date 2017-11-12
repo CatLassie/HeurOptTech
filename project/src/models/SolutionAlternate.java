@@ -13,14 +13,17 @@ public class SolutionAlternate {
 	public SolutionAlternate(int vertexNumber, int pageNumber) {
 		spineOrder = new ArrayList<>();
 		this.pageNumber = pageNumber;
+		this.adjacencyMatrix = new int[vertexNumber][vertexNumber];
 		for(int i = 0; i < vertexNumber; i++) {
 			spineOrder.add(i);
+			for(int j = 0; j < vertexNumber; j++) {
+				adjacencyMatrix[i][j] = -1;
+			}
 		}
 		crossingsList = new ArrayList<>();
 		for(int i = 0; i < pageNumber; i++) {
 			crossingsList.add(0);
 		}
-		this.adjacencyMatrix = new int[vertexNumber][vertexNumber];		
 	}
 	
 	public int calculateCrossingIncrease(int v1, int v2, int pageN) {
@@ -48,15 +51,15 @@ public class SolutionAlternate {
 		for (int i = 0; i < adjacencyMatrix.length; i++) {
 			for (int j = i + 1; j < adjacencyMatrix[i].length; j++) {
 				int pageN = adjacencyMatrix[i][j];
-				if (pageN > 0) {
+				if (pageN > -1) {
 					// crossingsIncreaseList = new ArrayList<>(pageNumber);
 					int v1Index = spineOrder.indexOf(v1);
 					int v2Index = spineOrder.indexOf(v2);
 					int iIndex = spineOrder.indexOf(i);
 					int jIndex = spineOrder.indexOf(j);
 					if (isCrossing(v1Index, v2Index, iIndex, jIndex)) {
-						newCrossings = crossingsIncreaseList.get(pageN-1) + 1;
-						crossingsIncreaseList.set(pageN-1, newCrossings);
+						newCrossings = crossingsIncreaseList.get(pageN) + 1;
+						crossingsIncreaseList.set(pageN, newCrossings);
 					}
 				}
 			}
