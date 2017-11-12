@@ -14,6 +14,8 @@ import localSearch.LocalSearch;
 import models.Solution;
 import models.SolutionAlternate;
 import parser.KPMPInstance;
+import util.NeighbourhoodStructureEnum;
+import util.StepFunctionEnum;
 
 public class MainAlternate {
 
@@ -55,7 +57,7 @@ public class MainAlternate {
 			
 			// LOCAL SEARCH
 			
-			ILocalSearch localSearch = new LocalSearch(initialSolution);
+			ILocalSearch localSearch = new LocalSearch(initialSolution, NeighbourhoodStructureEnum.FIRST, StepFunctionEnum.RANDOM);
 			
 			startTimeNano = System.nanoTime();
 			startTime = System.currentTimeMillis();
