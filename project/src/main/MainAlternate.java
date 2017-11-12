@@ -57,7 +57,7 @@ public class MainAlternate {
 			
 			// LOCAL SEARCH
 			
-			ILocalSearch localSearch = new LocalSearch(initialSolution, NeighbourhoodStructureEnum.FIRST, StepFunctionEnum.RANDOM);
+			ILocalSearch localSearch = new LocalSearch(initialSolution, NeighbourhoodStructureEnum.XOR, StepFunctionEnum.RANDOM);
 			
 			startTimeNano = System.nanoTime();
 			startTime = System.currentTimeMillis();
