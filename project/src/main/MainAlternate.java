@@ -38,12 +38,10 @@ public class MainAlternate {
 			double diffSec = ((double) endTime - startTime)/1000;
 			System.out.println("GREEDY TOOK: " + diffSec + " sec " + (endTimeNano - startTimeNano)); 
 			
-			int totalCrossings = 0;
 			for(int  i = 0; i < initialSolution.getCrossingsList().size(); i++) {
 				System.out.println("page #"+(i+1)+" : " + initialSolution.getCrossingsList().get(i));
-				totalCrossings += initialSolution.getCrossingsList().get(i);
 			}
-			System.out.println("TOTAL CROSSINGS: "+totalCrossings);
+			System.out.println("TOTAL CROSSINGS: "+initialSolution.getTotalCrossings());
 			// System.out.println("PAGE MATRIX: "+initialSolution);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

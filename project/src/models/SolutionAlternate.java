@@ -7,9 +7,9 @@ import java.util.List;
 public class SolutionAlternate {
 	
 	private List<Integer> spineOrder;
+	private int pageNumber;
 	private int[][] adjacencyMatrix;
 	private List<Integer> crossingsList;
-	private int pageNumber;
 	
 	public SolutionAlternate(int vertexNumber, int pageNumber, boolean isRandom) {
 		spineOrder = new ArrayList<>();
@@ -108,6 +108,14 @@ public class SolutionAlternate {
 	
 	public List<Integer> getCrossingsList() {
 		return crossingsList;
+	}
+	
+	public int getTotalCrossings() {
+		int totalCrossings = 0;
+		for(int  i = 0; i < crossingsList.size(); i++) {
+			totalCrossings += crossingsList.get(i);
+		}
+		return totalCrossings;
 	}
 	
 	public String toString() {
