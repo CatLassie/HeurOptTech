@@ -5,6 +5,9 @@ import util.StepFunctionEnum;
 
 public class NeighbourhoodLarge implements INeighbourhood {
 	private StepFunctionEnum stepFunctionType;
+	private int currentV1 = -1;
+	private int currentV2 = -1;
+	private int newPage = -1;
 	
 	public NeighbourhoodLarge(StepFunctionEnum stepFunctionType) {
 		this.stepFunctionType = stepFunctionType;
@@ -35,6 +38,18 @@ public class NeighbourhoodLarge implements INeighbourhood {
 
 	SolutionAlternate moveBestImprovement(SolutionAlternate solution) {
 		return solution;
+	}
+	
+	public int getCurrentV1() {
+		return currentV1;
+	}
+
+	public int getCurrentV2() {
+		return currentV2;
+	}
+
+	public int getNewPage() {
+		return newPage;
 	}
 
 }

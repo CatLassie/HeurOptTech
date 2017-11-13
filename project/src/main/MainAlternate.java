@@ -35,7 +35,7 @@ public class MainAlternate {
 			// CONSTRUCTION HEURISTIC
 			
 			IConstructionAlternate construction = new RandomizedPageMatrix();
-			construction = new GreedyPageMatrix();
+			// construction = new GreedyPageMatrix();
 			
 			long startTimeNano = System.nanoTime();
 			long startTime = System.currentTimeMillis();
@@ -73,6 +73,10 @@ public class MainAlternate {
 				System.out.println("page #"+(i+1)+" : " + bestSolution.getCrossingsList().get(i));
 			}
 			System.out.println("BEST SOLUTION TOTAL CROSSINGS: "+bestSolution.getTotalCrossings());
+			// System.out.println("PAGE MATRIX: "+bestSolution);
+			
+			
+			// System.out.println("PAGE MATRIX: "+localSearch.getBestSolution());
 			
 			
 		} catch (FileNotFoundException e) {
