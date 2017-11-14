@@ -10,7 +10,7 @@ import construction.RandomizedList;
 import models.SolutionOld;
 import parser.KPMPInstance;
 
-public class Main {
+public class MainOld {
 
 	private static String path = "C:/Users/prjabc/Desktop/uni/P/2017W/Heuristic Optimization Techniques/Assignment1/instances.tar/instances/automatic-7.txt";
 	private static String pathK4 = "C:/Users/prjabc/Desktop/uni/P/2017W/Heuristic Optimization Techniques/Assignment1/instances.tar/instances/k4.txt";
