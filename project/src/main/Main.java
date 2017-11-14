@@ -7,7 +7,7 @@ import construction.GreedyListConcurrent;
 import construction.GreedyMatrix;
 import construction.GreedyPageMatrix;
 import construction.IConstructionOld;
-import construction.IConstructionAlternate;
+import construction.IConstruction;
 import construction.RandomizedPageMatrix;
 import localSearch.ILocalSearch;
 import localSearch.LocalSearch;
@@ -34,7 +34,7 @@ public class Main {
 			
 			// CONSTRUCTION HEURISTIC
 			
-			IConstructionAlternate construction = new RandomizedPageMatrix();
+			IConstruction construction = new RandomizedPageMatrix();
 			construction = new GreedyPageMatrix();
 			
 			long startTimeNano = System.nanoTime();

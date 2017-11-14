@@ -9,7 +9,7 @@ import models.Solution;
 import parser.KPMPInstance;
 import util.Utilities;
 
-public class GreedyPageMatrix implements IConstructionAlternate {
+public class GreedyPageMatrix implements IConstruction {
 
 	public Solution generateSolution(KPMPInstance kpmpInstance) {
 		int vertexNumber = kpmpInstance.getNumVertices();
