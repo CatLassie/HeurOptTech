@@ -17,7 +17,7 @@ import parser.KPMPInstance;
 import util.NeighbourhoodStructureEnum;
 import util.StepFunctionEnum;
 
-public class MainAlternate {
+public class Main {
 
 	private static String path = "C:/Users/prjabc/Desktop/uni/P/2017W/Heuristic Optimization Techniques/Assignment1/instances.tar/instances/automatic-7.txt";
 	private static String pathK4 = "C:/Users/prjabc/Desktop/uni/P/2017W/Heuristic Optimization Techniques/Assignment1/instances.tar/instances/k4.txt";
