@@ -6,7 +6,7 @@ import java.util.List;
 import models.Solution;
 import parser.KPMPInstance;
 
-public class GreedyPageMatrix implements IConstruction {
+public class Greedy implements IConstruction {
 
 	public Solution generateSolution(KPMPInstance kpmpInstance) {
 		int vertexNumber = kpmpInstance.getNumVertices();

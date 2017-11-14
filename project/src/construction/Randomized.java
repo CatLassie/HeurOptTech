@@ -5,7 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import models.Solution;
 import parser.KPMPInstance;
 
-public class RandomizedPageMatrix implements IConstruction {
+public class Randomized implements IConstruction {
 	
 	public Solution generateSolution(KPMPInstance kpmpInstance) {
 		int vertexNumber = kpmpInstance.getNumVertices();

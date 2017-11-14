@@ -2,9 +2,9 @@ package main;
 
 import java.io.FileNotFoundException;
 
-import construction.GreedyPageMatrix;
+import construction.Greedy;
 import construction.IConstruction;
-import construction.RandomizedPageMatrix;
+import construction.Randomized;
 import localSearch.ILocalSearch;
 import localSearch.LocalSearch;
 import models.Solution;
@@ -29,8 +29,8 @@ public class Main {
 			
 			// CONSTRUCTION HEURISTIC
 			
-			IConstruction construction = new RandomizedPageMatrix();
-			construction = new GreedyPageMatrix();
+			IConstruction construction = new Randomized();
+			construction = new Greedy();
 			
 			long startTimeNano = System.nanoTime();
 			long startTime = System.currentTimeMillis();
