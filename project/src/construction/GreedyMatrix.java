@@ -1,13 +1,13 @@
 package construction;
 
-import models.Solution;
+import models.SolutionOld;
 import parser.KPMPInstance;
 
 public class GreedyMatrix implements IConstruction {
 
-	public Solution generateSolution(KPMPInstance kpmpInstance) {
+	public SolutionOld generateSolution(KPMPInstance kpmpInstance) {
 
-		Solution solution = new Solution(kpmpInstance.getNumVertices(), kpmpInstance.getK());
+		SolutionOld solution = new SolutionOld(kpmpInstance.getNumVertices(), kpmpInstance.getK());
 
 		// assign edges to pages
 

@@ -2,7 +2,7 @@ package test;
 
 import java.io.FileNotFoundException;
 
-import models.Solution;
+import models.SolutionOld;
 import parser.KPMPInstance;
 
 public class Tester {
@@ -14,7 +14,7 @@ public class Tester {
 		
 		// GraphPrinter.printGraphData(path);
 		
-		Solution x = new Solution(4, 2);
+		SolutionOld x = new SolutionOld(4, 2);
 		// System.out.println(new Solution(4, 2));
 		try {
 			System.out.println(KPMPInstance.readInstance(path).getAdjacencyList());

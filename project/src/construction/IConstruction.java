@@ -1,10 +1,10 @@
 package construction;
 
-import models.Solution;
+import models.SolutionOld;
 import parser.KPMPInstance;
 
 public interface IConstruction {
 	
-	public Solution generateSolution(KPMPInstance kpmpInstance);
+	public SolutionOld generateSolution(KPMPInstance kpmpInstance);
 
 }

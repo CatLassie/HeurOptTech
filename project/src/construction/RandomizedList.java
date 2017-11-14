@@ -3,14 +3,14 @@ package construction;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import models.Solution;
+import models.SolutionOld;
 import parser.KPMPInstance;
 import util.Utilities;
 
 public class RandomizedList implements IConstruction {
 
-	public Solution generateSolution(KPMPInstance kpmpInstance) {		
-		Solution solution = new Solution(kpmpInstance.getNumVertices(), kpmpInstance.getK());
+	public SolutionOld generateSolution(KPMPInstance kpmpInstance) {		
+		SolutionOld solution = new SolutionOld(kpmpInstance.getNumVertices(), kpmpInstance.getK());
 		Utilities.sortAdjacencyList(kpmpInstance.getAdjacencyList());
 
 		for (int i = 0; i < kpmpInstance.getAdjacencyList().size(); i++) {

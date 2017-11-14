@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import models.Solution;
+import models.SolutionOld;
 import models.SolutionAlternate;
 import parser.KPMPInstance;
 import util.Utilities;

@@ -11,7 +11,7 @@ import construction.IConstructionAlternate;
 import construction.RandomizedPageMatrix;
 import localSearch.ILocalSearch;
 import localSearch.LocalSearch;
-import models.Solution;
+import models.SolutionOld;
 import models.SolutionAlternate;
 import parser.KPMPInstance;
 import util.NeighbourhoodStructureEnum;
@@ -35,7 +35,7 @@ public class MainAlternate {
 			// CONSTRUCTION HEURISTIC
 			
 			IConstructionAlternate construction = new RandomizedPageMatrix();
-			// construction = new GreedyPageMatrix();
+			construction = new GreedyPageMatrix();
 			
 			long startTimeNano = System.nanoTime();
 			long startTime = System.currentTimeMillis();

@@ -7,7 +7,7 @@ import construction.GreedyListConcurrent;
 import construction.GreedyMatrix;
 import construction.IConstruction;
 import construction.RandomizedList;
-import models.Solution;
+import models.SolutionOld;
 import parser.KPMPInstance;
 
 public class Main {
@@ -28,7 +28,7 @@ public class Main {
 			long startTimeNano = System.nanoTime();
 			long startTime = System.currentTimeMillis();
 			
-			Solution initialSolution = greedy.generateSolution(k);
+			SolutionOld initialSolution = greedy.generateSolution(k);
 			
 			long endTimeNano = System.nanoTime();
 			long endTime = System.currentTimeMillis();

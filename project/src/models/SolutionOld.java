@@ -3,12 +3,12 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Solution {
+public class SolutionOld {
 	
 	private List<Integer> spineOrder;
 	private List<Page> pageList;
 	
-	public Solution(int vertexNumber, int pageNumber) {
+	public SolutionOld(int vertexNumber, int pageNumber) {
 		spineOrder = new ArrayList<>();
 		pageList = new ArrayList<>();
 		

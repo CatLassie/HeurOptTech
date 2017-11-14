@@ -2,14 +2,14 @@ package construction;
 
 import java.util.List;
 
-import models.Solution;
+import models.SolutionOld;
 import parser.KPMPInstance;
 import util.Utilities;
 
 public class GreedyList implements IConstruction {
 	
-	public Solution generateSolution(KPMPInstance kpmpInstance) {
-		Solution solution = new Solution(kpmpInstance.getNumVertices(), kpmpInstance.getK());
+	public SolutionOld generateSolution(KPMPInstance kpmpInstance) {
+		SolutionOld solution = new SolutionOld(kpmpInstance.getNumVertices(), kpmpInstance.getK());
 		Utilities.sortAdjacencyList(kpmpInstance.getAdjacencyList());
 				
 		int e = 1;

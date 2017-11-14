@@ -1,6 +1,6 @@
 package construction;
 
-import models.Solution;
+import models.SolutionOld;
 import models.SolutionAlternate;
 import parser.KPMPInstance;
 
