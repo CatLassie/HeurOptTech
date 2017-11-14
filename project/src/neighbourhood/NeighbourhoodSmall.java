@@ -2,7 +2,7 @@ package neighbourhood;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import models.SolutionAlternate;
+import models.Solution;
 import util.StepFunctionEnum;
 
 public class NeighbourhoodSmall implements INeighbourhood {
@@ -16,7 +16,7 @@ public class NeighbourhoodSmall implements INeighbourhood {
 		this.stepFunctionType = stepFunctionType;
 	}
 
-	public SolutionAlternate move(SolutionAlternate solution) {
+	public Solution move(Solution solution) {
 		switch (stepFunctionType) {
 		case RANDOM:
 			return moveRandom(solution);
@@ -33,7 +33,7 @@ public class NeighbourhoodSmall implements INeighbourhood {
 	
 	
 	// RANDOM STEP FUNCTION
-	SolutionAlternate moveRandom(SolutionAlternate solution) {
+	Solution moveRandom(Solution solution) {
 		int[][] matrix = solution.getAdjacencyMatrix();
 		int vertexN = matrix.length;
 		int pageN = solution.getPageNumber();
@@ -48,7 +48,7 @@ public class NeighbourhoodSmall implements INeighbourhood {
 			newPage = ThreadLocalRandom.current().nextInt(0, pageN);
 		} while(newPage == matrix[v1][v2]);
 		
-		SolutionAlternate solutionNew = solution.copy();
+		Solution solutionNew = solution.copy();
 		solutionNew.getAdjacencyMatrix()[v1][v2] = newPage;
 		
 		this.currentV1 = v1;
@@ -65,7 +65,7 @@ public class NeighbourhoodSmall implements INeighbourhood {
 	
 	
 
-	SolutionAlternate moveFirstImprovement(SolutionAlternate solution) {
+	Solution moveFirstImprovement(Solution solution) {
 		return solution;
 	}
 	
@@ -79,7 +79,7 @@ public class NeighbourhoodSmall implements INeighbourhood {
 	
 	
 
-	SolutionAlternate moveBestImprovement(SolutionAlternate solution) {
+	Solution moveBestImprovement(Solution solution) {
 		return solution;
 	}
 	

@@ -12,7 +12,7 @@ import construction.RandomizedPageMatrix;
 import localSearch.ILocalSearch;
 import localSearch.LocalSearch;
 import models.SolutionOld;
-import models.SolutionAlternate;
+import models.Solution;
 import parser.KPMPInstance;
 import util.NeighbourhoodStructureEnum;
 import util.StepFunctionEnum;
@@ -40,7 +40,7 @@ public class MainAlternate {
 			long startTimeNano = System.nanoTime();
 			long startTime = System.currentTimeMillis();
 			
-			SolutionAlternate initialSolution = construction.generateSolution(k);
+			Solution initialSolution = construction.generateSolution(k);
 			
 			long endTimeNano = System.nanoTime();
 			long endTime = System.currentTimeMillis();
@@ -62,7 +62,7 @@ public class MainAlternate {
 			startTimeNano = System.nanoTime();
 			startTime = System.currentTimeMillis();
 			
-			SolutionAlternate bestSolution = localSearch.search();
+			Solution bestSolution = localSearch.search();
 			
 			endTimeNano = System.nanoTime();
 			endTime = System.currentTimeMillis();

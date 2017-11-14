@@ -1,9 +1,9 @@
 package localSearch;
 
-import models.SolutionAlternate;
+import models.Solution;
 
 public interface ILocalSearch {
 	
-	public SolutionAlternate search();
-	public SolutionAlternate getBestSolution();
+	public Solution search();
+	public Solution getBestSolution();
 }

@@ -5,13 +5,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class SolutionAlternate {
+public class Solution {
 	private List<Integer> spineOrder;
 	private int pageNumber;
 	private int[][] adjacencyMatrix;
 	private List<Integer> crossingsList;
 	
-	public SolutionAlternate(int vertexNumber, int pageNumber, boolean isRandom) {
+	public Solution(int vertexNumber, int pageNumber, boolean isRandom) {
 		spineOrder = new ArrayList<>();
 		this.pageNumber = pageNumber;
 		this.adjacencyMatrix = new int[vertexNumber][vertexNumber];
@@ -31,7 +31,7 @@ public class SolutionAlternate {
 		// System.out.println("spine order is: " + spineOrder);
 	}
 	
-	public SolutionAlternate(List<Integer> spineOrder, int pageNumber,
+	public Solution(List<Integer> spineOrder, int pageNumber,
 			int[][] adjacencyMatrix, List<Integer> crossingsList) {
 		this.spineOrder = spineOrder;
 		this.pageNumber = pageNumber;
@@ -130,14 +130,14 @@ public class SolutionAlternate {
 		return totalCrossings;
 	}
 	
-	public SolutionAlternate copy() {
+	public Solution copy() {
 		List<Integer> spineOrderCopy = new ArrayList<>(spineOrder);
 		int[][] adjacencyMatrixCopy = new int[adjacencyMatrix.length][adjacencyMatrix.length];
 		for(int i = 0; i < adjacencyMatrix.length; i++) {
 			adjacencyMatrixCopy[i] = adjacencyMatrix[i].clone();
 		}
 		List<Integer> crossingsListCopy = new ArrayList<>(crossingsList);
-		return new SolutionAlternate(spineOrderCopy, pageNumber, adjacencyMatrixCopy, crossingsListCopy);
+		return new Solution(spineOrderCopy, pageNumber, adjacencyMatrixCopy, crossingsListCopy);
 	}
 	
 	public String toString() {
