@@ -2,8 +2,8 @@ package localSearch;
 
 import models.Solution;
 import neighbourhood.INeighbourhood;
-import neighbourhood.NeighbourhoodLarge;
-import neighbourhood.NeighbourhoodSmall;
+import neighbourhood.NeighbourhoodVertex;
+import neighbourhood.NeighbourhoodEdge;
 import util.NeighbourhoodStructureEnum;
 import util.StepFunctionEnum;
 
@@ -21,11 +21,11 @@ public class LocalSearch implements ILocalSearch {
 		this.currentSolutionValue = currentSolution.getTotalCrossings();
 		// this.neighbourhoodType = neighbourhoodType;
 		// this.stepFunctionType = stepFunctionType;
-		if (neighbourhoodType == NeighbourhoodStructureEnum.XOR) {
-			this.neighbourhood = new NeighbourhoodSmall(stepFunctionType);
+		if (neighbourhoodType == NeighbourhoodStructureEnum.EDGE) {
+			this.neighbourhood = new NeighbourhoodEdge(stepFunctionType);
 		}
-		if (neighbourhoodType == NeighbourhoodStructureEnum.OR) {
-			this.neighbourhood = new NeighbourhoodLarge(stepFunctionType);
+		if (neighbourhoodType == NeighbourhoodStructureEnum.VERTEX) {
+			this.neighbourhood = new NeighbourhoodVertex(stepFunctionType);
 		}
 	}
 

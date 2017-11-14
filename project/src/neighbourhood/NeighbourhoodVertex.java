@@ -3,13 +3,13 @@ package neighbourhood;
 import models.Solution;
 import util.StepFunctionEnum;
 
-public class NeighbourhoodLarge implements INeighbourhood {
+public class NeighbourhoodVertex implements INeighbourhood {
 	private StepFunctionEnum stepFunctionType;
 	private int currentV1 = -1;
 	private int currentV2 = -1;
 	private int newPage = -1;
 	
-	public NeighbourhoodLarge(StepFunctionEnum stepFunctionType) {
+	public NeighbourhoodVertex(StepFunctionEnum stepFunctionType) {
 		this.stepFunctionType = stepFunctionType;
 	}
 	

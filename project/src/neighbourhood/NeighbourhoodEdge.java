@@ -5,14 +5,14 @@ import java.util.concurrent.ThreadLocalRandom;
 import models.Solution;
 import util.StepFunctionEnum;
 
-public class NeighbourhoodSmall implements INeighbourhood {
+public class NeighbourhoodEdge implements INeighbourhood {
 	private StepFunctionEnum stepFunctionType;
 	private int currentV1 = -1;
 	private int currentV2 = -1;
 	// public int fromPage = -1;
 	private int newPage = -1;
 	
-	public NeighbourhoodSmall(StepFunctionEnum stepFunctionType) {
+	public NeighbourhoodEdge(StepFunctionEnum stepFunctionType) {
 		this.stepFunctionType = stepFunctionType;
 	}
 
