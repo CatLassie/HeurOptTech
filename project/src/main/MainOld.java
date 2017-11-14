@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import construction.GreedyList;
 import construction.GreedyListConcurrent;
 import construction.GreedyMatrix;
-import construction.IConstruction;
+import construction.IConstructionOld;
 import construction.RandomizedList;
 import models.SolutionOld;
 import parser.KPMPInstance;
@@ -22,7 +22,7 @@ public class MainOld {
 		
 		try {
 			KPMPInstance k = KPMPInstance.readInstance(path);
-			IConstruction greedy = new GreedyListConcurrent();
+			IConstructionOld greedy = new GreedyListConcurrent();
 			// greedy = new RandomizedList();
 			
 			long startTimeNano = System.nanoTime();

@@ -8,7 +8,7 @@ import parser.KPMPInstance;
 import util.CalculateIncreaseRunner;
 import util.Utilities;
 
-public class GreedyListConcurrent implements IConstruction {
+public class GreedyListConcurrent implements IConstructionOld {
 	
 	public SolutionOld generateSolution(KPMPInstance kpmpInstance) {
 		SolutionOld solution = new SolutionOld(kpmpInstance.getNumVertices(), kpmpInstance.getK());

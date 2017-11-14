@@ -6,7 +6,7 @@ import construction.GreedyList;
 import construction.GreedyListConcurrent;
 import construction.GreedyMatrix;
 import construction.GreedyPageMatrix;
-import construction.IConstruction;
+import construction.IConstructionOld;
 import construction.IConstructionAlternate;
 import construction.RandomizedPageMatrix;
 import localSearch.ILocalSearch;
