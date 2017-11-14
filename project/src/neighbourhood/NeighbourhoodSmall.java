@@ -40,12 +40,10 @@ public class NeighbourhoodSmall implements INeighbourhood {
 		int v1 = 0;
 		int v2 = 0;
 		int newPage;
-	
 		do {
 			v1 = ThreadLocalRandom.current().nextInt(0, vertexN);
 			v2 = ThreadLocalRandom.current().nextInt(0, vertexN);
 		} while(matrix[v1][v2] == -1);
-		
 		do {
 			newPage = ThreadLocalRandom.current().nextInt(0, pageN);
 		} while(newPage == matrix[v1][v2]);
@@ -60,14 +58,53 @@ public class NeighbourhoodSmall implements INeighbourhood {
 		
 		return solutionNew;
 	}
+	
+	
+	
+	
+	
+	
 
 	SolutionAlternate moveFirstImprovement(SolutionAlternate solution) {
 		return solution;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	SolutionAlternate moveBestImprovement(SolutionAlternate solution) {
 		return solution;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	public int getCurrentV1() {
 		return currentV1;

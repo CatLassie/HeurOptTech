@@ -9,16 +9,16 @@ import util.StepFunctionEnum;
 
 public class LocalSearch implements ILocalSearch {
 
-	private SolutionAlternate bestSolution;
-	private int bestSolutionValue;
+	private SolutionAlternate currentSolution;
+	private int currentSolutionValue;
 	// private NeighbourhoodStructureEnum neighbourhoodType;
 	// private StepFunctionEnum stepFunctionType;
 	private INeighbourhood neighbourhood;
 
 	public LocalSearch(SolutionAlternate solution, NeighbourhoodStructureEnum neighbourhoodType,
 			StepFunctionEnum stepFunctionType) {
-		this.bestSolution = solution;
-		this.bestSolutionValue = bestSolution.getTotalCrossings();
+		this.currentSolution = solution;
+		this.currentSolutionValue = currentSolution.getTotalCrossings();
 		// this.neighbourhoodType = neighbourhoodType;
 		// this.stepFunctionType = stepFunctionType;
 		if (neighbourhoodType == NeighbourhoodStructureEnum.XOR) {
@@ -32,10 +32,10 @@ public class LocalSearch implements ILocalSearch {
 	public SolutionAlternate search() {
 
 		for (int i = 0; i < 1000; i++) {
-			SolutionAlternate solutionNew = neighbourhood.move(bestSolution);
+			SolutionAlternate solutionNew = neighbourhood.move(currentSolution);
 			int v1 = neighbourhood.getCurrentV1();
 			int v2 = neighbourhood.getCurrentV2();
-			int fromPage = bestSolution.getAdjacencyMatrix()[v1][v2];
+			int fromPage = currentSolution.getAdjacencyMatrix()[v1][v2];
 			int toPage = neighbourhood.getNewPage();
 
 			// System.out.println("Edge [" + (v1 + 1) + "," + (v2 + 1) + "] moved from " + fromPage + " to " + toPage);
@@ -44,25 +44,25 @@ public class LocalSearch implements ILocalSearch {
 			// System.out.println(bestSolution.calculateCrossingIncrease(v1, v2,
 			// toPage));
 
-			int edgeRemovalCost = bestSolution.calculateCrossingIncrease(v1, v2, fromPage);
+			int edgeRemovalCost = currentSolution.calculateCrossingIncrease(v1, v2, fromPage);
 			if (edgeRemovalCost > 0) {
-				int edgeAdditionCost = bestSolution.calculateCrossingIncrease(v1, v2, toPage);
+				int edgeAdditionCost = currentSolution.calculateCrossingIncrease(v1, v2, toPage);
 				if (edgeAdditionCost < edgeRemovalCost) {
-					bestSolution = solutionNew;
-					bestSolution.getCrossingsList().set(fromPage,
-							bestSolution.getCrossingsList().get(fromPage) - edgeRemovalCost);
-					bestSolution.getCrossingsList().set(toPage,
-							bestSolution.getCrossingsList().get(toPage) + edgeAdditionCost);
+					currentSolution = solutionNew;
+					currentSolution.getCrossingsList().set(fromPage,
+							currentSolution.getCrossingsList().get(fromPage) - edgeRemovalCost);
+					currentSolution.getCrossingsList().set(toPage,
+							currentSolution.getCrossingsList().get(toPage) + edgeAdditionCost);
 					// System.out.println("UPDATE! " + i);
 				}
 			}
 		}
 
-		return bestSolution;
+		return currentSolution;
 	}
 
 	public SolutionAlternate getBestSolution() {
-		return bestSolution;
+		return currentSolution;
 	}
 
 }
