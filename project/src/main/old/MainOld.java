@@ -1,13 +1,13 @@
-package main;
+package main.old;
 
 import java.io.FileNotFoundException;
 
-import construction.GreedyListOld;
-import construction.GreedyListConcurrentOld;
-import construction.GreedyMatrixOld;
-import construction.IConstructionOld;
-import construction.RandomizedListOld;
-import models.SolutionOld;
+import construction.old.GreedyListConcurrentOld;
+import construction.old.GreedyListOld;
+import construction.old.GreedyMatrixOld;
+import construction.old.IConstructionOld;
+import construction.old.RandomizedListOld;
+import models.old.SolutionOld;
 import parser.KPMPInstance;
 
 public class MainOld {

@@ -2,16 +2,11 @@ package main;
 
 import java.io.FileNotFoundException;
 
-import construction.GreedyListOld;
-import construction.GreedyListConcurrentOld;
-import construction.GreedyMatrixOld;
 import construction.GreedyPageMatrix;
-import construction.IConstructionOld;
 import construction.IConstruction;
 import construction.RandomizedPageMatrix;
 import localSearch.ILocalSearch;
 import localSearch.LocalSearch;
-import models.SolutionOld;
 import models.Solution;
 import parser.KPMPInstance;
 import util.NeighbourhoodStructureEnum;

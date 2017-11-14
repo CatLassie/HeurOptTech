@@ -1,9 +1,9 @@
-package construction;
+package construction.old;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import models.SolutionOld;
+import models.old.SolutionOld;
 import parser.KPMPInstance;
 import util.Utilities;
 

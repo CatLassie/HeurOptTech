@@ -1,12 +1,9 @@
 package construction;
 
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import models.SolutionOld;
 import models.Solution;
 import parser.KPMPInstance;
-import util.Utilities;
 
 public class RandomizedPageMatrix implements IConstruction {
 	

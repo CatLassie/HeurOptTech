@@ -1,8 +1,8 @@
-package test;
+package test.old;
 
 import java.io.FileNotFoundException;
 
-import models.SolutionOld;
+import models.old.SolutionOld;
 import parser.KPMPInstance;
 
 public class Tester {

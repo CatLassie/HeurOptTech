@@ -1,6 +1,6 @@
-package construction;
+package construction.old;
 
-import models.SolutionOld;
+import models.old.SolutionOld;
 import parser.KPMPInstance;
 
 public class GreedyMatrixOld implements IConstructionOld {

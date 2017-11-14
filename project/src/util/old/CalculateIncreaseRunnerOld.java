@@ -1,6 +1,6 @@
-package util;
+package util.old;
 
-import models.SolutionOld;
+import models.old.SolutionOld;
 
 public class CalculateIncreaseRunnerOld implements Runnable {
 
