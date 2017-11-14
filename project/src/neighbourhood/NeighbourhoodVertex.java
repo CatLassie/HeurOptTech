@@ -5,9 +5,9 @@ import util.StepFunctionEnum;
 
 public class NeighbourhoodVertex implements INeighbourhood {
 	private StepFunctionEnum stepFunctionType;
-	private int currentV1 = -1;
-	private int currentV2 = -1;
-	private int newPage = -1;
+	// private int currentV1 = -1;
+	// private int currentV2 = -1;
+	// private int selectedPage = -1;
 	
 	public NeighbourhoodVertex(StepFunctionEnum stepFunctionType) {
 		this.stepFunctionType = stepFunctionType;
@@ -40,16 +40,16 @@ public class NeighbourhoodVertex implements INeighbourhood {
 		return solution;
 	}
 	
-	public int getCurrentV1() {
-		return currentV1;
+	public int getSelectedV1() {
+		return 0;
 	}
 
-	public int getCurrentV2() {
-		return currentV2;
+	public int getSelectedV2() {
+		return 0;
 	}
 
-	public int getNewPage() {
-		return newPage;
+	public int getSelectedPage() {
+		return 0;
 	}
 
 }

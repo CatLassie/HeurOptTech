@@ -48,10 +48,10 @@ public class LocalSearch implements ILocalSearch {
 	private Solution searchRandomEdge() {
 		for (int i = 0; i < currentSolution.getEdgeNumber(); i++) {
 			Solution solutionNew = neighbourhood.move(currentSolution);
-			int v1 = neighbourhood.getCurrentV1();
-			int v2 = neighbourhood.getCurrentV2();
+			int v1 = neighbourhood.getSelectedV1();
+			int v2 = neighbourhood.getSelectedV2();
 			int fromPage = currentSolution.getAdjacencyMatrix()[v1][v2];
-			int toPage = neighbourhood.getNewPage();
+			int toPage = neighbourhood.getSelectedPage();
 
 			// System.out.println("Edge [" + (v1 + 1) + "," + (v2 + 1) + "] moved from " + fromPage + " to " + toPage);
 			// System.out.println(bestSolution.calculateCrossingIncrease(v1, v2,

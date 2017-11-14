@@ -7,10 +7,10 @@ import util.StepFunctionEnum;
 
 public class NeighbourhoodEdge implements INeighbourhood {
 	private StepFunctionEnum stepFunctionType;
-	private int currentV1 = -1;
-	private int currentV2 = -1;
+	private int selectedV1 = -1;
+	private int selectedV2 = -1;
 	// public int fromPage = -1;
-	private int newPage = -1;
+	private int selectedPage = -1;
 	
 	public NeighbourhoodEdge(StepFunctionEnum stepFunctionType) {
 		this.stepFunctionType = stepFunctionType;
@@ -51,9 +51,9 @@ public class NeighbourhoodEdge implements INeighbourhood {
 		Solution solutionNew = solution.copy();
 		solutionNew.getAdjacencyMatrix()[randomV1][randomV2] = randomPage;
 		
-		this.currentV1 = randomV1;
-		this.currentV2 = randomV2;
-		this.newPage = randomPage;
+		this.selectedV1 = randomV1;
+		this.selectedV2 = randomV2;
+		this.selectedPage = randomPage;
 		// this.fromPage = matrix[v1][v2];
 		
 		return solutionNew;
@@ -106,16 +106,16 @@ public class NeighbourhoodEdge implements INeighbourhood {
 	
 	
 
-	public int getCurrentV1() {
-		return currentV1;
+	public int getSelectedV1() {
+		return selectedV1;
 	}
 
-	public int getCurrentV2() {
-		return currentV2;
+	public int getSelectedV2() {
+		return selectedV2;
 	}
 
-	public int getNewPage() {
-		return newPage;
+	public int getSelectedPage() {
+		return selectedPage;
 	}
 
 }
