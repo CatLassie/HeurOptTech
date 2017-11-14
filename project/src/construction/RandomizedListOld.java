@@ -7,7 +7,7 @@ import models.SolutionOld;
 import parser.KPMPInstance;
 import util.Utilities;
 
-public class RandomizedList implements IConstructionOld {
+public class RandomizedListOld implements IConstructionOld {
 
 	public SolutionOld generateSolution(KPMPInstance kpmpInstance) {		
 		SolutionOld solution = new SolutionOld(kpmpInstance.getNumVertices(), kpmpInstance.getK());

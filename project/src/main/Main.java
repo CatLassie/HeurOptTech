@@ -2,9 +2,9 @@ package main;
 
 import java.io.FileNotFoundException;
 
-import construction.GreedyList;
-import construction.GreedyListConcurrent;
-import construction.GreedyMatrix;
+import construction.GreedyListOld;
+import construction.GreedyListConcurrentOld;
+import construction.GreedyMatrixOld;
 import construction.GreedyPageMatrix;
 import construction.IConstructionOld;
 import construction.IConstruction;

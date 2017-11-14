@@ -2,11 +2,11 @@ package main;
 
 import java.io.FileNotFoundException;
 
-import construction.GreedyList;
-import construction.GreedyListConcurrent;
-import construction.GreedyMatrix;
+import construction.GreedyListOld;
+import construction.GreedyListConcurrentOld;
+import construction.GreedyMatrixOld;
 import construction.IConstructionOld;
-import construction.RandomizedList;
+import construction.RandomizedListOld;
 import models.SolutionOld;
 import parser.KPMPInstance;
 
@@ -16,14 +16,14 @@ public class MainOld {
 	private static String pathK4 = "C:/Users/prjabc/Desktop/uni/P/2017W/Heuristic Optimization Techniques/Assignment1/instances.tar/instances/k4.txt";
 	
 	public static void main(String[] args) {
-		System.out.println("Main.main()");
+		System.out.println("MainOld.main()");
 		
 		// GraphPrinter.printGraphData(path);
 		
 		try {
 			KPMPInstance k = KPMPInstance.readInstance(path);
-			IConstructionOld greedy = new GreedyListConcurrent();
-			// greedy = new RandomizedList();
+			IConstructionOld greedy = new GreedyListConcurrentOld();
+			// greedy = new RandomizedListOld();
 			
 			long startTimeNano = System.nanoTime();
 			long startTime = System.currentTimeMillis();
