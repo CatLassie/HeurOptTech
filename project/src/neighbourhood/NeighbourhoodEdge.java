@@ -37,24 +37,24 @@ public class NeighbourhoodEdge implements INeighbourhood {
 		int[][] matrix = solution.getAdjacencyMatrix();
 		int vertexN = matrix.length;
 		int pageN = solution.getPageNumber();
-		int v1 = 0;
-		int v2 = 0;
-		int newPage;
+		int randomV1 = 0;
+		int randomV2 = 0;
+		int randomPage;
 		do {
-			v1 = ThreadLocalRandom.current().nextInt(0, vertexN);
-			v2 = ThreadLocalRandom.current().nextInt(0, vertexN);
-		} while(matrix[v1][v2] == -1);
+			randomV1 = ThreadLocalRandom.current().nextInt(0, vertexN);
+			randomV2 = ThreadLocalRandom.current().nextInt(0, vertexN);
+		} while(matrix[randomV1][randomV2] == -1);
 		do {
-			newPage = ThreadLocalRandom.current().nextInt(0, pageN);
-		} while(newPage == matrix[v1][v2]);
+			randomPage = ThreadLocalRandom.current().nextInt(0, pageN);
+		} while(randomPage == matrix[randomV1][randomV2]);
 		
 		Solution solutionNew = solution.copy();
-		solutionNew.getAdjacencyMatrix()[v1][v2] = newPage;
+		solutionNew.getAdjacencyMatrix()[randomV1][randomV2] = randomPage;
 		
-		this.currentV1 = v1;
-		this.currentV2 = v2;
+		this.currentV1 = randomV1;
+		this.currentV2 = randomV2;
+		this.newPage = randomPage;
 		// this.fromPage = matrix[v1][v2];
-		this.newPage = solutionNew.getAdjacencyMatrix()[v1][v2];
 		
 		return solutionNew;
 	}
