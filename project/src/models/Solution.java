@@ -10,6 +10,7 @@ public class Solution {
 	private int pageNumber;
 	private int[][] adjacencyMatrix;
 	private List<Integer> crossingsList;
+	private int edgeNumber;
 	
 	public Solution(int vertexNumber, int pageNumber, boolean isRandom) {
 		spineOrder = new ArrayList<>();
@@ -32,11 +33,12 @@ public class Solution {
 	}
 	
 	public Solution(List<Integer> spineOrder, int pageNumber,
-			int[][] adjacencyMatrix, List<Integer> crossingsList) {
+			int[][] adjacencyMatrix, List<Integer> crossingsList, int edgeNumber) {
 		this.spineOrder = spineOrder;
 		this.pageNumber = pageNumber;
 		this.adjacencyMatrix = adjacencyMatrix;
 		this.crossingsList = crossingsList;
+		this.edgeNumber = edgeNumber;
 	}
 			
 	public int calculateCrossingIncrease(int v1, int v2, int pageN) {
@@ -130,6 +132,14 @@ public class Solution {
 		return totalCrossings;
 	}
 	
+	public int getEdgeNumber() {
+		return edgeNumber;
+	}
+
+	public void setEdgeNumber(int edgeNumber) {
+		this.edgeNumber = edgeNumber;
+	}
+	
 	public Solution copy() {
 		List<Integer> spineOrderCopy = new ArrayList<>(spineOrder);
 		int[][] adjacencyMatrixCopy = new int[adjacencyMatrix.length][adjacencyMatrix.length];
@@ -137,7 +147,7 @@ public class Solution {
 			adjacencyMatrixCopy[i] = adjacencyMatrix[i].clone();
 		}
 		List<Integer> crossingsListCopy = new ArrayList<>(crossingsList);
-		return new Solution(spineOrderCopy, pageNumber, adjacencyMatrixCopy, crossingsListCopy);
+		return new Solution(spineOrderCopy, pageNumber, adjacencyMatrixCopy, crossingsListCopy, edgeNumber);
 	}
 	
 	public String toString() {

@@ -14,12 +14,14 @@ public class Greedy implements IConstruction {
 		boolean[][] matrix = kpmpInstance.getAdjacencyMatrix();
 
 		Solution solution = new Solution(vertexNumber, pageNumber, false);
-
+		int edgeNumber = 0;
+		
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = i + 1; j < matrix[i].length; j++) {
 
 				boolean currentEdge = matrix[i][j];
 				if (currentEdge) {
+					edgeNumber++;
 					// greedily decide to which page to add the edge
 					List<Integer> crossingIncrease = solution.calculateCrossingIncreaseArray(i, j);
 
@@ -37,6 +39,7 @@ public class Greedy implements IConstruction {
 
 			}
 		}
+		solution.setEdgeNumber(edgeNumber);
 		return solution;
 	}
 

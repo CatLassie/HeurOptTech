@@ -48,7 +48,7 @@ public class Main {
 			System.out.println("INITIAL SOLUTION TOTAL CROSSINGS: "+initialSolution.getTotalCrossings());
 			// System.out.println("PAGE MATRIX: "+initialSolution);
 			
-			
+			System.out.println("#edge: "+initialSolution.getEdgeNumber());
 			
 			// LOCAL SEARCH
 			
