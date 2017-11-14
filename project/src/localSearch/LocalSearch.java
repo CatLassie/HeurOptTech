@@ -11,16 +11,16 @@ public class LocalSearch implements ILocalSearch {
 
 	private Solution currentSolution;
 	private int currentSolutionValue;
-	// private NeighbourhoodStructureEnum neighbourhoodType;
-	// private StepFunctionEnum stepFunctionType;
+	private NeighbourhoodStructureEnum neighbourhoodType;
+	private StepFunctionEnum stepFunctionType;
 	private INeighbourhood neighbourhood;
 
 	public LocalSearch(Solution solution, NeighbourhoodStructureEnum neighbourhoodType,
 			StepFunctionEnum stepFunctionType) {
 		this.currentSolution = solution;
 		this.currentSolutionValue = currentSolution.getTotalCrossings();
-		// this.neighbourhoodType = neighbourhoodType;
-		// this.stepFunctionType = stepFunctionType;
+		this.neighbourhoodType = neighbourhoodType;
+		this.stepFunctionType = stepFunctionType;
 		if (neighbourhoodType == NeighbourhoodStructureEnum.EDGE) {
 			this.neighbourhood = new NeighbourhoodEdge(stepFunctionType);
 		}
@@ -30,8 +30,23 @@ public class LocalSearch implements ILocalSearch {
 	}
 
 	public Solution search() {
-
-		for (int i = 0; i < 1000; i++) {
+		if(stepFunctionType == StepFunctionEnum.RANDOM){
+			if(neighbourhoodType == NeighbourhoodStructureEnum.EDGE) {
+				return searchRandomEdge();	
+			} else {
+				return searchRandomVertex();
+			}
+		} else {
+			if(neighbourhoodType == NeighbourhoodStructureEnum.EDGE) {
+				return searchDeterministicEdge();	
+			}else{
+				return searchDeterministicVertex();
+			}
+		}
+	}
+	
+	private Solution searchRandomEdge() {
+		for (int i = 0; i < currentSolution.getEdgeNumber(); i++) {
 			Solution solutionNew = neighbourhood.move(currentSolution);
 			int v1 = neighbourhood.getCurrentV1();
 			int v2 = neighbourhood.getCurrentV2();
@@ -49,15 +64,26 @@ public class LocalSearch implements ILocalSearch {
 				int edgeAdditionCost = currentSolution.calculateCrossingIncrease(v1, v2, toPage);
 				if (edgeAdditionCost < edgeRemovalCost) {
 					currentSolution = solutionNew;
-					currentSolution.getCrossingsList().set(fromPage,
-							currentSolution.getCrossingsList().get(fromPage) - edgeRemovalCost);
-					currentSolution.getCrossingsList().set(toPage,
-							currentSolution.getCrossingsList().get(toPage) + edgeAdditionCost);
+					int fromPageCrossings = currentSolution.getCrossingsList().get(fromPage);
+					int toPageCrossings = currentSolution.getCrossingsList().get(toPage);
+					currentSolution.getCrossingsList().set(fromPage, fromPageCrossings - edgeRemovalCost);
+					currentSolution.getCrossingsList().set(toPage, toPageCrossings + edgeAdditionCost);
 					// System.out.println("UPDATE! " + i);
 				}
 			}
 		}
-
+		return currentSolution;
+	}
+	
+	private Solution searchDeterministicEdge() {
+		return currentSolution;
+	}
+	
+	private Solution searchRandomVertex() {
+		return currentSolution;
+	}
+	
+	private Solution searchDeterministicVertex() {
 		return currentSolution;
 	}
 

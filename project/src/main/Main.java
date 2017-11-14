@@ -69,6 +69,7 @@ public class Main {
 			}
 			System.out.println("BEST SOLUTION TOTAL CROSSINGS: "+bestSolution.getTotalCrossings());
 			// System.out.println("PAGE MATRIX: "+bestSolution);
+			System.out.println("#edge: "+bestSolution.getEdgeNumber());
 			
 			
 			// System.out.println("PAGE MATRIX: "+localSearch.getBestSolution());
