@@ -2,21 +2,18 @@ package construction;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 import models.Solution;
-import models.SolutionAlternate;
 import parser.KPMPInstance;
-import util.Utilities;
 
-public class GreedyPageMatrix implements IConstructionAlternate {
+public class GreedyPageMatrix implements IConstruction {
 
-	public SolutionAlternate generateSolution(KPMPInstance kpmpInstance) {
+	public Solution generateSolution(KPMPInstance kpmpInstance) {
 		int vertexNumber = kpmpInstance.getNumVertices();
 		int pageNumber = kpmpInstance.getK();
 		boolean[][] matrix = kpmpInstance.getAdjacencyMatrix();
 
-		SolutionAlternate solution = new SolutionAlternate(vertexNumber, pageNumber, false);
+		Solution solution = new Solution(vertexNumber, pageNumber, false);
 
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = i + 1; j < matrix[i].length; j++) {

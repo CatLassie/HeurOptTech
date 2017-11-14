@@ -1,6 +1,6 @@
 package neighbourhood;
 
-import models.SolutionAlternate;
+import models.Solution;
 import util.StepFunctionEnum;
 
 public class NeighbourhoodLarge implements INeighbourhood {
@@ -13,7 +13,7 @@ public class NeighbourhoodLarge implements INeighbourhood {
 		this.stepFunctionType = stepFunctionType;
 	}
 	
-	public SolutionAlternate move(SolutionAlternate solution) {
+	public Solution move(Solution solution) {
 		switch (stepFunctionType) {
 		case RANDOM:
 			return moveRandom(solution);
@@ -28,15 +28,15 @@ public class NeighbourhoodLarge implements INeighbourhood {
 		}
 	}
 
-	SolutionAlternate moveRandom(SolutionAlternate solution) {
+	Solution moveRandom(Solution solution) {
 		return solution;
 	}
 
-	SolutionAlternate moveFirstImprovement(SolutionAlternate solution) {
+	Solution moveFirstImprovement(Solution solution) {
 		return solution;
 	}
 
-	SolutionAlternate moveBestImprovement(SolutionAlternate solution) {
+	Solution moveBestImprovement(Solution solution) {
 		return solution;
 	}
 	

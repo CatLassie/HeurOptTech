@@ -1,80 +1,158 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Solution {
-	
 	private List<Integer> spineOrder;
-	private List<Page> pageList;
+	private int pageNumber;
+	private int[][] adjacencyMatrix;
+	private List<Integer> crossingsList;
 	
-	public Solution(int vertexNumber, int pageNumber) {
+	public Solution(int vertexNumber, int pageNumber, boolean isRandom) {
 		spineOrder = new ArrayList<>();
-		pageList = new ArrayList<>();
-		
-		// set the spine order
+		this.pageNumber = pageNumber;
+		this.adjacencyMatrix = new int[vertexNumber][vertexNumber];
 		for(int i = 0; i < vertexNumber; i++) {
 			spineOrder.add(i);
+			for(int j = 0; j < vertexNumber; j++) {
+				adjacencyMatrix[i][j] = -1;
+			}
 		}
-		
+		crossingsList = new ArrayList<>();
 		for(int i = 0; i < pageNumber; i++) {
-			pageList.add(new Page(vertexNumber));
+			crossingsList.add(0);
 		}
+		if(isRandom) {
+			Collections.shuffle(spineOrder);	
+		}
+		// System.out.println("spine order is: " + spineOrder);
+	}
+	
+	public Solution(List<Integer> spineOrder, int pageNumber,
+			int[][] adjacencyMatrix, List<Integer> crossingsList) {
+		this.spineOrder = spineOrder;
+		this.pageNumber = pageNumber;
+		this.adjacencyMatrix = adjacencyMatrix;
+		this.crossingsList = crossingsList;
 	}
 			
-	public int calculateCrossingIncrease_M(int v1, int v2, int pageN) {
-		return pageList.get(pageN).calculateCrossingIncrease_M(v1, v2, spineOrder);
+	public int calculateCrossingIncrease(int v1, int v2, int pageN) {
+		int newCrossings = 0;
+		for (int i = 0; i < adjacencyMatrix.length; i++) {
+			for (int j = i + 1; j < adjacencyMatrix[i].length; j++) {
+				if (adjacencyMatrix[i][j] == pageN) {
+					int v1Index = spineOrder.indexOf(v1);
+					int v2Index = spineOrder.indexOf(v2);
+					int iIndex = spineOrder.indexOf(i);
+					int jIndex = spineOrder.indexOf(j);
+					if (isCrossing(v1Index, v2Index, iIndex, jIndex)) {
+						newCrossings = newCrossings + 1;
+					}
+				}
+			}
+		}
+		return newCrossings;
 	}
 	
-	public int calculateCrossingIncrease_L(int v1, int v2, int pageN) {
-		return pageList.get(pageN).calculateCrossingIncrease_L(v1, v2, spineOrder);
+	public List<Integer> calculateCrossingIncreaseArray(int v1, int v2) {
+		List<Integer> crossingsIncreaseList = new ArrayList<>();
+		for(int i = 0; i < pageNumber; i++) { crossingsIncreaseList.add(0); }
+		int newCrossings = 0;
+		for (int i = 0; i < adjacencyMatrix.length; i++) {
+			for (int j = i + 1; j < adjacencyMatrix[i].length; j++) {
+				int pageN = adjacencyMatrix[i][j];
+				if (pageN > -1) {
+					// crossingsIncreaseList = new ArrayList<>(pageNumber);
+					int v1Index = spineOrder.indexOf(v1);
+					int v2Index = spineOrder.indexOf(v2);
+					int iIndex = spineOrder.indexOf(i);
+					int jIndex = spineOrder.indexOf(j);
+					if (isCrossing(v1Index, v2Index, iIndex, jIndex)) {
+						newCrossings = crossingsIncreaseList.get(pageN) + 1;
+						crossingsIncreaseList.set(pageN, newCrossings);
+					}
+				}
+			}
+		}
+		return crossingsIncreaseList;
 	}
 	
-	public void addEdgeToPage_M(int v1, int v2, int pageN) {
-		pageList.get(pageN).addEdge_M(v1,v2);
+	private boolean isCrossing(int newV1, int newV2, int v1, int v2) {
+		if (newV1 < newV2) {
+			if (v1 < v2) {
+				return ((newV1 < v1) && (v1 < newV2) && (newV2 < v2)) || ((v1 < newV1) && (newV1 < v2) && (v2 < newV2));
+			} else {
+				return ((newV1 < v2) && (v2 < newV2) && (newV2 < v1)) || ((v2 < newV1) && (newV1 < v1) && (v1 < newV2));
+			}
+		} else {
+			if (v1 < v2) {
+				return ((newV2 < v1) && (v1 < newV1) && (newV1 < v2)) || ((v1 < newV2) && (newV2 < v2) && (v2 < newV1));
+			} else {
+				return ((newV2 < v2) && (v2 < newV1) && (newV1 < v1)) || ((v2 < newV2) && (newV2 < v1) && (v1 < newV1));
+			}
+		}
 	}
 	
-	public void addEdgeToPage_L(int v1, int v2, int pageN) {
-		pageList.get(pageN).addEdge_L(v1,v2);
+	public void addEdge(int v1, int v2, int pageN) {
+		this.adjacencyMatrix[v1][v2] = pageN;
+		// this.adjacencyMatrix[v2][v1] = pageN;
 	}
 	
 	public void addNewCrossings(int crossingIncrease, int pageN) {
-		pageList.get(pageN).addNewCrossings(crossingIncrease);
+		int crossingN = crossingsList.get(pageN) + crossingIncrease;
+		crossingsList.set(pageN, crossingN);
 	}
-		
+	
 	public List<Integer> getSpineOrder() {
 		return spineOrder;
 	}
 
-	public void setSpineOrder(List<Integer> spineOrder) {
-		this.spineOrder = spineOrder;
-	}
-
-	public List<Page> getPageList() {
-		return pageList;
-	}
-
-	public void setPageList(List<Page> pageList) {
-		this.pageList = pageList;
+	public int[][] getAdjacencyMatrix() {
+		return adjacencyMatrix;
 	}
 	
-	public int getCrossingN () {
-		int sum = 0;
-		for(Page page : pageList) {
-			sum += page.getCrossingN();
+	public List<Integer> getCrossingsList() {
+		return crossingsList;
+	}
+	
+	public int getPageNumber() {
+		return pageNumber;
+	}
+	
+	public int getTotalCrossings() {
+		int totalCrossings = 0;
+		for(int  i = 0; i < crossingsList.size(); i++) {
+			totalCrossings += crossingsList.get(i);
 		}
-		return sum;
+		return totalCrossings;
+	}
+	
+	public Solution copy() {
+		List<Integer> spineOrderCopy = new ArrayList<>(spineOrder);
+		int[][] adjacencyMatrixCopy = new int[adjacencyMatrix.length][adjacencyMatrix.length];
+		for(int i = 0; i < adjacencyMatrix.length; i++) {
+			adjacencyMatrixCopy[i] = adjacencyMatrix[i].clone();
+		}
+		List<Integer> crossingsListCopy = new ArrayList<>(crossingsList);
+		return new Solution(spineOrderCopy, pageNumber, adjacencyMatrixCopy, crossingsListCopy);
 	}
 	
 	public String toString() {
-		String solution = "";
-		solution += "Spine order is: " + spineOrder + "\n";
-		solution += "Page # is: " + pageList.size() + "\n";
-		solution += "\n";
-		for(int i = 0; i < pageList.size(); i++) {
-			solution += "page #"+(i+1)+"\n"+ pageList.get(i).toString() +"\n";
+		String matrix = "\n";
+		for (int i = 0; i < adjacencyMatrix.length; i++) {
+			for (int j = 0; j < adjacencyMatrix[i].length; j++) {
+				if(adjacencyMatrix[i][j] == -1){
+					matrix += "*" + " ";
+				} else {
+					matrix += adjacencyMatrix[i][j] + " ";	
+				}
+			}
+			matrix += "\n";
 		}
-		return solution;
+		return matrix;
 	}
-	
+
 }

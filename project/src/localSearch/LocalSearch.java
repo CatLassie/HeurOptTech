@@ -1,6 +1,6 @@
 package localSearch;
 
-import models.SolutionAlternate;
+import models.Solution;
 import neighbourhood.INeighbourhood;
 import neighbourhood.NeighbourhoodLarge;
 import neighbourhood.NeighbourhoodSmall;
@@ -9,13 +9,13 @@ import util.StepFunctionEnum;
 
 public class LocalSearch implements ILocalSearch {
 
-	private SolutionAlternate currentSolution;
+	private Solution currentSolution;
 	private int currentSolutionValue;
 	// private NeighbourhoodStructureEnum neighbourhoodType;
 	// private StepFunctionEnum stepFunctionType;
 	private INeighbourhood neighbourhood;
 
-	public LocalSearch(SolutionAlternate solution, NeighbourhoodStructureEnum neighbourhoodType,
+	public LocalSearch(Solution solution, NeighbourhoodStructureEnum neighbourhoodType,
 			StepFunctionEnum stepFunctionType) {
 		this.currentSolution = solution;
 		this.currentSolutionValue = currentSolution.getTotalCrossings();
@@ -29,10 +29,10 @@ public class LocalSearch implements ILocalSearch {
 		}
 	}
 
-	public SolutionAlternate search() {
+	public Solution search() {
 
 		for (int i = 0; i < 1000; i++) {
-			SolutionAlternate solutionNew = neighbourhood.move(currentSolution);
+			Solution solutionNew = neighbourhood.move(currentSolution);
 			int v1 = neighbourhood.getCurrentV1();
 			int v2 = neighbourhood.getCurrentV2();
 			int fromPage = currentSolution.getAdjacencyMatrix()[v1][v2];
@@ -61,7 +61,7 @@ public class LocalSearch implements ILocalSearch {
 		return currentSolution;
 	}
 
-	public SolutionAlternate getBestSolution() {
+	public Solution getBestSolution() {
 		return currentSolution;
 	}
 

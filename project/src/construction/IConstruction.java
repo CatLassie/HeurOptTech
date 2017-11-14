@@ -4,7 +4,7 @@ import models.Solution;
 import parser.KPMPInstance;
 
 public interface IConstruction {
-	
-	public Solution generateSolution(KPMPInstance kpmpInstance);
 
+	public Solution generateSolution(KPMPInstance kpmpInstance);
+	
 }
