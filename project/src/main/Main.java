@@ -52,7 +52,7 @@ public class Main {
 			
 			// LOCAL SEARCH
 			
-			ILocalSearch localSearch = new LocalSearch(initialSolution, NeighbourhoodStructureEnum.EDGE, StepFunctionEnum.RANDOM);
+			ILocalSearch localSearch = new LocalSearch(initialSolution, NeighbourhoodStructureEnum.EDGE, StepFunctionEnum.FIRST_IMPROVEMENT);
 			
 			startTimeNano = System.nanoTime();
 			startTime = System.currentTimeMillis();
