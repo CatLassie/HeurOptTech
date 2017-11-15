@@ -11,6 +11,7 @@ public class NeighbourhoodEdge implements INeighbourhood {
 	private int selectedV2 = -1;
 	// public int fromPage = -1;
 	private int selectedPage = -1;
+	private boolean isSolutionUpdated = false;
 
 	public NeighbourhoodEdge(StepFunctionEnum stepFunctionType) {
 		this.stepFunctionType = stepFunctionType;
@@ -66,7 +67,8 @@ public class NeighbourhoodEdge implements INeighbourhood {
 		//int betterV2 = -1;
 		//int betterPage = -1;
 		Solution solutionNew = solution;
-
+		isSolutionUpdated = false;
+		
 		firstImprovement: for (int i = 0; i < matrix.length; i++) {
 			for (int j = i + 1; j < matrix[i].length; j++) {
 				if (matrix[i][j] > -1) {
@@ -94,6 +96,7 @@ public class NeighbourhoodEdge implements INeighbourhood {
 									this.selectedV1 = i;
 									this.selectedV2 = j;
 									this.selectedPage = toPage;
+									isSolutionUpdated = true;
 									break firstImprovement;
 								}
 							}
@@ -120,6 +123,10 @@ public class NeighbourhoodEdge implements INeighbourhood {
 
 	public int getSelectedPage() {
 		return selectedPage;
+	}
+	
+	public boolean isSolutionUpdated() {
+		return isSolutionUpdated;
 	}
 
 }

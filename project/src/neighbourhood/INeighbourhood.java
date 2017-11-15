@@ -7,4 +7,5 @@ public interface INeighbourhood {
 	public int getSelectedV1();
 	public int getSelectedV2();
 	public int getSelectedPage();
+	public boolean isSolutionUpdated();
 }

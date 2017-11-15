@@ -51,5 +51,9 @@ public class NeighbourhoodVertex implements INeighbourhood {
 	public int getSelectedPage() {
 		return 0;
 	}
+	
+	public boolean isSolutionUpdated() {
+		return false;
+	}
 
 }
