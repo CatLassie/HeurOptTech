@@ -79,7 +79,7 @@ public class LocalSearch implements ILocalSearch {
 		Solution solutionNew;
 		do{
 			solutionNew = neighbourhood.move(currentSolution);
-			System.out.println("UPDATE! " + solutionNew.getTotalCrossings() + " " + currentSolution.getTotalCrossings());
+			// System.out.println("UPDATE! " + solutionNew.getTotalCrossings() + " " + currentSolution.getTotalCrossings());
 			if(solutionNew.getTotalCrossings() < currentSolution.getTotalCrossings()){
 				currentSolution = solutionNew;
 			}
