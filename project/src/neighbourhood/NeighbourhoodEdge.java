@@ -59,26 +59,16 @@ public class NeighbourhoodEdge implements INeighbourhood {
 		return solutionNew;
 	}
 
+	// FIRST IMPROVEMENT STEP FUNCTION
 	Solution moveFirstImprovement(Solution solution) {
 		int[][] matrix = solution.getAdjacencyMatrix();
-		//int vertexN = matrix.length;
 		int pageN = solution.getPageNumber();
-		//int betterV1 = -1;
-		//int betterV2 = -1;
-		//int betterPage = -1;
 		Solution solutionNew = solution;
 		isSolutionUpdated = false;
-		
+
 		firstImprovement: for (int i = 0; i < matrix.length; i++) {
 			for (int j = i + 1; j < matrix[i].length; j++) {
 				if (matrix[i][j] > -1) {
-					/*
-					if (betterV1 == -1) {
-						betterV1 = i;
-						betterV2 = j;
-						betterPage = matrix[i][j];
-					}
-					*/
 					for (int k = 0; k < pageN; k++) {
 						if (k != matrix[i][j]) {
 							int fromPage = matrix[i][j];
@@ -102,15 +92,73 @@ public class NeighbourhoodEdge implements INeighbourhood {
 							}
 						}
 					}
-
 				}
 			}
 		}
+		
 		return solutionNew;
 	}
 
+	// BEST IMPROVEMENT STEP FUNCTION
 	Solution moveBestImprovement(Solution solution) {
-		return solution;
+		int[][] matrix = solution.getAdjacencyMatrix();
+		int pageN = solution.getPageNumber();
+		int bestV1 = -1;
+		int bestV2 = -1;
+		int bestFromPage = -1;
+		int bestToPage = -1;
+		int bestRemovalCost = 0;
+		int bestAdditionCost = 0;
+		Solution solutionNew = solution;
+		isSolutionUpdated = false;
+
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = i + 1; j < matrix[i].length; j++) {
+				if (matrix[i][j] > -1) {
+					if (bestV1 == -1) {
+						bestV1 = i;
+						bestV2 = j;
+						bestFromPage = matrix[i][j];
+						bestToPage = matrix[i][j];
+					}
+					for (int k = 0; k < pageN; k++) {
+						if (k != matrix[i][j]) {
+							int fromPage = matrix[i][j];
+							int toPage = k;
+							int edgeRemovalCost = solution.calculateCrossingIncrease(i, j, fromPage);
+							if (edgeRemovalCost > 0) {
+								int edgeAdditionCost = solution.calculateCrossingIncrease(i, j, toPage);
+								if (edgeAdditionCost < edgeRemovalCost) {
+									if ((edgeAdditionCost - edgeRemovalCost) < (bestAdditionCost - bestRemovalCost)) {
+										bestV1 = i;
+										bestV2 = j;
+										bestFromPage = fromPage;
+										bestToPage = toPage;
+										bestRemovalCost = edgeRemovalCost;
+										bestAdditionCost = edgeAdditionCost;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		if (bestAdditionCost < bestRemovalCost) {
+			int fromPageCrossings = solution.getCrossingsList().get(bestFromPage);
+			int toPageCrossings = solution.getCrossingsList().get(bestToPage);
+			solutionNew = solution.copy();
+			solutionNew.getAdjacencyMatrix()[bestV1][bestV2] = bestToPage;
+			solutionNew.getCrossingsList().set(bestFromPage, fromPageCrossings - bestRemovalCost);
+			solutionNew.getCrossingsList().set(bestToPage, toPageCrossings + bestAdditionCost);
+			this.selectedV1 = bestV1;
+			this.selectedV2 = bestV2;
+			this.selectedPage = bestToPage;
+			isSolutionUpdated = true;
+		}
+
+		return solutionNew;
 	}
 
 	public int getSelectedV1() {
@@ -124,7 +172,7 @@ public class NeighbourhoodEdge implements INeighbourhood {
 	public int getSelectedPage() {
 		return selectedPage;
 	}
-	
+
 	public boolean isSolutionUpdated() {
 		return isSolutionUpdated;
 	}

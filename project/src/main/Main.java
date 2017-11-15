@@ -14,7 +14,7 @@ import util.StepFunctionEnum;
 
 public class Main {
 
-	private static String path = "C:/Users/prjabc/Desktop/uni/P/2017W/Heuristic Optimization Techniques/Assignment1/instances.tar/instances/automatic-5.txt";
+	private static String path = "C:/Users/prjabc/Desktop/uni/P/2017W/Heuristic Optimization Techniques/Assignment1/new_instances/instances.tar/instances/instance-06.txt";
 	private static String pathK4 = "C:/Users/prjabc/Desktop/uni/P/2017W/Heuristic Optimization Techniques/Assignment1/instances.tar/instances/k4.txt";
 	
 	public static void main(String[] args) {
@@ -52,7 +52,7 @@ public class Main {
 			
 			// LOCAL SEARCH
 			
-			ILocalSearch localSearch = new LocalSearch(initialSolution, NeighbourhoodStructureEnum.EDGE, StepFunctionEnum.FIRST_IMPROVEMENT);
+			ILocalSearch localSearch = new LocalSearch(initialSolution, NeighbourhoodStructureEnum.EDGE, StepFunctionEnum.BEST_IMPROVEMENT);
 			
 			startTimeNano = System.nanoTime();
 			startTime = System.currentTimeMillis();

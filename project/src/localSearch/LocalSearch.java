@@ -77,9 +77,11 @@ public class LocalSearch implements ILocalSearch {
 	
 	private Solution searchDeterministicEdge() {
 		Solution solutionNew;
+		// int i = 0;
 		do{
 			solutionNew = neighbourhood.move(currentSolution);
-			// System.out.println("UPDATE! " + solutionNew.getTotalCrossings() + " " + currentSolution.getTotalCrossings());
+			//System.out.println("UPDATE! " + i++ +" old cross: " + currentSolution.getTotalCrossings() + " new cross: "+ solutionNew.getTotalCrossings());
+			//System.out.println("UPDATE! " + i++);
 			if(solutionNew.getTotalCrossings() < currentSolution.getTotalCrossings()){
 				currentSolution = solutionNew;
 			}
