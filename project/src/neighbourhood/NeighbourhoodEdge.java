@@ -3,6 +3,7 @@ package neighbourhood;
 import java.util.concurrent.ThreadLocalRandom;
 
 import models.Solution;
+import util.BestImprovementRunnable;
 import util.StepFunctionEnum;
 
 public class NeighbourhoodEdge implements INeighbourhood {
@@ -24,7 +25,7 @@ public class NeighbourhoodEdge implements INeighbourhood {
 		case FIRST_IMPROVEMENT:
 			return moveFirstImprovement(solution);
 		case BEST_IMPROVEMENT:
-			return moveBestImprovement(solution);
+			return moveBestImprovementConcurrent(solution);
 		default: {
 			System.out.println("Something has gone pretty bad here, fellas!");
 			return solution;
@@ -185,24 +186,27 @@ public class NeighbourhoodEdge implements INeighbourhood {
 					}
 
 					// concurrent part should go here
-					for (int k = 0; k < pageN; k++) {
-						if (k != matrix[i][j]) {
-							int fromPage = matrix[i][j];
-							int toPage = k;
-							int edgeRemovalCost = solution.calculateCrossingIncrease(i, j, fromPage);
-							if (edgeRemovalCost > 0) {
-								int edgeAdditionCost = solution.calculateCrossingIncrease(i, j, toPage);
-								if (edgeAdditionCost < edgeRemovalCost) {
-									if ((edgeAdditionCost - edgeRemovalCost) < (bestAdditionCost - bestRemovalCost)) {
-										bestV1 = i;
-										bestV2 = j;
-										bestFromPage = fromPage;
-										bestToPage = toPage;
-										bestRemovalCost = edgeRemovalCost;
-										bestAdditionCost = edgeAdditionCost;
-									}
-								}
-							}
+
+					BestImprovementRunnable b = new BestImprovementRunnable(solution, i, j);
+					Thread t = new Thread(b);
+					t.start();
+					// cIR.add(c);
+					// workers.add(t);
+					try {
+						// workers.get(k).join();
+						t.join();
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+
+					if (b.getCurrentCrossingIncrease() < 0) {
+						if ((b.getCurrentCrossingIncrease()) < (bestAdditionCost - bestRemovalCost)) {
+							bestV1 = b.getV1();
+							bestV2 = b.getV2();
+							bestFromPage = b.getFromPage();
+							bestToPage = b.getBestToPage();
+							bestRemovalCost = b.getBestRemovalCost();
+							bestAdditionCost = b.getBestAdditionCost();
 						}
 					}
 
