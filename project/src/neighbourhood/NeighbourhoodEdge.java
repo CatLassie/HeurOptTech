@@ -69,12 +69,12 @@ public class NeighbourhoodEdge implements INeighbourhood {
 		firstImprovement: for (int i = 0; i < matrix.length; i++) {
 			for (int j = i + 1; j < matrix[i].length; j++) {
 				if (matrix[i][j] > -1) {
-					for (int k = 0; k < pageN; k++) {
-						if (k != matrix[i][j]) {
-							int fromPage = matrix[i][j];
-							int toPage = k;
-							int edgeRemovalCost = solution.calculateCrossingIncrease(i, j, fromPage);
-							if (edgeRemovalCost > 0) {
+					int fromPage = matrix[i][j];
+					int edgeRemovalCost = solution.calculateCrossingIncrease(i, j, fromPage);
+					if (edgeRemovalCost > 0) {
+						for (int k = 0; k < pageN; k++) {
+							if (k != matrix[i][j]) {
+								int toPage = k;
 								int edgeAdditionCost = solution.calculateCrossingIncrease(i, j, toPage);
 								if (edgeAdditionCost < edgeRemovalCost) {
 									int fromPageCrossings = solution.getCrossingsList().get(fromPage);
@@ -95,7 +95,7 @@ public class NeighbourhoodEdge implements INeighbourhood {
 				}
 			}
 		}
-		
+
 		return solutionNew;
 	}
 
@@ -121,6 +121,70 @@ public class NeighbourhoodEdge implements INeighbourhood {
 						bestFromPage = matrix[i][j];
 						bestToPage = matrix[i][j];
 					}
+					int fromPage = matrix[i][j];
+					int edgeRemovalCost = solution.calculateCrossingIncrease(i, j, fromPage);
+					if (edgeRemovalCost > 0) {
+						for (int k = 0; k < pageN; k++) {
+							if (k != matrix[i][j]) {
+								int toPage = k;
+								int edgeAdditionCost = solution.calculateCrossingIncrease(i, j, toPage);
+								if (edgeAdditionCost < edgeRemovalCost) {
+									if ((edgeAdditionCost - edgeRemovalCost) < (bestAdditionCost - bestRemovalCost)) {
+										bestV1 = i;
+										bestV2 = j;
+										bestFromPage = fromPage;
+										bestToPage = toPage;
+										bestRemovalCost = edgeRemovalCost;
+										bestAdditionCost = edgeAdditionCost;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		if (bestAdditionCost < bestRemovalCost) {
+			int fromPageCrossings = solution.getCrossingsList().get(bestFromPage);
+			int toPageCrossings = solution.getCrossingsList().get(bestToPage);
+			solutionNew = solution.copy();
+			solutionNew.getAdjacencyMatrix()[bestV1][bestV2] = bestToPage;
+			solutionNew.getCrossingsList().set(bestFromPage, fromPageCrossings - bestRemovalCost);
+			solutionNew.getCrossingsList().set(bestToPage, toPageCrossings + bestAdditionCost);
+			this.selectedV1 = bestV1;
+			this.selectedV2 = bestV2;
+			this.selectedPage = bestToPage;
+			isSolutionUpdated = true;
+		}
+
+		return solutionNew;
+	}
+
+	// CONCURRENT BEST IMPROVEMENT STEP FUNCTION
+	Solution moveBestImprovementConcurrent(Solution solution) {
+		int[][] matrix = solution.getAdjacencyMatrix();
+		int pageN = solution.getPageNumber();
+		int bestV1 = -1;
+		int bestV2 = -1;
+		int bestFromPage = -1;
+		int bestToPage = -1;
+		int bestRemovalCost = 0;
+		int bestAdditionCost = 0;
+		Solution solutionNew = solution;
+		isSolutionUpdated = false;
+
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = i + 1; j < matrix[i].length; j++) {
+				if (matrix[i][j] > -1) {
+					if (bestV1 == -1) {
+						bestV1 = i;
+						bestV2 = j;
+						bestFromPage = matrix[i][j];
+						bestToPage = matrix[i][j];
+					}
+
+					// concurrent part should go here
 					for (int k = 0; k < pageN; k++) {
 						if (k != matrix[i][j]) {
 							int fromPage = matrix[i][j];
@@ -141,6 +205,7 @@ public class NeighbourhoodEdge implements INeighbourhood {
 							}
 						}
 					}
+
 				}
 			}
 		}
