@@ -1,10 +1,13 @@
 package neighbourhood;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import models.Solution;
 import util.BestImprovementRunnable;
 import util.StepFunctionEnum;
+import util.old.CalculateIncreaseRunnerOld;
 
 public class NeighbourhoodEdge implements INeighbourhood {
 	private StepFunctionEnum stepFunctionType;
@@ -175,6 +178,19 @@ public class NeighbourhoodEdge implements INeighbourhood {
 		Solution solutionNew = solution;
 		isSolutionUpdated = false;
 
+		int edgeN = solution.getEdgeNumber();
+		// int remainingSize = edgeN; (remainingSize > 100) ? 100 :
+		// remainingSize;
+		int threadListSize = (edgeN > 500) ? 500 : edgeN;
+		int remainingSize = edgeN - threadListSize;
+		/*
+		 * for(int i = 0; i < threadListSize; i++) { }
+		 */
+		List<BestImprovementRunnable> runnableList = new ArrayList<>();
+		List<Thread> workers = new ArrayList<>();
+		
+		// int count = 0;
+		int l = 0;
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = i + 1; j < matrix[i].length; j++) {
 				if (matrix[i][j] > -1) {
@@ -184,35 +200,50 @@ public class NeighbourhoodEdge implements INeighbourhood {
 						bestFromPage = matrix[i][j];
 						bestToPage = matrix[i][j];
 					}
-
+					
+					// System.out.println("count " + count++);
 					// concurrent part should go here
-
-					BestImprovementRunnable b = new BestImprovementRunnable(solution, i, j);
-					Thread t = new Thread(b);
-					t.start();
-					// cIR.add(c);
-					// workers.add(t);
-					try {
-						// workers.get(k).join();
-						t.join();
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
-					}
-
-					if (b.getCurrentCrossingIncrease() < 0) {
-						if ((b.getCurrentCrossingIncrease()) < (bestAdditionCost - bestRemovalCost)) {
-							bestV1 = b.getV1();
-							bestV2 = b.getV2();
-							bestFromPage = b.getFromPage();
-							bestToPage = b.getBestToPage();
-							bestRemovalCost = b.getBestRemovalCost();
-							bestAdditionCost = b.getBestAdditionCost();
+					 
+						// System.out.println("l " + l);
+						BestImprovementRunnable b = new BestImprovementRunnable(solution, i, j);
+						Thread t = new Thread(b);
+						t.start();
+						runnableList.add(b);
+						workers.add(t);
+						l++;
+						if (l >= threadListSize) {
+						// System.out.println("else");
+						for (int m = 0; m < threadListSize; m++) {
+							try {
+								workers.get(m).join();
+							} catch (InterruptedException e1) {
+								e1.printStackTrace();
+							}
+							BestImprovementRunnable r = runnableList.get(m);
+							// System.out.println(r.getCurrentCrossingIncrease());
+							if (r.getCurrentCrossingIncrease() < 0) {
+								if ((r.getCurrentCrossingIncrease()) < (bestAdditionCost - bestRemovalCost)) {
+									bestV1 = r.getV1();
+									bestV2 = r.getV2();
+									bestFromPage = r.getFromPage();
+									bestToPage = r.getBestToPage();
+									bestRemovalCost = r.getBestRemovalCost();
+									bestAdditionCost = r.getBestAdditionCost();
+									
+								}
+							}
 						}
+						// System.out.println("TS "+threadListSize+  " RS "+remainingSize);
+						l = 0;
+						workers = new ArrayList<>();
+						runnableList = new ArrayList<>();
+						threadListSize = (remainingSize - threadListSize > 0) ? threadListSize : remainingSize;
+						remainingSize = remainingSize - threadListSize;
 					}
-
 				}
 			}
 		}
+		// System.out.println("TS "+threadListSize+  " RS "+remainingSize);
 
 		if (bestAdditionCost < bestRemovalCost) {
 			int fromPageCrossings = solution.getCrossingsList().get(bestFromPage);

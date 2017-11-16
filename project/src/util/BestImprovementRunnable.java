@@ -24,9 +24,10 @@ public class BestImprovementRunnable implements Runnable {
 	}
 
 	public void run() {
-		// System.out.println("thread " + v1 + " " + v2);
-
+	
 		int edgeRemovalCost = solution.calculateCrossingIncrease(v1, v2, fromPage);
+		
+		//System.out.println("thread " + v1 + " " + v2 + " " + edgeRemovalCost);
 
 		if (edgeRemovalCost > 0) {
 			for (int k = 0; k < pageN; k++) {
@@ -35,8 +36,8 @@ public class BestImprovementRunnable implements Runnable {
 					int toPage = k;
 
 					// if (edgeRemovalCost > 0) {
-
 					int edgeAdditionCost = solution.calculateCrossingIncrease(v1, v2, toPage);
+					// System.out.println("INSIDE " + edgeAdditionCost +" "+edgeRemovalCost);
 					if (edgeAdditionCost < edgeRemovalCost) {
 						if ((edgeAdditionCost - edgeRemovalCost) < (bestAdditionCost - bestRemovalCost)) {
 							// bestV1 = i;
@@ -53,8 +54,8 @@ public class BestImprovementRunnable implements Runnable {
 				}
 			}
 		}
-
 		crossingIncrease = bestAdditionCost - bestRemovalCost;
+		
 	}
 
 	public int getCurrentCrossingIncrease() {
