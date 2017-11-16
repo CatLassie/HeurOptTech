@@ -5,9 +5,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import models.Solution;
-import util.BestImprovementRunnable;
 import util.StepFunctionEnum;
-import util.old.CalculateIncreaseRunnerOld;
 
 public class NeighbourhoodEdge implements INeighbourhood {
 	private StepFunctionEnum stepFunctionType;
@@ -186,7 +184,7 @@ public class NeighbourhoodEdge implements INeighbourhood {
 		/*
 		 * for(int i = 0; i < threadListSize; i++) { }
 		 */
-		List<BestImprovementRunnable> runnableList = new ArrayList<>();
+		List<BestImprovementEdgeRunnable> runnableList = new ArrayList<>();
 		List<Thread> workers = new ArrayList<>();
 		
 		// int count = 0;
@@ -205,7 +203,7 @@ public class NeighbourhoodEdge implements INeighbourhood {
 					// concurrent part should go here
 					 
 						// System.out.println("l " + l);
-						BestImprovementRunnable b = new BestImprovementRunnable(solution, i, j);
+						BestImprovementEdgeRunnable b = new BestImprovementEdgeRunnable(solution, i, j);
 						Thread t = new Thread(b);
 						t.start();
 						runnableList.add(b);
@@ -219,7 +217,7 @@ public class NeighbourhoodEdge implements INeighbourhood {
 							} catch (InterruptedException e1) {
 								e1.printStackTrace();
 							}
-							BestImprovementRunnable r = runnableList.get(m);
+							BestImprovementEdgeRunnable r = runnableList.get(m);
 							// System.out.println(r.getCurrentCrossingIncrease());
 							if (r.getCurrentCrossingIncrease() < 0) {
 								if ((r.getCurrentCrossingIncrease()) < (bestAdditionCost - bestRemovalCost)) {
