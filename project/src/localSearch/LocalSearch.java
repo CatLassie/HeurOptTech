@@ -79,9 +79,19 @@ public class LocalSearch implements ILocalSearch {
 		Solution solutionNew;
 		// int i = 0;
 		do{
+			/*
+			long startTimeNano = System.nanoTime();
+			long startTime = System.currentTimeMillis();
+			*/			
 			solutionNew = neighbourhood.move(currentSolution);
-			//System.out.println("UPDATE! " + i++ +" old cross: " + currentSolution.getTotalCrossings() + " new cross: "+ solutionNew.getTotalCrossings());
-			//System.out.println("UPDATE! " + i++);
+			/*
+			long endTimeNano = System.nanoTime();
+			long endTime = System.currentTimeMillis();
+			double diffSec = ((double) endTime - startTime)/1000;
+			System.out.println("BEST IMPROVEMENT STEP TOOK: " + diffSec + " sec " + (endTimeNano - startTimeNano)); 
+			*/
+			// System.out.println("UPDATE! " + i++ +" old cross: " + currentSolution.getTotalCrossings() + " new cross: "+ solutionNew.getTotalCrossings());
+			// System.out.println("UPDATE! " + i++);
 			if(solutionNew.getTotalCrossings() < currentSolution.getTotalCrossings()){
 				currentSolution = solutionNew;
 			}
