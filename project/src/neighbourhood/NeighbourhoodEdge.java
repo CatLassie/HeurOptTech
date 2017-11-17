@@ -26,7 +26,7 @@ public class NeighbourhoodEdge implements INeighbourhood {
 		case FIRST_IMPROVEMENT:
 			return moveFirstImprovement(solution);
 		case BEST_IMPROVEMENT:
-			return moveBestImprovementConcurrent(solution);
+			return moveBestImprovementDivide(solution);
 		default: {
 			System.out.println("Something has gone pretty bad here, fellas!");
 			return solution;
@@ -241,6 +241,160 @@ public class NeighbourhoodEdge implements INeighbourhood {
 				}
 			}
 		}
+		// System.out.println("TS "+threadListSize+  " RS "+remainingSize);
+
+		if (bestAdditionCost < bestRemovalCost) {
+			int fromPageCrossings = solution.getCrossingsList().get(bestFromPage);
+			int toPageCrossings = solution.getCrossingsList().get(bestToPage);
+			solutionNew = solution.copy();
+			solutionNew.getAdjacencyMatrix()[bestV1][bestV2] = bestToPage;
+			solutionNew.getCrossingsList().set(bestFromPage, fromPageCrossings - bestRemovalCost);
+			solutionNew.getCrossingsList().set(bestToPage, toPageCrossings + bestAdditionCost);
+			this.selectedV1 = bestV1;
+			this.selectedV2 = bestV2;
+			this.selectedPage = bestToPage;
+			isSolutionUpdated = true;
+		}
+
+		return solutionNew;
+	}
+	
+	// CONCURRENT DIVIDE AND CONQUER STYLE BEST IMPROVEMENT STEP FUNCTION
+	Solution moveBestImprovementDivide(Solution solution) {
+		int[][] matrix = solution.getAdjacencyMatrix();
+		int pageN = solution.getPageNumber();
+		int bestV1 = -1;
+		int bestV2 = -1;
+		int bestFromPage = -1;
+		int bestToPage = -1;
+		int bestRemovalCost = 0;
+		int bestAdditionCost = 0;
+		Solution solutionNew = solution;
+		isSolutionUpdated = false;
+		
+		valueInitLoop:
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = i + 1; j < matrix[i].length; j++) {
+				if (matrix[i][j] > -1) {
+						bestV1 = i;
+						bestV2 = j;
+						bestFromPage = matrix[i][j];
+						bestToPage = matrix[i][j];
+						break valueInitLoop;
+				}
+			}
+		}
+
+		int edgeN = solution.getEdgeNumber();
+		// int threadListSize = (edgeN > 500) ? 500 : edgeN;
+		// int remainingSize = edgeN - threadListSize;
+		
+		// thread list size is the square root of traveresed vertices (possible edge number, including empty edges)
+		int possibleEdgeN = (matrix.length*(matrix.length-1))/2;
+		int threadListSize = (int) Math.sqrt(possibleEdgeN);
+		int iterationN = possibleEdgeN/threadListSize +1; // +1 is NOT gonna work with a constant threadListSize!!!!
+		System.out.println("thread list size: " + threadListSize);
+		System.out.println("vertex number: " + matrix.length);
+		System.out.println("possible edge N: " + possibleEdgeN);
+		// System.out.println("edge N: " + edgeN);
+		System.out.println("iterationN: " + iterationN);
+		
+		List<BestImprovementEdgeRunnableDivide> runnableList = new ArrayList<>();
+		List<Thread> workers = new ArrayList<>();
+		
+		// int count = 0;
+		//int l = 0;
+		
+		int i = 0;
+		int j = i + 1;
+		while(i < matrix.length) {
+			System.out.println("outer: " + i);
+			int iIncrease = 0;
+			//i += j / matrix.length;
+			//int jPosition = (j+iterationN) % (matrix.length);
+			//j = jPosition + i;
+			while(j < matrix.length && iIncrease == 0) {
+					 System.out.println("i " + i + " j " + j);
+					 //System.out.println("j " + (i < j));
+					// concurrent part should go here
+					 
+						// System.out.println("l " + l);
+						BestImprovementEdgeRunnableDivide b = new BestImprovementEdgeRunnableDivide(solution, i, j, iterationN);
+						Thread t = new Thread(b);
+						t.start();
+						runnableList.add(b);
+						workers.add(t);
+						/*
+						iIncrease = (j+iterationN) / (matrix.length);
+						System.out.println("iIncrease "+iIncrease);
+						i += iIncrease;
+						// int jIncrease = (j+iterationN) % (matrix.length-i);
+						// System.out.println("jIncrease "+jIncrease);
+						int jPosition = (j+iterationN+i) % (matrix.length);
+						j = jPosition; //+ i;
+						// j += jIncrease;
+						// j = jPosition;
+						System.out.println("jPosition " + j);
+						*/
+						int globalJ = (j+iterationN);
+						// System.out.println(globalJ);
+						int remainderJ = globalJ % matrix.length;
+						// System.out.println(offsetJ);
+						iIncrease = globalJ / matrix.length;
+						i += iIncrease;
+						j = remainderJ;
+						/*
+						for(int n = 0; n < iIncrease; n++) {
+							j += (n+1);
+						}
+						*/
+						if(iIncrease > 0){
+							j += i;
+						}
+						
+						
+						// HERE!1!!!!
+						if(j > matrix.length)
+						
+						
+						
+						// l++;
+
+						// System.out.println("else");
+
+						// System.out.println("TS "+threadListSize+  " RS "+remainingSize);
+						/*
+						l = 0;
+						workers = new ArrayList<>();
+						runnableList = new ArrayList<>();
+						threadListSize = (remainingSize - threadListSize > 0) ? threadListSize : remainingSize;
+						remainingSize = remainingSize - threadListSize;
+						*/
+			}
+		}
+		
+		for (int m = 0; m < threadListSize; m++) {
+			// System.out.println("IM IN THREAD WAITING LOOP!");
+			try {
+				workers.get(m).join();
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			BestImprovementEdgeRunnableDivide r = runnableList.get(m);
+			//System.out.println(r.fromI +" "+ r.fromJ +" " +runnableList.size() );
+			if (r.getCurrentCrossingIncrease() < 0) {
+				if ((r.getCurrentCrossingIncrease()) < (bestAdditionCost - bestRemovalCost)) {
+					bestV1 = r.getV1();
+					bestV2 = r.getV2();
+					bestFromPage = r.getFromPage();
+					bestToPage = r.getBestToPage();
+					bestRemovalCost = r.getBestRemovalCost();
+					bestAdditionCost = r.getBestAdditionCost();
+				}
+			}
+		}
+		
+		
 		// System.out.println("TS "+threadListSize+  " RS "+remainingSize);
 
 		if (bestAdditionCost < bestRemovalCost) {
