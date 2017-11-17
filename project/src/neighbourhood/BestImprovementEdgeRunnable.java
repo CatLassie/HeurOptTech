@@ -21,31 +21,28 @@ public class BestImprovementEdgeRunnable implements Runnable {
 		this.iterationN = iterationN;
 		this.pageN = solution.getPageNumber();
 		this.matrix = solution.getAdjacencyMatrix();
-		// this.fromPage = matrix[v1][v2];
 	}
 
 	public void run() {
 		// System.out.println("Running with: " + fromI +" "+ fromJ);
-		
-		valueInitLoop:
-		for (int i = 0; i < matrix.length; i++) {
+
+		valueInitLoop: for (int i = 0; i < matrix.length; i++) {
 			for (int j = i + 1; j < matrix[i].length; j++) {
 				if (matrix[i][j] > -1) {
-						bestV1 = i;
-						bestV2 = j;
-						bestFromPage = matrix[i][j];
-						bestToPage = matrix[i][j];
-						break valueInitLoop;
+					bestV1 = i;
+					bestV2 = j;
+					bestFromPage = matrix[i][j];
+					bestToPage = matrix[i][j];
+					break valueInitLoop;
 				}
 			}
 		}
-		
+
 		int l = 0;
 		int j = fromJ;
-		outerLoop:
 		for (int i = fromI; i < matrix.length && l < iterationN; i++) {
 			for (; j < matrix[i].length && l < iterationN; j++) {
-				// System.out.println("HARR! "+ i +" "+ j);
+				// System.out.println("currently checking edge "+ i +" "+ j);
 				if (matrix[i][j] > -1) {
 					if (bestV1 == -1) {
 						bestV1 = i;
@@ -76,14 +73,13 @@ public class BestImprovementEdgeRunnable implements Runnable {
 					}
 				}
 				l++;
-				//if(l >= iterationN) {break outerLoop;}
 			}
-			j = i+2;
+			j = i + 2;
 		}
-		// System.out.println("Counster is: " + l);
+		// System.out.println("current iteration number: " + l);
 		crossingIncrease = bestAdditionCost - bestRemovalCost;
 	}
-	
+
 	public int getCurrentCrossingIncrease() {
 		return crossingIncrease;
 	}
