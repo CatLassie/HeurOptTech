@@ -25,7 +25,7 @@ public class NeighbourhoodEdge implements INeighbourhood {
 		case FIRST_IMPROVEMENT:
 			return moveFirstImprovement(solution);
 		case BEST_IMPROVEMENT:
-			return moveBestImprovementDivide(solution);
+			return moveBestImprovementConcurrent(solution);
 		default: {
 			System.out.println("Something has gone pretty bad here, fellas!");
 			return solution;
@@ -161,8 +161,8 @@ public class NeighbourhoodEdge implements INeighbourhood {
 		return solutionNew;
 	}
 
-	// CONCURRENT BEST IMPROVEMENT STEP FUNCTION
-	Solution moveBestImprovementConcurrent(Solution solution) {
+	// CONCURRENT BEST IMPROVEMENT STEP FUNCTION (pretty bad)
+	Solution moveBestImprovementConcurrentSlow(Solution solution) {
 		int[][] matrix = solution.getAdjacencyMatrix();
 		int bestV1 = -1;
 		int bestV2 = -1;
@@ -245,8 +245,8 @@ public class NeighbourhoodEdge implements INeighbourhood {
 		return solutionNew;
 	}
 
-	// CONCURRENT DIVIDE AND CONQUER STYLE BEST IMPROVEMENT STEP FUNCTION
-	Solution moveBestImprovementDivide(Solution solution) {
+	// CONCURRENT BEST IMPROVEMENT STEP FUNCTION
+	Solution moveBestImprovementConcurrent(Solution solution) {
 		int[][] matrix = solution.getAdjacencyMatrix();
 		int bestV1 = -1;
 		int bestV2 = -1;
