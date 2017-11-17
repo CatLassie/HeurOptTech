@@ -99,6 +99,134 @@ public class NeighbourhoodEdge implements INeighbourhood {
 		return solutionNew;
 	}
 
+	// CONCURRENT BEST IMPROVEMENT STEP FUNCTION
+	Solution moveBestImprovementConcurrent(Solution solution) {
+		int[][] matrix = solution.getAdjacencyMatrix();
+		int bestV1 = -1;
+		int bestV2 = -1;
+		int bestFromPage = -1;
+		int bestToPage = -1;
+		int bestRemovalCost = 0;
+		int bestAdditionCost = 0;
+		Solution solutionNew = solution;
+		isSolutionUpdated = false;
+
+		valueInitLoop: for (int i = 0; i < matrix.length; i++) {
+			for (int j = i + 1; j < matrix[i].length; j++) {
+				if (matrix[i][j] > -1) {
+					bestV1 = i;
+					bestV2 = j;
+					bestFromPage = matrix[i][j];
+					bestToPage = matrix[i][j];
+					break valueInitLoop;
+				}
+			}
+		}
+
+		int possibleEdgeN = (matrix.length * (matrix.length - 1)) / 2;
+		// iteration number is the square root of traveresed edges (possible
+		// edge number, including empty edges)
+		int iterationN = (int) Math.sqrt(possibleEdgeN);
+
+		// System.out.println("thread list size: " + threadListSize);
+		// System.out.println("vertex number: " + matrix.length);
+		// System.out.println("possible edge N: " + possibleEdgeN);
+		// int edgeN = solution.getEdgeNumber();
+		// System.out.println("edge N: " + edgeN);
+		// System.out.println("iterationN: " + iterationN);
+
+		List<BestImprovementEdgeRunnable> runnableList = new ArrayList<>();
+		List<Thread> workers = new ArrayList<>();
+
+		int iIncrease = 0;
+		int jOffset = 0;
+		for (int i = 0; i < matrix.length; i += iIncrease) {
+			int j = i + 1 + jOffset;
+			for (; j < matrix.length; j += iterationN) {
+				BestImprovementEdgeRunnable b = new BestImprovementEdgeRunnable(solution, i, j, iterationN);
+				Thread t = new Thread(b);
+				t.start();
+				runnableList.add(b);
+				workers.add(t);
+			}
+			iIncrease = j / matrix.length;
+			jOffset = j % matrix.length;
+		}
+
+		for (int m = 0; m < workers.size(); m++) {
+			try {
+				workers.get(m).join();
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			BestImprovementEdgeRunnable r = runnableList.get(m);
+			if (r.getCurrentCrossingIncrease() < 0) {
+				if ((r.getCurrentCrossingIncrease()) < (bestAdditionCost - bestRemovalCost)) {
+					bestV1 = r.getV1();
+					bestV2 = r.getV2();
+					bestFromPage = r.getFromPage();
+					bestToPage = r.getBestToPage();
+					bestRemovalCost = r.getBestRemovalCost();
+					bestAdditionCost = r.getBestAdditionCost();
+				}
+			}
+		}
+
+		if (bestAdditionCost < bestRemovalCost) {
+			int fromPageCrossings = solution.getCrossingsList().get(bestFromPage);
+			int toPageCrossings = solution.getCrossingsList().get(bestToPage);
+			solutionNew = solution.copy();
+			solutionNew.getAdjacencyMatrix()[bestV1][bestV2] = bestToPage;
+			solutionNew.getCrossingsList().set(bestFromPage, fromPageCrossings - bestRemovalCost);
+			solutionNew.getCrossingsList().set(bestToPage, toPageCrossings + bestAdditionCost);
+			this.selectedV1 = bestV1;
+			this.selectedV2 = bestV2;
+			this.selectedPage = bestToPage;
+			isSolutionUpdated = true;
+		}
+
+		return solutionNew;
+	}
+
+	public int getSelectedV1() {
+		return selectedV1;
+	}
+
+	public int getSelectedV2() {
+		return selectedV2;
+	}
+
+	public int getSelectedPage() {
+		return selectedPage;
+	}
+
+	public boolean isSolutionUpdated() {
+		return isSolutionUpdated;
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// BEST IMPROVEMENT STEP FUNCTION
 	Solution moveBestImprovement(Solution solution) {
 		int[][] matrix = solution.getAdjacencyMatrix();
@@ -161,7 +289,10 @@ public class NeighbourhoodEdge implements INeighbourhood {
 		return solutionNew;
 	}
 
-	// CONCURRENT BEST IMPROVEMENT STEP FUNCTION (pretty bad)
+	
+	
+	
+	// CONCURRENT BEST IMPROVEMENT STEP FUNCTION (old, bad and unused)
 	Solution moveBestImprovementConcurrentSlow(Solution solution) {
 		int[][] matrix = solution.getAdjacencyMatrix();
 		int bestV1 = -1;
@@ -243,111 +374,6 @@ public class NeighbourhoodEdge implements INeighbourhood {
 		}
 
 		return solutionNew;
-	}
-
-	// CONCURRENT BEST IMPROVEMENT STEP FUNCTION
-	Solution moveBestImprovementConcurrent(Solution solution) {
-		int[][] matrix = solution.getAdjacencyMatrix();
-		int bestV1 = -1;
-		int bestV2 = -1;
-		int bestFromPage = -1;
-		int bestToPage = -1;
-		int bestRemovalCost = 0;
-		int bestAdditionCost = 0;
-		Solution solutionNew = solution;
-		isSolutionUpdated = false;
-
-		valueInitLoop: for (int i = 0; i < matrix.length; i++) {
-			for (int j = i + 1; j < matrix[i].length; j++) {
-				if (matrix[i][j] > -1) {
-					bestV1 = i;
-					bestV2 = j;
-					bestFromPage = matrix[i][j];
-					bestToPage = matrix[i][j];
-					break valueInitLoop;
-				}
-			}
-		}
-
-		int possibleEdgeN = (matrix.length * (matrix.length - 1)) / 2;
-		// iteration number is the square root of traveresed edges (possible
-		// edge number, including empty edges)
-		int iterationN = (int) Math.sqrt(possibleEdgeN);
-		
-		// System.out.println("thread list size: " + threadListSize);
-		// System.out.println("vertex number: " + matrix.length);
-		// System.out.println("possible edge N: " + possibleEdgeN);
-		// int edgeN = solution.getEdgeNumber();
-		// System.out.println("edge N: " + edgeN);
-		// System.out.println("iterationN: " + iterationN);
-
-		List<BestImprovementEdgeRunnable> runnableList = new ArrayList<>();
-		List<Thread> workers = new ArrayList<>();
-
-		int iIncrease = 0;
-		int jOffset = 0;
-		for (int i = 0; i < matrix.length; i += iIncrease) {
-			int j = i+1+jOffset;
-			for (;j < matrix.length; j += iterationN) {
-				BestImprovementEdgeRunnable b = new BestImprovementEdgeRunnable(solution, i, j, iterationN);
-				Thread t = new Thread(b);
-				t.start();
-				runnableList.add(b);
-				workers.add(t);
-			}
-			iIncrease = j / matrix.length;
-			jOffset = j % matrix.length;
-		}
-
-		for (int m = 0; m < workers.size(); m++) {
-			try {
-				workers.get(m).join();
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
-			}
-			BestImprovementEdgeRunnable r = runnableList.get(m);
-			if (r.getCurrentCrossingIncrease() < 0) {
-				if ((r.getCurrentCrossingIncrease()) < (bestAdditionCost - bestRemovalCost)) {
-					bestV1 = r.getV1();
-					bestV2 = r.getV2();
-					bestFromPage = r.getFromPage();
-					bestToPage = r.getBestToPage();
-					bestRemovalCost = r.getBestRemovalCost();
-					bestAdditionCost = r.getBestAdditionCost();
-				}
-			}
-		}
-
-		if (bestAdditionCost < bestRemovalCost) {
-			int fromPageCrossings = solution.getCrossingsList().get(bestFromPage);
-			int toPageCrossings = solution.getCrossingsList().get(bestToPage);
-			solutionNew = solution.copy();
-			solutionNew.getAdjacencyMatrix()[bestV1][bestV2] = bestToPage;
-			solutionNew.getCrossingsList().set(bestFromPage, fromPageCrossings - bestRemovalCost);
-			solutionNew.getCrossingsList().set(bestToPage, toPageCrossings + bestAdditionCost);
-			this.selectedV1 = bestV1;
-			this.selectedV2 = bestV2;
-			this.selectedPage = bestToPage;
-			isSolutionUpdated = true;
-		}
-
-		return solutionNew;
-	}
-
-	public int getSelectedV1() {
-		return selectedV1;
-	}
-
-	public int getSelectedV2() {
-		return selectedV2;
-	}
-
-	public int getSelectedPage() {
-		return selectedPage;
-	}
-
-	public boolean isSolutionUpdated() {
-		return isSolutionUpdated;
 	}
 
 }
