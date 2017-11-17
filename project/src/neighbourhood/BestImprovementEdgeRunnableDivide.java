@@ -25,6 +25,7 @@ public class BestImprovementEdgeRunnableDivide implements Runnable {
 	}
 
 	public void run() {
+		// System.out.println("Running with: " + fromI +" "+ fromJ);
 		
 		valueInitLoop:
 		for (int i = 0; i < matrix.length; i++) {
@@ -40,9 +41,11 @@ public class BestImprovementEdgeRunnableDivide implements Runnable {
 		}
 		
 		int l = 0;
+		int j = fromJ;
 		outerLoop:
 		for (int i = fromI; i < matrix.length && l < iterationN; i++) {
-			for (int j = fromJ; j < matrix[i].length && l < iterationN; j++) {
+			for (; j < matrix[i].length && l < iterationN; j++) {
+				// System.out.println("HARR! "+ i +" "+ j);
 				if (matrix[i][j] > -1) {
 					if (bestV1 == -1) {
 						bestV1 = i;
@@ -73,9 +76,11 @@ public class BestImprovementEdgeRunnableDivide implements Runnable {
 					}
 				}
 				l++;
+				//if(l >= iterationN) {break outerLoop;}
 			}
+			j = i+2;
 		}
-		//System.out.println("L is: " + l);
+		// System.out.println("Counster is: " + l);
 		crossingIncrease = bestAdditionCost - bestRemovalCost;
 	}
 	
