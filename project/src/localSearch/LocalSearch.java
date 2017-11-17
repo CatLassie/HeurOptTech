@@ -53,12 +53,6 @@ public class LocalSearch implements ILocalSearch {
 			int fromPage = currentSolution.getAdjacencyMatrix()[v1][v2];
 			int toPage = neighbourhood.getSelectedPage();
 
-			// System.out.println("Edge [" + (v1 + 1) + "," + (v2 + 1) + "] moved from " + fromPage + " to " + toPage);
-			// System.out.println(bestSolution.calculateCrossingIncrease(v1, v2,
-			// fromPage));
-			// System.out.println(bestSolution.calculateCrossingIncrease(v1, v2,
-			// toPage));
-
 			int edgeRemovalCost = currentSolution.calculateCrossingIncrease(v1, v2, fromPage);
 			if (edgeRemovalCost > 0) {
 				int edgeAdditionCost = currentSolution.calculateCrossingIncrease(v1, v2, toPage);
@@ -77,21 +71,14 @@ public class LocalSearch implements ILocalSearch {
 	
 	private Solution searchDeterministicEdge() {
 		Solution solutionNew;
-		// int i = 0;
 		do{
-			
 			long startTimeNano = System.nanoTime();
-			long startTime = System.currentTimeMillis();
-						
+			long startTime = System.currentTimeMillis();		
 			solutionNew = neighbourhood.move(currentSolution);
-			
 			long endTimeNano = System.nanoTime();
 			long endTime = System.currentTimeMillis();
 			double diffSec = ((double) endTime - startTime)/1000;
 			System.out.println("BEST IMPROVEMENT STEP TOOK: " + diffSec + " sec " + (endTimeNano - startTimeNano)); 
-			
-			// System.out.println("UPDATE! " + i++ +" old cross: " + currentSolution.getTotalCrossings() + " new cross: "+ solutionNew.getTotalCrossings());
-			// System.out.println("UPDATE! " + i++);
 			if(solutionNew.getTotalCrossings() < currentSolution.getTotalCrossings()){
 				currentSolution = solutionNew;
 			}
