@@ -1,4 +1,4 @@
-package neighbourhood;
+package neighbourhood.old;
 
 import models.Solution;
 

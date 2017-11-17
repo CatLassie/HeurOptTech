@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import models.Solution;
+import neighbourhood.old.BestImprovementEdgeRunnableSlow;
 import util.StepFunctionEnum;
 
 public class NeighbourhoodEdge implements INeighbourhood {
