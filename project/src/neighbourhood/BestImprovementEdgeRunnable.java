@@ -2,7 +2,7 @@ package neighbourhood;
 
 import models.Solution;
 
-public class BestImprovementEdgeRunnableDivide implements Runnable {
+public class BestImprovementEdgeRunnable implements Runnable {
 
 	private Solution solution;
 	public int bestV1, bestV2, pageN, fromI, fromJ, iterationN;
@@ -14,7 +14,7 @@ public class BestImprovementEdgeRunnableDivide implements Runnable {
 	private int bestAdditionCost = 0;
 	private boolean isSolutionUpdated = false;
 
-	public BestImprovementEdgeRunnableDivide(Solution solution, int fromI, int fromJ, int iterationN) {
+	public BestImprovementEdgeRunnable(Solution solution, int fromI, int fromJ, int iterationN) {
 		this.solution = solution;
 		this.fromI = fromI;
 		this.fromJ = fromJ;

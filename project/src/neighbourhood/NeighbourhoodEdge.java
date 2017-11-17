@@ -302,7 +302,7 @@ public class NeighbourhoodEdge implements INeighbourhood {
 		//     System.out.println("edge N: " + edgeN);
 		System.out.println("iterationN: " + iterationN);
 
-		List<BestImprovementEdgeRunnableDivide> runnableList = new ArrayList<>();
+		List<BestImprovementEdgeRunnable> runnableList = new ArrayList<>();
 		List<Thread> workers = new ArrayList<>();
 
 		// int count = 0;
@@ -319,7 +319,7 @@ public class NeighbourhoodEdge implements INeighbourhood {
 				// System.out.println("i " + i + " j " + j /*+ " iterationN " + iterationN*/);
 				// System.out.println("j " + (i < j));
 
-				BestImprovementEdgeRunnableDivide b = new BestImprovementEdgeRunnableDivide(solution, i, j, iterationN);
+				BestImprovementEdgeRunnable b = new BestImprovementEdgeRunnable(solution, i, j, iterationN);
 				Thread t = new Thread(b);
 				t.start();
 				runnableList.add(b);
@@ -340,7 +340,7 @@ public class NeighbourhoodEdge implements INeighbourhood {
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
-			BestImprovementEdgeRunnableDivide r = runnableList.get(m);
+			BestImprovementEdgeRunnable r = runnableList.get(m);
 			// System.out.println(r.fromI +" "+ r.fromJ +" "+r.getCurrentCrossingIncrease() );
 			if (r.getCurrentCrossingIncrease() < 0) {
 				if ((r.getCurrentCrossingIncrease()) < (bestAdditionCost - bestRemovalCost)) {
