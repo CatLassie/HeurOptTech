@@ -53,8 +53,9 @@ public class Solution {
 				if (pageNofV > -1) {
 					
 					// against all other remaining edges
+					int w2 = v2+1;
 					for (int w1 = v1; w1 < adjacencyMatrix.length; w1++) {
-						for (int w2 = v2+1; w2 < adjacencyMatrix[w1].length; w2++) {
+						for (; w2 < adjacencyMatrix[w1].length; w2++) {
 							int pageNofW = adjacencyMatrix[w1][w2];
 							if(pageNofV == pageNofW) {
 								int v1Index = spineOrder.indexOf(v1);
@@ -68,6 +69,7 @@ public class Solution {
 								
 							}
 						}
+						w2 = w1+2;
 					}
 					
 				}

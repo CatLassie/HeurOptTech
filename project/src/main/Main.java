@@ -49,6 +49,8 @@ public class Main {
 			System.out.println("INITIAL SOLUTION RECALCULATED CROSSINGS: "+initialSolution.calculateTotalCrossingArray());
 			// System.out.println("PAGE MATRIX: "+initialSolution);
 			
+			// System.out.println("SPINE ORDER: "+initialSolution.getSpineOrder());
+			
 			System.out.println("#edge: "+initialSolution.getEdgeNumber());
 			
 			// LOCAL SEARCH

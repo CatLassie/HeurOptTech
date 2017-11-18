@@ -24,8 +24,8 @@ public class Randomized implements IConstruction {
 					int randomPage = ThreadLocalRandom.current().nextInt(0, pageNumber);
 					// System.out.println("page #" + randomPage);
 					int crossingIncrease = solution.calculateCrossingIncrease(i,j,randomPage);
-					// System.out.println(crossingIncrease);
-
+					// System.out.println(i+" "+j+" p: "+randomPage+" increase: "+crossingIncrease);
+ 
 					solution.addEdge(i, j, randomPage);
 					solution.addNewCrossings(crossingIncrease, randomPage);
 					// System.out.println(minCrossingIncrease);
