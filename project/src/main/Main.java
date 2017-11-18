@@ -46,6 +46,7 @@ public class Main {
 				System.out.println("page #"+(i+1)+" : " + initialSolution.getCrossingsList().get(i));
 			}
 			System.out.println("INITIAL SOLUTION TOTAL CROSSINGS: "+initialSolution.getTotalCrossings());
+			System.out.println("INITIAL SOLUTION RECALCULATED CROSSINGS: "+initialSolution.calculateTotalCrossingArray());
 			// System.out.println("PAGE MATRIX: "+initialSolution);
 			
 			System.out.println("#edge: "+initialSolution.getEdgeNumber());
@@ -68,6 +69,7 @@ public class Main {
 				System.out.println("page #"+(i+1)+" : " + bestSolution.getCrossingsList().get(i));
 			}
 			System.out.println("BEST SOLUTION TOTAL CROSSINGS: "+bestSolution.getTotalCrossings());
+			System.out.println("BEST SOLUTION RECALCULATED CROSSINGS: "+bestSolution.calculateTotalCrossingArray());
 			// System.out.println("PAGE MATRIX: "+bestSolution);
 			System.out.println("#edge: "+bestSolution.getEdgeNumber());
 			
