@@ -12,7 +12,6 @@ public class GreedyListOld implements IConstructionOld {
 		SolutionOld solution = new SolutionOld(kpmpInstance.getNumVertices(), kpmpInstance.getK());
 		Utilities.sortAdjacencyList(kpmpInstance.getAdjacencyList());
 				
-		int e = 1;
 		for(int i = 0; i < kpmpInstance.getAdjacencyList().size(); i++) {
 			List<Integer> innerList = kpmpInstance.getAdjacencyList().get(i);
 			for(int j = innerList.size()-1; (j >= 0) && (innerList.get(j) > i); j--) {
