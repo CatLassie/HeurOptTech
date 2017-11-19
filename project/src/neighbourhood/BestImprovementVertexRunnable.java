@@ -20,13 +20,13 @@ public class BestImprovementVertexRunnable implements Runnable {
 		int vertexN = spineOrder.size();
 		Solution bestSolution = solution;
 		isSolutionUpdated = false;
-
+		
 		for (int i = 0; i < vertexN; i++) {
-			Solution solutionNew = bestSolution.copy();
+			Solution solutionNew = solution.copy();
 			int fromValue = solutionNew.getSpineOrder().get(fromPosition);
 			solutionNew.getSpineOrder().remove(fromPosition);
 			solutionNew.getSpineOrder().add(i, fromValue);
-				
+	
 			List<Integer> newCrossingsList = solutionNew.calculateTotalCrossingArray();
 			solutionNew.setCrossingsList(newCrossingsList);
 			if(solutionNew.getTotalCrossings() < bestSolution.getTotalCrossings()){
