@@ -11,6 +11,7 @@ import models.Solution;
 import parser.KPMPInstance;
 import util.NeighbourhoodStructureEnum;
 import util.StepFunctionEnum;
+import vnd.VND;
 
 public class Main {
 	
@@ -95,7 +96,24 @@ public class Main {
 			}
 			
 			if(metaType.equals("vnd")){
-				System.out.println("VND TOOK: ");
+				VND vnd = new VND(initialSolution);
+				
+				startTimeNano = System.nanoTime();
+				startTime = System.currentTimeMillis();
+				Solution bestSolution = vnd.search();
+				endTimeNano = System.nanoTime();
+				endTime = System.currentTimeMillis();
+				diffSec = ((double) endTime - startTime)/1000;
+				System.out.println("\nVND TOOK: " + diffSec + " sec " + (endTimeNano - startTimeNano));
+				/*	
+				for(int  i = 0; i < bestSolution.getCrossingsList().size(); i++) {
+					System.out.println("page #"+(i+1)+" : " + bestSolution.getCrossingsList().get(i));
+				}
+				*/
+				System.out.println("BEST SOLUTION TOTAL CROSSINGS: "+bestSolution.getTotalCrossings());
+				// System.out.println("BEST SOLUTION RECALCULATED CROSSINGS: "+bestSolution.calculateTotalCrossingArray());
+				// System.out.println("PAGE MATRIX: "+bestSolution);
+				//System.out.println("BEST SOLUTION spine order: "+bestSolution.getSpineOrder());
 			}
 			
 			if(metaType.equals("gvns")){

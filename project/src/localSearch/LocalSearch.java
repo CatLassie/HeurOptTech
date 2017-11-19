@@ -142,4 +142,12 @@ public class LocalSearch implements ILocalSearch {
 		return currentSolution;
 	}
 
+	public NeighbourhoodStructureEnum getNeighbourhoodType() {
+		return neighbourhoodType;
+	}
+
+	public StepFunctionEnum getStepFunctionType() {
+		return stepFunctionType;
+	}
+
 }
