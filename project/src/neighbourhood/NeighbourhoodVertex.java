@@ -6,6 +6,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import models.Solution;
 import util.StepFunctionEnum;
+import util.Utilities;
 
 public class NeighbourhoodVertex implements INeighbourhood {
 	private StepFunctionEnum stepFunctionType;
@@ -62,6 +63,10 @@ public class NeighbourhoodVertex implements INeighbourhood {
 
 		firstImprovement: for (int i = 0; i < vertexN; i++) {
 			for (int j = 0; j < vertexN; j++) {
+				if(Utilities.isTimeOver()){
+					System.out.println("Vertex First Improvement time is up!");
+					break firstImprovement;
+				}
 
 				Solution solutionNew = betterSolution.copy();
 				int fromValue = solutionNew.getSpineOrder().get(i);
@@ -98,7 +103,12 @@ public class NeighbourhoodVertex implements INeighbourhood {
 			workers.add(t);
 		}
 		
+		timeout:
 		for (int i = 0; i < workers.size(); i++) {
+			if(Utilities.isTimeOver()){
+				System.out.println("Vertex Best Improvement time is up!");
+				break timeout;
+			}
 			try {
 				workers.get(i).join();
 			} catch (InterruptedException e1) {

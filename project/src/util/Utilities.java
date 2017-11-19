@@ -10,10 +10,11 @@ public class Utilities {
 		timer = System.currentTimeMillis();
 	}
 	
+	// timeout set to 5 minutes
 	public static boolean isTimeOver () {
 		long currentTime = System.currentTimeMillis();
 		double diffSec = ((double) currentTime - timer)/1000;
-		return diffSec > 10;
+		return diffSec > 300;
 	}
 	
 	// UNUSED (as far as I remember)

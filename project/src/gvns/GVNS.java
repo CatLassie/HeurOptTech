@@ -3,6 +3,7 @@ package gvns;
 import java.util.List;
 
 import models.Solution;
+import util.Utilities;
 import vnd.VND;
 
 public class GVNS {
@@ -18,7 +19,12 @@ public class GVNS {
 		VND vnd;
 		Solution currentBestSolution = solution;
 		
+		timeout:
 		for(int i = 0; i < solution.getAdjacencyMatrix().length; i++){
+			if(Utilities.isTimeOver()){
+				System.out.println("GVNS time is up!");
+				break timeout;
+			}
 			// make a copy of the current best solution and shuffle its spine order
 			Solution currentBestSolutionCopy = currentBestSolution.copy();
 			if(i > 0) {

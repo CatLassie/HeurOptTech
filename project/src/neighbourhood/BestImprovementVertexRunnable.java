@@ -3,6 +3,7 @@ package neighbourhood;
 import java.util.List;
 
 import models.Solution;
+import util.Utilities;
 
 public class BestImprovementVertexRunnable implements Runnable {
 
@@ -21,7 +22,12 @@ public class BestImprovementVertexRunnable implements Runnable {
 		Solution bestSolution = solution;
 		isSolutionUpdated = false;
 		
+		timeout:
 		for (int i = 0; i < vertexN; i++) {
+			if(Utilities.isTimeOver()){
+				// System.out.println("Runnable time is up!");
+				break timeout;
+			}
 			Solution solutionNew = solution.copy();
 			int fromValue = solutionNew.getSpineOrder().get(fromPosition);
 			solutionNew.getSpineOrder().remove(fromPosition);

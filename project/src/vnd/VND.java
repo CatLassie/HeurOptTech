@@ -4,6 +4,7 @@ import localSearch.LocalSearch;
 import models.Solution;
 import util.NeighbourhoodStructureEnum;
 import util.StepFunctionEnum;
+import util.Utilities;
 
 public class VND {
 	
@@ -18,7 +19,12 @@ public class VND {
 		LocalSearch localSearch;
 		Solution currentBestSolution = solution;
 		
+		timeout:
 		for(int i = 0; i < 2; i++){
+			if(Utilities.isTimeOver()){
+				System.out.println("VND time is up!");
+				break timeout;
+			}
 			localSearch = i == 0 ? 
 					new LocalSearch(currentBestSolution, NeighbourhoodStructureEnum.EDGE, StepFunctionEnum.BEST_IMPROVEMENT) :
 					new LocalSearch(currentBestSolution, NeighbourhoodStructureEnum.VERTEX, StepFunctionEnum.BEST_IMPROVEMENT);	

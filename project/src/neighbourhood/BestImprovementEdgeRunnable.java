@@ -1,6 +1,7 @@
 package neighbourhood;
 
 import models.Solution;
+import util.Utilities;
 
 public class BestImprovementEdgeRunnable implements Runnable {
 
@@ -40,8 +41,13 @@ public class BestImprovementEdgeRunnable implements Runnable {
 
 		int l = 0;
 		int j = fromJ;
+		timeout:
 		for (int i = fromI; i < matrix.length && l < iterationN; i++) {
 			for (; j < matrix[i].length && l < iterationN; j++) {
+				if(Utilities.isTimeOver()){
+					// System.out.println("Runnable time is up!");
+					break timeout;
+				}
 				// System.out.println("currently checking edge "+ i +" "+ j);
 				if (matrix[i][j] > -1) {
 					if (bestV1 == -1) {

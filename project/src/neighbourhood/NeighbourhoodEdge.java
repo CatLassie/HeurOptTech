@@ -7,6 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import models.Solution;
 import neighbourhood.old.BestImprovementEdgeRunnableSlow;
 import util.StepFunctionEnum;
+import util.Utilities;
 
 public class NeighbourhoodEdge implements INeighbourhood {
 	private StepFunctionEnum stepFunctionType;
@@ -69,6 +70,10 @@ public class NeighbourhoodEdge implements INeighbourhood {
 
 		firstImprovement: for (int i = 0; i < matrix.length; i++) {
 			for (int j = i + 1; j < matrix[i].length; j++) {
+				if(Utilities.isTimeOver()){
+					System.out.println("Edge First Improvement time is up!");
+					break firstImprovement;
+				}
 				if (matrix[i][j] > -1) {
 					int fromPage = matrix[i][j];
 					int edgeRemovalCost = solution.calculateCrossingIncrease(i, j, fromPage);
@@ -154,7 +159,12 @@ public class NeighbourhoodEdge implements INeighbourhood {
 			jOffset = j % matrix.length;
 		}
 
+		timeout:
 		for (int m = 0; m < workers.size(); m++) {
+			if(Utilities.isTimeOver()){
+				System.out.println("Edge Best Improvement time is up!");
+				break timeout;
+			}
 			try {
 				workers.get(m).join();
 			} catch (InterruptedException e1) {
