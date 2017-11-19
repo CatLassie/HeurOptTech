@@ -49,12 +49,20 @@ public class Main {
 			System.out.println("INITIAL SOLUTION RECALCULATED CROSSINGS: "+initialSolution.calculateTotalCrossingArray());
 			// System.out.println("PAGE MATRIX: "+initialSolution);
 			
-			// System.out.println("SPINE ORDER: "+initialSolution.getSpineOrder());
+			//System.out.println("SPINE ORDER: "+initialSolution.getSpineOrder());
+			
+			//System.out.println("initial position of: "+ 5 +" is " +initialSolution.getPosition(5));
+			
+			//System.out.println("after move position of: "+ 5 +" is " +initialSolution.getPosition(5));
 			
 			System.out.println("#edge: "+initialSolution.getEdgeNumber());
 			
-			// LOCAL SEARCH
 			
+			
+			
+			
+			// LOCAL SEARCH EDGE
+			/*
 			ILocalSearch localSearch = new LocalSearch(initialSolution, NeighbourhoodStructureEnum.EDGE, StepFunctionEnum.BEST_IMPROVEMENT);
 			
 			startTimeNano = System.nanoTime();
@@ -65,8 +73,8 @@ public class Main {
 			endTimeNano = System.nanoTime();
 			endTime = System.currentTimeMillis();
 			diffSec = ((double) endTime - startTime)/1000;
-			System.out.println("LOCAL SEARCH TOOK: " + diffSec + " sec " + (endTimeNano - startTimeNano)); 
-			
+			System.out.println("LOCAL SEARCH TOOK: " + diffSec + " sec " + (endTimeNano - startTimeNano));
+						
 			for(int  i = 0; i < bestSolution.getCrossingsList().size(); i++) {
 				System.out.println("page #"+(i+1)+" : " + bestSolution.getCrossingsList().get(i));
 			}
@@ -74,9 +82,32 @@ public class Main {
 			System.out.println("BEST SOLUTION RECALCULATED CROSSINGS: "+bestSolution.calculateTotalCrossingArray());
 			// System.out.println("PAGE MATRIX: "+bestSolution);
 			System.out.println("#edge: "+bestSolution.getEdgeNumber());
-			
-			
 			// System.out.println("PAGE MATRIX: "+localSearch.getBestSolution());
+			*/
+			
+			
+			
+			
+			
+			// LOCAL SEARCH VERTEX
+			
+			ILocalSearch localSearch = new LocalSearch(initialSolution, NeighbourhoodStructureEnum.VERTEX, StepFunctionEnum.RANDOM);
+			
+			startTimeNano = System.nanoTime();
+			startTime = System.currentTimeMillis();
+			
+			Solution bestSolution = localSearch.search();
+			
+			endTimeNano = System.nanoTime();
+			endTime = System.currentTimeMillis();
+			diffSec = ((double) endTime - startTime)/1000;
+			System.out.println("LOCAL SEARCH TOOK: " + diffSec + " sec " + (endTimeNano - startTimeNano));
+			
+			System.out.println("BEST SOLUTION TOTAL CROSSINGS: "+bestSolution.getTotalCrossings());
+			System.out.println("BEST SOLUTION RECALCULATED CROSSINGS: "+bestSolution.calculateTotalCrossingArray());
+			//System.out.println("BEST SOLUTION spine order: "+bestSolution.getSpineOrder());
+			
+			
 			
 			
 		} catch (FileNotFoundException e) {

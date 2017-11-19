@@ -204,6 +204,14 @@ public class NeighbourhoodEdge implements INeighbourhood {
 	public boolean isSolutionUpdated() {
 		return isSolutionUpdated;
 	}
+	
+	public int getSelectedFromPosition() {
+		return 0;
+	}
+
+	public int getSelectedToPosition() {
+		return 0;
+	}
 
 	
 	

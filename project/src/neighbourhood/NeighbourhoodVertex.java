@@ -1,13 +1,16 @@
 package neighbourhood;
 
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
 import models.Solution;
 import util.StepFunctionEnum;
 
 public class NeighbourhoodVertex implements INeighbourhood {
 	private StepFunctionEnum stepFunctionType;
-	// private int currentV1 = -1;
-	// private int currentV2 = -1;
-	// private int selectedPage = -1;
+	private int selectedFromPosition = 0;
+	private int selectedToPosition = 0;
+	private boolean isSolutionUpdated = false;
 	
 	public NeighbourhoodVertex(StepFunctionEnum stepFunctionType) {
 		this.stepFunctionType = stepFunctionType;
@@ -29,7 +32,25 @@ public class NeighbourhoodVertex implements INeighbourhood {
 	}
 
 	Solution moveRandom(Solution solution) {
-		return solution;
+		List<Integer> spineOrder = solution.getSpineOrder();
+		int vertexN = spineOrder.size();
+		int fromPosition = 0;
+		int toPosition = 0;
+		
+		fromPosition = ThreadLocalRandom.current().nextInt(0, vertexN);
+		do {
+			toPosition = ThreadLocalRandom.current().nextInt(0, vertexN);
+		} while (fromPosition == toPosition);
+
+		Solution solutionNew = solution.copy();
+		int fromValue = solutionNew.getSpineOrder().get(fromPosition);
+		solutionNew.getSpineOrder().remove(fromPosition);
+		solutionNew.getSpineOrder().add(toPosition, fromValue);
+		this.selectedFromPosition = fromPosition;
+		this.selectedToPosition = toPosition;
+
+		// System.out.println("from "+fromPosition+" to "+toPosition);
+		return solutionNew;
 	}
 
 	Solution moveFirstImprovement(Solution solution) {
@@ -53,7 +74,16 @@ public class NeighbourhoodVertex implements INeighbourhood {
 	}
 	
 	public boolean isSolutionUpdated() {
-		return false;
+		return isSolutionUpdated;
 	}
+
+	public int getSelectedFromPosition() {
+		return selectedFromPosition;
+	}
+
+	public int getSelectedToPosition() {
+		return selectedToPosition;
+	}
+
 
 }

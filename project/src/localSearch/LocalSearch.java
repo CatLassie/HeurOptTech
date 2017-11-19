@@ -1,5 +1,8 @@
 package localSearch;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import models.Solution;
 import neighbourhood.INeighbourhood;
 import neighbourhood.NeighbourhoodVertex;
@@ -45,6 +48,9 @@ public class LocalSearch implements ILocalSearch {
 		}
 	}
 	
+	
+	
+	// RANDOM EDGE
 	private Solution searchRandomEdge() {
 		for (int i = 0; i < currentSolution.getEdgeNumber(); i++) {
 			Solution solutionNew = neighbourhood.move(currentSolution);
@@ -69,6 +75,9 @@ public class LocalSearch implements ILocalSearch {
 		return currentSolution;
 	}
 	
+	
+	
+	// DETERMINISTIC EDGE
 	private Solution searchDeterministicEdge() {
 		Solution solutionNew;
 		do{
@@ -78,7 +87,7 @@ public class LocalSearch implements ILocalSearch {
 			long endTimeNano = System.nanoTime();
 			long endTime = System.currentTimeMillis();
 			double diffSec = ((double) endTime - startTime)/1000;
-			System.out.println("BEST IMPROVEMENT STEP TOOK: " + diffSec + " sec " + (endTimeNano - startTimeNano)); 
+			System.out.println("BEST IMPROVEMENT EDGE STEP TOOK: " + diffSec + " sec " + (endTimeNano - startTimeNano)); 
 			if(solutionNew.getTotalCrossings() < currentSolution.getTotalCrossings()){
 				currentSolution = solutionNew;
 			}
@@ -86,10 +95,45 @@ public class LocalSearch implements ILocalSearch {
 		return currentSolution;
 	}
 	
+	
+	
+	// RANDOM VERTEX
 	private Solution searchRandomVertex() {
+		for (int i = 0; i < currentSolution.getAdjacencyMatrix().length; i++) {
+			Solution solutionNew = neighbourhood.move(currentSolution);
+			List<Integer> newCrossingsList = solutionNew.calculateTotalCrossingArray();
+			solutionNew.setCrossingsList(newCrossingsList);
+			if(solutionNew.getTotalCrossings() < currentSolution.getTotalCrossings()){
+				currentSolution = solutionNew;	
+			}
+			// Would have been part of incremental evaluation
+			/*
+			int fromPosition = neighbourhood.getSelectedFromPosition();
+			int toPosition = neighbourhood.getSelectedToPosition();
+			  
+			List<Integer>currentIntervalCrossingList = currentSolution.calculateCrossingOnIntervalArray(fromPosition, toPosition);
+			List<Integer>newIntervalCrossingList = solutionNew.calculateCrossingOnIntervalArray(fromPosition, toPosition);
+			
+			//System.out.println("old affected! " + currentIntervalCrossingList);
+			//System.out.println("new affected! " + newIntervalCrossingList);
+			
+			List<Integer>crossingsListNew = new ArrayList<>();
+			int difference;
+			for(int j = 0; j < currentIntervalCrossingList.size(); j++){
+				difference = newIntervalCrossingList.get(j) - currentIntervalCrossingList.get(j);
+				crossingsListNew.add(currentSolution.getCrossingsList().get(j) + difference);
+			}
+			System.out.println("recalculate! incremental! " + crossingsListNew);
+			solutionNew.setCrossingsList(crossingsListNew);
+			//System.out.println((differenceArray));
+			*/
+		}
 		return currentSolution;
 	}
 	
+	
+	
+	// DETERMINISTIC VERTEX
 	private Solution searchDeterministicVertex() {
 		return currentSolution;
 	}

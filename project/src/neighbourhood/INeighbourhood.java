@@ -8,4 +8,6 @@ public interface INeighbourhood {
 	public int getSelectedV2();
 	public int getSelectedPage();
 	public boolean isSolutionUpdated();
+	public int getSelectedFromPosition();
+	public int getSelectedToPosition();
 }
