@@ -4,6 +4,18 @@ import java.util.List;
 
 public class Utilities {
 	
+	public static long timer;
+	
+	public static void startTimer() {
+		timer = System.currentTimeMillis();
+	}
+	
+	public static boolean isTimeOver () {
+		long currentTime = System.currentTimeMillis();
+		double diffSec = ((double) currentTime - timer)/1000;
+		return diffSec > 10;
+	}
+	
 	// UNUSED (as far as I remember)
 	public static List<List<Integer>> sortAdjacencyList(List<List<Integer>> OGList) {
 		long startTimeNano = System.nanoTime();

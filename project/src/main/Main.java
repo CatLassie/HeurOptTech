@@ -5,12 +5,14 @@ import java.io.FileNotFoundException;
 import construction.Greedy;
 import construction.IConstruction;
 import construction.Randomized;
+import gvns.GVNS;
 import localSearch.ILocalSearch;
 import localSearch.LocalSearch;
 import models.Solution;
 import parser.KPMPInstance;
 import util.NeighbourhoodStructureEnum;
 import util.StepFunctionEnum;
+import util.Utilities;
 import vnd.VND;
 
 public class Main {
@@ -77,6 +79,8 @@ public class Main {
 				
 				localSearch = new LocalSearch(initialSolution, n, s);
 			
+				Utilities.startTimer();
+				
 				startTimeNano = System.nanoTime();
 				startTime = System.currentTimeMillis();
 				Solution bestSolution = localSearch.search();
@@ -98,6 +102,8 @@ public class Main {
 			if(metaType.equals("vnd")){
 				VND vnd = new VND(initialSolution);
 				
+				Utilities.startTimer();
+				
 				startTimeNano = System.nanoTime();
 				startTime = System.currentTimeMillis();
 				Solution bestSolution = vnd.search();
@@ -117,7 +123,26 @@ public class Main {
 			}
 			
 			if(metaType.equals("gvns")){
-				System.out.println("GVNS TOOK: ");
+				GVNS gvns = new GVNS(initialSolution);
+				
+				Utilities.startTimer();
+				
+				startTimeNano = System.nanoTime();
+				startTime = System.currentTimeMillis();
+				Solution bestSolution = gvns.search();
+				endTimeNano = System.nanoTime();
+				endTime = System.currentTimeMillis();
+				diffSec = ((double) endTime - startTime)/1000;
+				System.out.println("\nGVNS TOOK: " + diffSec + " sec " + (endTimeNano - startTimeNano));
+				/*	
+				for(int  i = 0; i < bestSolution.getCrossingsList().size(); i++) {
+					System.out.println("page #"+(i+1)+" : " + bestSolution.getCrossingsList().get(i));
+				}
+				*/
+				System.out.println("BEST SOLUTION TOTAL CROSSINGS: "+bestSolution.getTotalCrossings());
+				// System.out.println("BEST SOLUTION RECALCULATED CROSSINGS: "+bestSolution.calculateTotalCrossingArray());
+				// System.out.println("PAGE MATRIX: "+bestSolution);
+				//System.out.println("BEST SOLUTION spine order: "+bestSolution.getSpineOrder());
 			}
 			
 		} catch (FileNotFoundException e) {

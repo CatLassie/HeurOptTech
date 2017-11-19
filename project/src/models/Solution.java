@@ -150,6 +150,10 @@ public class Solution {
 		int crossingN = crossingsList.get(pageN) + crossingIncrease;
 		crossingsList.set(pageN, crossingN);
 	}
+	
+	public void shuffleSpineOrder(){
+		Collections.shuffle(spineOrder);
+	}
 
 	public List<Integer> getSpineOrder() {
 		return spineOrder;

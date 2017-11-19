@@ -9,6 +9,7 @@ import neighbourhood.NeighbourhoodVertex;
 import neighbourhood.NeighbourhoodEdge;
 import util.NeighbourhoodStructureEnum;
 import util.StepFunctionEnum;
+import util.Utilities;
 
 public class LocalSearch implements ILocalSearch {
 
@@ -52,7 +53,12 @@ public class LocalSearch implements ILocalSearch {
 	
 	// RANDOM EDGE
 	private Solution searchRandomEdge() {
+		timeout:
 		for (int i = 0; i < currentSolution.getEdgeNumber(); i++) {
+			if(Utilities.isTimeOver()){
+				System.out.println("Local Search time is up!");
+				break timeout;
+			}
 			Solution solutionNew = neighbourhood.move(currentSolution);
 			int v1 = neighbourhood.getSelectedV1();
 			int v2 = neighbourhood.getSelectedV2();
@@ -80,7 +86,12 @@ public class LocalSearch implements ILocalSearch {
 	// DETERMINISTIC EDGE
 	private Solution searchDeterministicEdge() {
 		Solution solutionNew;
+		timeout:
 		do{
+			if(Utilities.isTimeOver()){
+				System.out.println("Local Search time is up!");
+				break timeout;
+			}
 			/*
 			long startTimeNano = System.nanoTime();
 			long startTime = System.currentTimeMillis();
@@ -103,7 +114,12 @@ public class LocalSearch implements ILocalSearch {
 	
 	// RANDOM VERTEX
 	private Solution searchRandomVertex() {
+		timeout:
 		for (int i = 0; i < currentSolution.getAdjacencyMatrix().length; i++) {
+			if(Utilities.isTimeOver()){
+				System.out.println("Local Search time is up!");
+				break timeout;
+			}
 			Solution solutionNew = neighbourhood.move(currentSolution);
 			List<Integer> newCrossingsList = solutionNew.calculateTotalCrossingArray();
 			solutionNew.setCrossingsList(newCrossingsList);
@@ -119,7 +135,12 @@ public class LocalSearch implements ILocalSearch {
 	// DETERMINISTIC VERTEX
 	private Solution searchDeterministicVertex() {
 		Solution solutionNew;
+		timeout:
 		do{
+			if(Utilities.isTimeOver()){
+				System.out.println("Local Search time is up!");
+				break timeout;
+			}
 			/*
 			long startTimeNano = System.nanoTime();
 			long startTime = System.currentTimeMillis();
