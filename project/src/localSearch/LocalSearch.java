@@ -87,7 +87,7 @@ public class LocalSearch implements ILocalSearch {
 			long endTimeNano = System.nanoTime();
 			long endTime = System.currentTimeMillis();
 			double diffSec = ((double) endTime - startTime)/1000;
-			System.out.println("BEST IMPROVEMENT EDGE STEP TOOK: " + diffSec + " sec " + (endTimeNano - startTimeNano)); 
+			System.out.println("DETERMINISTIC IMPROVEMENT EDGE STEP TOOK: " + diffSec + " sec " + (endTimeNano - startTimeNano)); 
 			if(solutionNew.getTotalCrossings() < currentSolution.getTotalCrossings()){
 				currentSolution = solutionNew;
 			}
@@ -135,6 +135,19 @@ public class LocalSearch implements ILocalSearch {
 	
 	// DETERMINISTIC VERTEX
 	private Solution searchDeterministicVertex() {
+		Solution solutionNew;
+		do{
+			long startTimeNano = System.nanoTime();
+			long startTime = System.currentTimeMillis();		
+			solutionNew = neighbourhood.move(currentSolution);
+			long endTimeNano = System.nanoTime();
+			long endTime = System.currentTimeMillis();
+			double diffSec = ((double) endTime - startTime)/1000;
+			System.out.println("DETERMINISTIC IMPROVEMENT VERTEX STEP TOOK: " + diffSec + " sec " + (endTimeNano - startTimeNano)); 
+			if(solutionNew.getTotalCrossings() < currentSolution.getTotalCrossings()){
+				currentSolution = solutionNew;
+			}
+		} while(neighbourhood.isSolutionUpdated());
 		return currentSolution;
 	}
 

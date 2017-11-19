@@ -54,11 +54,58 @@ public class NeighbourhoodVertex implements INeighbourhood {
 	}
 
 	Solution moveFirstImprovement(Solution solution) {
-		return solution;
+		List<Integer> spineOrder = solution.getSpineOrder();
+		int vertexN = spineOrder.size();
+		Solution betterSolution = solution;
+		isSolutionUpdated = false;
+
+		firstImprovement: for (int i = 0; i < vertexN; i++) {
+			for (int j = 0; j < vertexN; j++) {
+
+				Solution solutionNew = betterSolution.copy();
+				int fromValue = solutionNew.getSpineOrder().get(i);
+				solutionNew.getSpineOrder().remove(i);
+				solutionNew.getSpineOrder().add(j, fromValue);
+				
+				List<Integer> newCrossingsList = solutionNew.calculateTotalCrossingArray();
+				solutionNew.setCrossingsList(newCrossingsList);
+				if(solutionNew.getTotalCrossings() < betterSolution.getTotalCrossings()){
+					betterSolution = solutionNew;
+					isSolutionUpdated = true;
+					break firstImprovement;
+				}
+				
+			}
+		}
+
+		return betterSolution;
 	}
 
 	Solution moveBestImprovement(Solution solution) {
-		return solution;
+		List<Integer> spineOrder = solution.getSpineOrder();
+		int vertexN = spineOrder.size();
+		Solution bestSolution = solution;
+		isSolutionUpdated = false;
+
+		for (int i = 0; i < vertexN; i++) {
+			for (int j = 0; j < vertexN; j++) {
+
+				Solution solutionNew = bestSolution.copy();
+				int fromValue = solutionNew.getSpineOrder().get(i);
+				solutionNew.getSpineOrder().remove(i);
+				solutionNew.getSpineOrder().add(j, fromValue);
+				
+				List<Integer> newCrossingsList = solutionNew.calculateTotalCrossingArray();
+				solutionNew.setCrossingsList(newCrossingsList);
+				if(solutionNew.getTotalCrossings() < bestSolution.getTotalCrossings()){
+					bestSolution = solutionNew;
+					isSolutionUpdated = true;
+				}
+				
+			}
+		}
+
+		return bestSolution;
 	}
 	
 	public int getSelectedV1() {
