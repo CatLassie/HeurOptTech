@@ -106,27 +106,6 @@ public class LocalSearch implements ILocalSearch {
 			if(solutionNew.getTotalCrossings() < currentSolution.getTotalCrossings()){
 				currentSolution = solutionNew;	
 			}
-			// Would have been part of incremental evaluation
-			/*
-			int fromPosition = neighbourhood.getSelectedFromPosition();
-			int toPosition = neighbourhood.getSelectedToPosition();
-			  
-			List<Integer>currentIntervalCrossingList = currentSolution.calculateCrossingOnIntervalArray(fromPosition, toPosition);
-			List<Integer>newIntervalCrossingList = solutionNew.calculateCrossingOnIntervalArray(fromPosition, toPosition);
-			
-			//System.out.println("old affected! " + currentIntervalCrossingList);
-			//System.out.println("new affected! " + newIntervalCrossingList);
-			
-			List<Integer>crossingsListNew = new ArrayList<>();
-			int difference;
-			for(int j = 0; j < currentIntervalCrossingList.size(); j++){
-				difference = newIntervalCrossingList.get(j) - currentIntervalCrossingList.get(j);
-				crossingsListNew.add(currentSolution.getCrossingsList().get(j) + difference);
-			}
-			System.out.println("recalculate! incremental! " + crossingsListNew);
-			solutionNew.setCrossingsList(crossingsListNew);
-			//System.out.println((differenceArray));
-			*/
 		}
 		return currentSolution;
 	}

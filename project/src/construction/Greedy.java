@@ -32,9 +32,6 @@ public class Greedy implements IConstruction {
 					minCrossingIncrease = copyCrossingIncrease.get(0);
 					bestPage = crossingIncrease.indexOf(minCrossingIncrease);
 					
-					// System.out.println(crossingIncrease);
-					// System.out.println(copyCrossingIncrease);
-
 					solution.addEdge(i, j, bestPage);
 					solution.addNewCrossings(minCrossingIncrease, bestPage);
 					// System.out.println(minCrossingIncrease);

@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Utilities {
 	
+	// UNUSED (as far as I remember)
 	public static List<List<Integer>> sortAdjacencyList(List<List<Integer>> OGList) {
 		long startTimeNano = System.nanoTime();
 		long startTime = System.currentTimeMillis();
