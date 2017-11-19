@@ -91,7 +91,7 @@ public class Main {
 			
 			// LOCAL SEARCH VERTEX
 			
-			ILocalSearch localSearch = new LocalSearch(initialSolution, NeighbourhoodStructureEnum.VERTEX, StepFunctionEnum.RANDOM);
+			ILocalSearch localSearch = new LocalSearch(initialSolution, NeighbourhoodStructureEnum.VERTEX, StepFunctionEnum.BEST_IMPROVEMENT);
 			
 			startTimeNano = System.nanoTime();
 			startTime = System.currentTimeMillis();

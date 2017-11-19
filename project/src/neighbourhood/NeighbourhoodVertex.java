@@ -1,5 +1,6 @@
 package neighbourhood;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -87,24 +88,29 @@ public class NeighbourhoodVertex implements INeighbourhood {
 		Solution bestSolution = solution;
 		isSolutionUpdated = false;
 
-		for (int i = 0; i < vertexN; i++) {
-			for (int j = 0; j < vertexN; j++) {
-
-				Solution solutionNew = bestSolution.copy();
-				int fromValue = solutionNew.getSpineOrder().get(i);
-				solutionNew.getSpineOrder().remove(i);
-				solutionNew.getSpineOrder().add(j, fromValue);
-				
-				List<Integer> newCrossingsList = solutionNew.calculateTotalCrossingArray();
-				solutionNew.setCrossingsList(newCrossingsList);
-				if(solutionNew.getTotalCrossings() < bestSolution.getTotalCrossings()){
-					bestSolution = solutionNew;
-					isSolutionUpdated = true;
-				}
-				
+		List<BestImprovementVertexRunnable> runnableList = new ArrayList<>();
+		List<Thread> workers = new ArrayList<>();
+		for (int i = 0; i < vertexN; i++) {		
+			BestImprovementVertexRunnable b = new BestImprovementVertexRunnable(solution, i);
+			Thread t = new Thread(b);
+			t.start();
+			runnableList.add(b);
+			workers.add(t);
+		}
+		
+		for (int i = 0; i < workers.size(); i++) {
+			try {
+				workers.get(i).join();
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			BestImprovementVertexRunnable r = runnableList.get(i);
+			if (r.getSolution().getTotalCrossings() < bestSolution.getTotalCrossings()) {
+				bestSolution = r.getSolution();
+				isSolutionUpdated = true;
 			}
 		}
-
+		
 		return bestSolution;
 	}
 	
