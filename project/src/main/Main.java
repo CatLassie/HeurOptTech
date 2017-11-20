@@ -104,7 +104,7 @@ public class Main {
 				//System.out.println("BEST SOLUTION spine order: "+bestSolution.getSpineOrder());
 				
 				String pathContd = metaType+"/instance-"+instanceN+".txt";
-				writeSolution(initialSolution, pathContd);
+				writeSolution(bestSolution, pathContd);
 			}
 			
 			if(metaType.equals("vnd")){
@@ -130,7 +130,7 @@ public class Main {
 				//System.out.println("BEST SOLUTION spine order: "+bestSolution.getSpineOrder());
 				
 				String pathContd = metaType+"/instance-"+instanceN+".txt";
-				writeSolution(initialSolution, pathContd);
+				writeSolution(bestSolution, pathContd);
 			}
 			
 			if(metaType.equals("gvns")){
@@ -156,7 +156,7 @@ public class Main {
 				//System.out.println("BEST SOLUTION spine order: "+bestSolution.getSpineOrder());
 				
 				String pathContd = metaType+"/instance-"+instanceN+".txt";
-				writeSolution(initialSolution, pathContd);
+				writeSolution(bestSolution, pathContd);
 			}
 			
 		} catch (FileNotFoundException e) {
