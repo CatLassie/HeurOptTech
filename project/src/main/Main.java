@@ -175,7 +175,9 @@ public class Main {
 		int[][] matrix = solution.getAdjacencyMatrix();
 		for(int i = 0; i < matrix.length; i++){
 			for(int j = i+1; j < matrix.length; j++){
-				solutionWriter.addEdgeOnPage(i, j, matrix[i][j]);				
+				if(matrix[i][j] > -1){
+					solutionWriter.addEdgeOnPage(i, j, matrix[i][j]);	
+				}				
 			}
 		}
 		
