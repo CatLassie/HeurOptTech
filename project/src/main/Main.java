@@ -1,6 +1,7 @@
 package main;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import construction.Greedy;
 import construction.IConstruction;
@@ -10,6 +11,7 @@ import localSearch.ILocalSearch;
 import localSearch.LocalSearch;
 import models.Solution;
 import parser.KPMPInstance;
+import parser.KPMPSolutionWriter;
 import util.NeighbourhoodStructureEnum;
 import util.StepFunctionEnum;
 import util.Utilities;
@@ -35,10 +37,10 @@ public class Main {
 		String stepFunctionType = metaType.equals("local") ? args[4] : "none";
 		System.out.println("command line args: "+instanceN+" "+constrType+" "+metaType+" "+neighbourhoodType +" "+ stepFunctionType+"\n");
 		
-		String path = "C:/Users/prjabc/Desktop/uni/P/2017W/Heuristic Optimization Techniques/Assignment1/new_instances/instances.tar/instances/instance-"+instanceN+".txt";
+		String readPath = "C:/Users/prjabc/Desktop/uni/P/2017W/Heuristic Optimization Techniques/Assignment1/new_instances/instances.tar/instances/instance-"+instanceN+".txt";
 		
 		try {
-			KPMPInstance k = KPMPInstance.readInstance(path);		
+			KPMPInstance k = KPMPInstance.readInstance(readPath);
 			
 			// CONSTRUCTION HEURISTIC
 			IConstruction construction = constrType.equals("random") ? new Randomized() : (constrType.equals("greedy") ? new Greedy() : null);
@@ -59,7 +61,10 @@ public class Main {
 			// System.out.println("PAGE MATRIX: "+initialSolution);
 			// System.out.println("SPINE ORDER: "+initialSolution.getSpineOrder());
 			//System.out.println("#edge: "+initialSolution.getEdgeNumber());
-			
+			if(metaType.equals("none")) {
+				String pathContd = constrType+"/instance-"+instanceN+".txt";
+				writeSolution(initialSolution, pathContd);
+			}
 			
 			
 			// LOCAL SEARCH
@@ -97,6 +102,9 @@ public class Main {
 				// System.out.println("BEST SOLUTION RECALCULATED CROSSINGS: "+bestSolution.calculateTotalCrossingArray());
 				// System.out.println("PAGE MATRIX: "+bestSolution);
 				//System.out.println("BEST SOLUTION spine order: "+bestSolution.getSpineOrder());
+				
+				String pathContd = metaType+"/instance-"+instanceN+".txt";
+				writeSolution(initialSolution, pathContd);
 			}
 			
 			if(metaType.equals("vnd")){
@@ -120,6 +128,9 @@ public class Main {
 				// System.out.println("BEST SOLUTION RECALCULATED CROSSINGS: "+bestSolution.calculateTotalCrossingArray());
 				// System.out.println("PAGE MATRIX: "+bestSolution);
 				//System.out.println("BEST SOLUTION spine order: "+bestSolution.getSpineOrder());
+				
+				String pathContd = metaType+"/instance-"+instanceN+".txt";
+				writeSolution(initialSolution, pathContd);
 			}
 			
 			if(metaType.equals("gvns")){
@@ -143,6 +154,9 @@ public class Main {
 				// System.out.println("BEST SOLUTION RECALCULATED CROSSINGS: "+bestSolution.calculateTotalCrossingArray());
 				// System.out.println("PAGE MATRIX: "+bestSolution);
 				//System.out.println("BEST SOLUTION spine order: "+bestSolution.getSpineOrder());
+				
+				String pathContd = metaType+"/instance-"+instanceN+".txt";
+				writeSolution(initialSolution, pathContd);
 			}
 			
 		} catch (FileNotFoundException e) {
@@ -150,6 +164,27 @@ public class Main {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	private static void writeSolution(Solution solution, String pathContd) {
+		String writePathBase = "C:/Users/prjabc/Desktop/uni/P/2017W/Heuristic Optimization Techniques/Assignment1/results/";
+		String writePath = writePathBase + pathContd;
+		KPMPSolutionWriter solutionWriter = new KPMPSolutionWriter(solution.getPageNumber());
+		
+		solutionWriter.setSpineOrder(solution.getSpineOrder());
+		int[][] matrix = solution.getAdjacencyMatrix();
+		for(int i = 0; i < matrix.length; i++){
+			for(int j = i+1; j < matrix.length; j++){
+				solutionWriter.addEdgeOnPage(i, j, matrix[i][j]);				
+			}
+		}
+		
+		try {
+			solutionWriter.write(writePath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }
