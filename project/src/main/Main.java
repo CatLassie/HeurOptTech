@@ -37,7 +37,7 @@ public class Main {
 		String stepFunctionType = metaType.equals("local") ? args[4] : "none";
 		System.out.println("command line args: "+instanceN+" "+constrType+" "+metaType+" "+neighbourhoodType +" "+ stepFunctionType+"\n");
 		
-		String readPath = "C:/Users/prjabc/Desktop/uni/P/2017W/Heuristic Optimization Techniques/Assignment1/new_instances/instances.tar/instances/instance-"+instanceN+".txt";
+		String readPath = "../../instances/instance-"+instanceN+".txt";
 		
 		try {
 			KPMPInstance k = KPMPInstance.readInstance(readPath);
@@ -167,7 +167,7 @@ public class Main {
 	}
 	
 	private static void writeSolution(Solution solution, String pathContd) {
-		String writePathBase = "C:/Users/prjabc/Desktop/uni/P/2017W/Heuristic Optimization Techniques/Assignment1/results/";
+		String writePathBase = "../../results/";
 		String writePath = writePathBase + pathContd;
 		KPMPSolutionWriter solutionWriter = new KPMPSolutionWriter(solution.getPageNumber());
 		
