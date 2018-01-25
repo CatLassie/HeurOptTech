@@ -36,5 +36,9 @@ public class Randomized implements IConstruction {
 		solution.setEdgeNumber(edgeNumber);
 		return solution;
 	}
+	
+	public String toString(){
+		return "Randomized construction heuristic";
+	}
 
 }

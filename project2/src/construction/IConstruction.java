@@ -7,4 +7,6 @@ public interface IConstruction {
 
 	public Solution generateSolution(KPMPInstance kpmpInstance);
 	
+	public String toString();
+	
 }

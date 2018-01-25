@@ -42,5 +42,9 @@ public class Greedy implements IConstruction {
 		solution.setEdgeNumber(edgeNumber);
 		return solution;
 	}
+	
+	public String toString(){
+		return "Greedy construction heuristic";
+	}
 
 }
