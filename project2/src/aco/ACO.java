@@ -32,14 +32,24 @@ public class ACO implements IConstruction {
 		int edgeNumber = 0;
 		
 		for(int i = 0; i < antN; i++) {
-			ants.add(new Ant(i,initialSolution));
+			ants.add(new Ant(i));
 			System.out.println(ants.get(i));
 		}
 		
+		// it would be cool to make ants start from different edges
 		for(int i = 0; i < timeN; i++){
-			
+			for(int j = 0; j < ants.size(); j++) {
+				Ant ant = ants.get(j);
+				Solution solution_ij = ant.generateSolution(initialSolution);
+				
+				System.out.println("solution of ant "+j+" at time "+i+" is: "+solution_ij.getTotalCrossings());
+			}
 		}
 		
+		return null;
+	}
+	
+	public Solution getBestSolution() {
 		return null;
 	}
 	

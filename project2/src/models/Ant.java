@@ -5,9 +5,14 @@ public class Ant {
 	int antID;
 	Solution currentSolution;
 	
-	public Ant(int antID ,Solution initialSolution) {
-		this.currentSolution = initialSolution.copy();
+	public Ant(int antID) {
 		this.antID = antID;
+	}
+	
+	public Solution generateSolution(Solution solution){
+		this.currentSolution = solution.copy();
+		
+		return currentSolution;
 	}
 	
 	public int getAntID() {
@@ -20,7 +25,8 @@ public class Ant {
 	
 	public String toString() {
 		String info = "\nAnt "+antID+":\n";
-		info = info + "ant's current solution: "+currentSolution.getTotalCrossings();
+		String solution = currentSolution != null ? Integer.toString(currentSolution.getTotalCrossings()) : "none";
+		info = info + "ant's current solution: "+ solution;
 		return info;
 	}
 
