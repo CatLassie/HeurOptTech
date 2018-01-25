@@ -2,6 +2,7 @@ package main;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 import aco.ACO;
 import construction.Greedy;
@@ -95,6 +96,7 @@ public class Main {
 			}
 			
 			System.out.println("First heuristic is: " + construction);
+			List<Solution> initialSolution = construction.generateSolutionPopulation(k);
 			
 			
 			// LOCAL SEARCH

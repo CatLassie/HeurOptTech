@@ -43,6 +43,10 @@ public class Greedy implements IConstruction {
 		return solution;
 	}
 	
+	public List<Solution> generateSolutionPopulation(KPMPInstance kpmpInstance) {
+		return null;
+	}
+	
 	public String toString(){
 		return "Greedy construction heuristic";
 	}

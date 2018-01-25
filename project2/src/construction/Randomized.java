@@ -1,5 +1,6 @@
 package construction;
 
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import models.Solution;
@@ -35,6 +36,10 @@ public class Randomized implements IConstruction {
 		}
 		solution.setEdgeNumber(edgeNumber);
 		return solution;
+	}
+	
+	public List<Solution> generateSolutionPopulation(KPMPInstance kpmpInstance) {
+		return null;
 	}
 	
 	public String toString(){
