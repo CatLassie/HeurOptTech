@@ -6,17 +6,19 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Ant {
 	
-	int antID;
+	int antID, vertexNumber, pageNumber;
 	boolean[][] adjacencyMatrix;
 	Solution currentSolution;
 	
-	public Ant(int antID, boolean[][] adjacencyMatrix) {
+	public Ant(int antID, boolean[][] adjacencyMatrix, int vertexNumber, int pageNumber) {
 		this.antID = antID;
+		this.vertexNumber = vertexNumber;
+		this.pageNumber = pageNumber;
 		this.adjacencyMatrix = adjacencyMatrix;
 	}
 	
-	public Solution generateSolution(Solution solution){
-		this.currentSolution = solution.copy();
+	public Solution generateSolution(){
+		this.currentSolution = new Solution(vertexNumber, pageNumber, false);
 		
 		int pageNumber = currentSolution.getPageNumber();
 		int[][] matrix = currentSolution.getAdjacencyMatrix();

@@ -29,11 +29,11 @@ public class ACO implements IConstruction {
 		int vertexNumber = kpmpInstance.getNumVertices();
 		int pageNumber = kpmpInstance.getK();
 		boolean[][] matrix = kpmpInstance.getAdjacencyMatrix();
-		Solution initialSolution = new Solution(vertexNumber, pageNumber, false);
+		// Solution initialSolution = new Solution(vertexNumber, pageNumber, false);
 		// int edgeNumber = 0;
 		
 		for(int i = 0; i < antN; i++) {
-			ants.add(new Ant(i, matrix));
+			ants.add(new Ant(i, matrix, vertexNumber, pageNumber));
 			// System.out.println(ants.get(i));
 		}
 		
@@ -41,19 +41,19 @@ public class ACO implements IConstruction {
 		
 		// it would be cool to make ants start from different edges
 		for(int i = 0; i < timeN; i++){
-			currentPopulation = generateOneRound(initialSolution, i);
+			currentPopulation = generateOneRound(i);
 		}
 		
 		population = currentPopulation;
 		return currentPopulation;
 	}
 	
-	public List<Solution> generateOneRound(Solution initialSolution, int timeStep) {
+	public List<Solution> generateOneRound(int timeStep) {
 		
 		List<Solution> currentPopulation = new ArrayList<>();
 		for(int j = 0; j < ants.size(); j++) {
 			Ant ant = ants.get(j);
-			Solution solution_ij = ant.generateSolution(initialSolution);
+			Solution solution_ij = ant.generateSolution();
 			currentPopulation.add(solution_ij);
 			
 			System.out.println("solution of ant "+j+" at time "+timeStep+" is: "+solution_ij.getTotalCrossings());
