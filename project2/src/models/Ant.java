@@ -1,17 +1,44 @@
 package models;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Ant {
 	
 	int antID;
+	boolean[][] adjacencyMatrix;
 	Solution currentSolution;
 	
-	public Ant(int antID) {
+	public Ant(int antID, boolean[][] adjacencyMatrix) {
 		this.antID = antID;
+		this.adjacencyMatrix = adjacencyMatrix;
 	}
 	
 	public Solution generateSolution(Solution solution){
 		this.currentSolution = solution.copy();
 		
+		int pageNumber = currentSolution.getPageNumber();
+		int[][] matrix = currentSolution.getAdjacencyMatrix();
+		int edgeNumber = 0;
+		
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = i + 1; j < matrix[i].length; j++) {
+
+				boolean currentEdge = adjacencyMatrix[i][j];
+				if (currentEdge) {
+					edgeNumber++;									
+					int randomPage = ThreadLocalRandom.current().nextInt(0, pageNumber);
+					// System.out.println("page #" + randomPage);
+					int crossingIncrease = currentSolution.calculateCrossingIncrease(i,j,randomPage);
+					// System.out.println(i+" "+j+" p: "+randomPage+" increase: "+crossingIncrease);
+ 
+					currentSolution.addEdge(i, j, randomPage);
+					currentSolution.addNewCrossings(crossingIncrease, randomPage);
+					// System.out.println(minCrossingIncrease);
+				}
+				
+			}
+		}
+		currentSolution.setEdgeNumber(edgeNumber);
 		return currentSolution;
 	}
 	
