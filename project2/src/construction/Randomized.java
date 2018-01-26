@@ -42,6 +42,10 @@ public class Randomized implements IConstruction {
 		return null;
 	}
 	
+	public Solution getBestSolution(){
+		return null;
+	}
+	
 	public String toString(){
 		return "Randomized construction heuristic";
 	}

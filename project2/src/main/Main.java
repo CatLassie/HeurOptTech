@@ -102,6 +102,7 @@ public class Main {
 				System.out.print(s.getTotalCrossings()+" ");
 			});
 			System.out.println("");
+			System.out.println("Best solution is: " + construction.getBestSolution().getTotalCrossings());
 			
 			// LOCAL SEARCH
 			if(metaType.equals("local")){

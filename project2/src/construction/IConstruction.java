@@ -11,6 +11,8 @@ public interface IConstruction {
 	
 	public List<Solution> generateSolutionPopulation(KPMPInstance kpmpInstance);
 	
+	public Solution getBestSolution();
+	
 	public String toString();
 	
 }

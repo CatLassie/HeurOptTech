@@ -47,6 +47,10 @@ public class Greedy implements IConstruction {
 		return null;
 	}
 	
+	public Solution getBestSolution(){
+		return null;
+	}
+	
 	public String toString(){
 		return "Greedy construction heuristic";
 	}

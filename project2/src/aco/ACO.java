@@ -13,6 +13,7 @@ public class ACO implements IConstruction {
 	int antN, timeN;
 	double initialPh, phWeight, costWeight, evapWeight;
 	List<Ant> ants;
+	List<Solution> population;
 	
 	public ACO(int antN, int timeN, double initialPh, double phWeight, double costWeight, double evapWeight) {
 		this.antN = antN;
@@ -28,7 +29,7 @@ public class ACO implements IConstruction {
 		int vertexNumber = kpmpInstance.getNumVertices();
 		int pageNumber = kpmpInstance.getK();
 		boolean[][] matrix = kpmpInstance.getAdjacencyMatrix();
-		Solution initialSolution = new Solution(vertexNumber, pageNumber, true);
+		Solution initialSolution = new Solution(vertexNumber, pageNumber, false);
 		// int edgeNumber = 0;
 		
 		for(int i = 0; i < antN; i++) {
@@ -43,6 +44,7 @@ public class ACO implements IConstruction {
 			currentPopulation = generateOneRound(initialSolution, i);
 		}
 		
+		population = currentPopulation;
 		return currentPopulation;
 	}
 	
@@ -61,7 +63,13 @@ public class ACO implements IConstruction {
 	}
 	
 	public Solution getBestSolution() {
-		return null;
+		Solution bestSolution = population.get(0);
+		for(int i = 0; i < population.size(); i++) {
+			if(population.get(i).getTotalCrossings() < bestSolution.getTotalCrossings()){
+				bestSolution = population.get(i);
+			}			
+		}
+		return bestSolution;
 	}
 	
 	public Solution generateSolution(KPMPInstance kpmpInstance) {

@@ -29,6 +29,8 @@ public class Ant {
 				if (currentEdge) {
 					edgeNumber++;
 					
+					// Greedy Construction
+					
 					// greedily decide to which page to add the edge
 					List<Integer> crossingIncrease = currentSolution.calculateCrossingIncreaseArray(i, j);
 					int minCrossingIncrease = -1;
@@ -41,6 +43,7 @@ public class Ant {
 					currentSolution.addNewCrossings(minCrossingIncrease, bestPage);
 					// System.out.println(minCrossingIncrease);
 					
+					
 					// Random Construction
 					/*
 					int randomPage = ThreadLocalRandom.current().nextInt(0, pageNumber);
@@ -50,7 +53,7 @@ public class Ant {
 					currentSolution.addEdge(i, j, randomPage);
 					currentSolution.addNewCrossings(crossingIncrease, randomPage);
 					// System.out.println(minCrossingIncrease);
-					 */
+					*/
 				}
 				
 			}
