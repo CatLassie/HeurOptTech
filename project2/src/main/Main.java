@@ -97,7 +97,11 @@ public class Main {
 			
 			System.out.println("First heuristic is: " + construction);
 			List<Solution> initialSolution = construction.generateSolutionPopulation(k);
-			
+			System.out.print("population is: ");
+			initialSolution.forEach((s)->{
+				System.out.print(s.getTotalCrossings()+" ");
+			});
+			System.out.println("");
 			
 			// LOCAL SEARCH
 			if(metaType.equals("local")){
