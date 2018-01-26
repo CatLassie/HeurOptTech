@@ -76,7 +76,7 @@ public class Ant {
 		int chosenPage = -1;
 		double pSum = 0;
 		for (Integer inc : crossingIncrease) {
-			pSum += 1/(inc+0.1);
+			pSum += 1.0/(inc+0.1);
 		}
 		double p = Math.random();
 		// System.out.println(p);
@@ -85,7 +85,7 @@ public class Ant {
 		crossLoop:
 		for (int i = 0; i < crossingIncrease.size(); i++) {
 			int inc = crossingIncrease.get(i);
-		    cumulativeProbability += (1/(inc+0.1))/pSum;
+		    cumulativeProbability += (1.0/(inc+0.1))/pSum;
 		    /*
 		    System.out.println("page "+i);
 		    System.out.println("prob "+(1/(inc+0.1))/pSum);

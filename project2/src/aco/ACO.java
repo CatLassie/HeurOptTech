@@ -53,10 +53,13 @@ public class ACO implements IConstruction {
 		List<Solution> currentPopulation = new ArrayList<>();
 		for(int j = 0; j < ants.size(); j++) {
 			Ant ant = ants.get(j);
+			double latestPheromoneValue = 0;
 			Solution solution_ij = ant.generateSolution();
 			currentPopulation.add(solution_ij);
+			latestPheromoneValue = 1.0/solution_ij.getTotalCrossings();
 			
 			System.out.println("solution of ant "+j+" at time "+timeStep+" is: "+solution_ij.getTotalCrossings());
+			// System.out.println("pheromone trail value: "+latestPheromoneValue);
 		}
 		
 		return currentPopulation;
