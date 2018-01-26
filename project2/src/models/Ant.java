@@ -29,8 +29,17 @@ public class Ant {
 				if (currentEdge) {
 					edgeNumber++;
 					
-					// Greedy Construction
+					// Ant decision
+					List<Integer> crossingIncrease = currentSolution.calculateCrossingIncreaseArray(i, j);
+					int chosenPage = -1;
+
+					chosenPage = decidePage(crossingIncrease);
+					currentSolution.addEdge(i, j, chosenPage);
+					currentSolution.addNewCrossings(crossingIncrease.get(chosenPage), chosenPage);
+					// System.out.println(currentSolution);
 					
+					// Greedy Construction
+					/*
 					// greedily decide to which page to add the edge
 					List<Integer> crossingIncrease = currentSolution.calculateCrossingIncreaseArray(i, j);
 					int minCrossingIncrease = -1;
@@ -42,7 +51,7 @@ public class Ant {
 					currentSolution.addEdge(i, j, bestPage);
 					currentSolution.addNewCrossings(minCrossingIncrease, bestPage);
 					// System.out.println(minCrossingIncrease);
-					
+					*/				
 					
 					// Random Construction
 					/*
@@ -60,6 +69,35 @@ public class Ant {
 		}
 		currentSolution.setEdgeNumber(edgeNumber);
 		return currentSolution;
+	}
+	
+	private int decidePage(List<Integer> crossingIncrease) {
+		int chosenPage = -1;
+		double pSum = 0;
+		for (Integer inc : crossingIncrease) {
+			pSum += 1/(inc+0.1);
+		}
+		double p = Math.random();
+		// System.out.println(p);
+		// System.out.println("\n"+pSum);
+		double cumulativeProbability = 0;
+		crossLoop:
+		for (int i = 0; i < crossingIncrease.size(); i++) {
+			int inc = crossingIncrease.get(i);
+		    cumulativeProbability += (1/(inc+0.1))/pSum;
+		    /*
+		    System.out.println("page "+i);
+		    System.out.println("prob "+(1/(inc+0.1))/pSum);
+		    System.out.println("cumul "+cumulativeProbability);
+		    System.out.println("inc "+inc);
+		    */
+		    if (p <= cumulativeProbability) {
+		        chosenPage = i;
+		        break crossLoop;
+		    }
+		}
+		// System.out.println("chosen "+chosenPage);
+		return chosenPage;
 	}
 	
 	public int getAntID() {
