@@ -34,7 +34,6 @@ public class Ant {
 					// Ant decision
 					List<Integer> crossingIncrease = currentSolution.calculateCrossingIncreaseArray(i, j);
 					int chosenPage = -1;
-
 					chosenPage = decidePage(crossingIncrease);
 					currentSolution.addEdge(i, j, chosenPage);
 					currentSolution.addNewCrossings(crossingIncrease.get(chosenPage), chosenPage);
