@@ -20,6 +20,7 @@ public class Ant {
 	public Solution generateSolution(PheromoneMatrix phMatrix){
 		this.currentSolution = new Solution(vertexNumber, pageNumber, false);
 		
+		// System.out.println(phMatrix);
 		int pageNumber = currentSolution.getPageNumber();
 		int[][] matrix = currentSolution.getAdjacencyMatrix();
 		int edgeNumber = 0;
@@ -32,11 +33,13 @@ public class Ant {
 					edgeNumber++;
 					// Ant decision
 					List<Integer> crossingIncrease = currentSolution.calculateCrossingIncreaseArray(i, j);
+					double[] pheromones_ij = phMatrix.getValue()[i][j];
 					int chosenPage = -1;
-					chosenPage = decidePage(crossingIncrease);
+					chosenPage = decidePage(crossingIncrease, pheromones_ij);
 					currentSolution.addEdge(i, j, chosenPage);
 					currentSolution.addNewCrossings(crossingIncrease.get(chosenPage), chosenPage);
 					// System.out.println(currentSolution);
+					// System.out.println(crossingIncrease + " " + pheromones_ij[0]);
 				}
 				
 			}
@@ -45,7 +48,7 @@ public class Ant {
 		return currentSolution;
 	}
 	
-	private int decidePage(List<Integer> crossingIncrease) {
+	private int decidePage(List<Integer> crossingIncrease, double[] pheromones_ij) {
 		int chosenPage = -1;
 		double pSum = 0;
 		for (Integer inc : crossingIncrease) {
