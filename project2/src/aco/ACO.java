@@ -5,6 +5,7 @@ import java.util.List;
 
 import construction.IConstruction;
 import models.Ant;
+import models.PheromoneMatrix;
 import models.Solution;
 import parser.KPMPInstance;
 
@@ -14,6 +15,7 @@ public class ACO implements IConstruction {
 	double initialPh, phWeight, costWeight, evapWeight;
 	List<Ant> ants;
 	List<Solution> population;
+	PheromoneMatrix phMatrix;
 	
 	public ACO(int antN, int timeN, double initialPh, double phWeight, double costWeight, double evapWeight) {
 		this.antN = antN;
@@ -32,6 +34,7 @@ public class ACO implements IConstruction {
 		// Solution initialSolution = new Solution(vertexNumber, pageNumber, false);
 		// int edgeNumber = 0;
 		
+		phMatrix = new PheromoneMatrix(vertexNumber, pageNumber, initialPh, evapWeight);
 		for(int i = 0; i < antN; i++) {
 			ants.add(new Ant(i, matrix, vertexNumber, pageNumber));
 			// System.out.println(ants.get(i));
@@ -51,16 +54,21 @@ public class ACO implements IConstruction {
 	public List<Solution> generateOneRound(int timeStep) {
 		
 		List<Solution> currentPopulation = new ArrayList<>();
+		List<Double> currentPheromoneValues = new ArrayList<>();
 		for(int j = 0; j < ants.size(); j++) {
 			Ant ant = ants.get(j);
-			double latestPheromoneValue = 0;
 			Solution solution_ij = ant.generateSolution();
 			currentPopulation.add(solution_ij);
-			latestPheromoneValue = 1.0/solution_ij.getTotalCrossings();
+			
+			double pheromoneValue = 1.0/solution_ij.getTotalCrossings();
+			currentPheromoneValues.add(pheromoneValue);
 			
 			System.out.println("solution of ant "+j+" at time "+timeStep+" is: "+solution_ij.getTotalCrossings());
-			// System.out.println("pheromone trail value: "+latestPheromoneValue);
+			// System.out.println("pheromone trail value: "+currentPheromoneValues);
 		}
+		// System.out.println(phMatrix);
+		phMatrix.update(currentPopulation, currentPheromoneValues);
+		phMatrix.evaporate();
 		
 		return currentPopulation;
 	}
