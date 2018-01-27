@@ -57,7 +57,7 @@ public class ACO implements IConstruction {
 		List<Double> currentPheromoneValues = new ArrayList<>();
 		for(int j = 0; j < ants.size(); j++) {
 			Ant ant = ants.get(j);
-			Solution solution_ij = ant.generateSolution();
+			Solution solution_ij = ant.generateSolution(phMatrix);
 			currentPopulation.add(solution_ij);
 			
 			double pheromoneValue = 1.0/solution_ij.getTotalCrossings();

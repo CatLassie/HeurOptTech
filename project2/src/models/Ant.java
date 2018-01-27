@@ -17,7 +17,7 @@ public class Ant {
 		this.adjacencyMatrix = adjacencyMatrix;
 	}
 	
-	public Solution generateSolution(){
+	public Solution generateSolution(PheromoneMatrix phMatrix){
 		this.currentSolution = new Solution(vertexNumber, pageNumber, false);
 		
 		int pageNumber = currentSolution.getPageNumber();
@@ -30,7 +30,6 @@ public class Ant {
 				boolean currentEdge = adjacencyMatrix[i][j];
 				if (currentEdge) {
 					edgeNumber++;
-					
 					// Ant decision
 					List<Integer> crossingIncrease = currentSolution.calculateCrossingIncreaseArray(i, j);
 					int chosenPage = -1;
@@ -38,32 +37,6 @@ public class Ant {
 					currentSolution.addEdge(i, j, chosenPage);
 					currentSolution.addNewCrossings(crossingIncrease.get(chosenPage), chosenPage);
 					// System.out.println(currentSolution);
-					
-					// Greedy Construction
-					/*
-					// greedily decide to which page to add the edge
-					List<Integer> crossingIncrease = currentSolution.calculateCrossingIncreaseArray(i, j);
-					int minCrossingIncrease = -1;
-					int bestPage = -1;
-					List<Integer> copyCrossingIncrease = new ArrayList<>(crossingIncrease);
-					copyCrossingIncrease.sort((a, b) -> a - b);
-					minCrossingIncrease = copyCrossingIncrease.get(0);
-					bestPage = crossingIncrease.indexOf(minCrossingIncrease);
-					currentSolution.addEdge(i, j, bestPage);
-					currentSolution.addNewCrossings(minCrossingIncrease, bestPage);
-					// System.out.println(minCrossingIncrease);
-					*/				
-					
-					// Random Construction
-					/*
-					int randomPage = ThreadLocalRandom.current().nextInt(0, pageNumber);
-					// System.out.println("page #" + randomPage);
-					int crossingIncrease = currentSolution.calculateCrossingIncrease(i,j,randomPage);
-					// System.out.println(i+" "+j+" p: "+randomPage+" increase: "+crossingIncrease);
-					currentSolution.addEdge(i, j, randomPage);
-					currentSolution.addNewCrossings(crossingIncrease, randomPage);
-					// System.out.println(minCrossingIncrease);
-					*/
 				}
 				
 			}
