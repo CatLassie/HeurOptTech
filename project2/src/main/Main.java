@@ -74,12 +74,12 @@ public class Main {
 							: new ACO(Integer.parseInt(antN), Integer.parseInt(timeN), Double.parseDouble(initialPh), Double.parseDouble(phWeight), 
 									Double.parseDouble(costWeight), Double.parseDouble(evapWeight)));
 			
-			long startTimeNano = System.nanoTime();
-			long startTime = System.currentTimeMillis();
+			//// long startTimeNano = System.nanoTime();
+			//// long startTime = System.currentTimeMillis();
 			//// Solution initialSolution = construction.generateSolution(k);
-			long endTimeNano = System.nanoTime();
-			long endTime = System.currentTimeMillis();
-			double diffSec = ((double) endTime - startTime)/1000;
+			//// long endTimeNano = System.nanoTime();
+			//// long endTime = System.currentTimeMillis();
+			//// double diffSec = ((double) endTime - startTime)/1000;
 			//// System.out.println("CONSTRUCTION TOOK: " + diffSec + " sec " + (endTimeNano - startTimeNano)); 
 			/*
 			for(int  i = 0; i < initialSolution.getCrossingsList().size(); i++) {
@@ -97,8 +97,16 @@ public class Main {
 			
 			Utilities.startTimer();
 			
-			System.out.println("First heuristic is: " + construction);
+			//System.out.println("First heuristic is: " + construction);
+			long startTimeNano = System.nanoTime();
+			long startTime = System.currentTimeMillis();
 			List<Solution> initialSolution = construction.generateSolutionPopulation(k);
+			long endTimeNano = System.nanoTime();
+			long endTime = System.currentTimeMillis();
+			double diffSec = ((double) endTime - startTime)/1000;
+			System.out.println("ACO TOOK: " + diffSec + " sec " + (endTimeNano - startTimeNano)); 
+			
+			Solution bestPopSolution = null;
 			System.out.print("population is: ");
 			if(initialSolution != null) {
 				initialSolution.forEach((s)->{
@@ -108,11 +116,14 @@ public class Main {
 				System.out.print("no population obtained!");
 			}
 			if(construction.getBestSolution() != null){
+				bestPopSolution = construction.getBestSolution();
 				System.out.println("");
-				System.out.println("Best solution is: " + construction.getBestSolution().getTotalCrossings());
+				System.out.println("BEST POPULATION SOLUTION IS: " + bestPopSolution.getTotalCrossings()+"\n");
+				String pathContd = constrType+"/instance-"+instanceN+".txt";
+				writeSolution(bestPopSolution, pathContd);
 			} else {
 				System.out.println("");
-				System.out.println("no best solution obtained!");
+				System.out.println("no best solution obtained!\n");
 			}
 			
 			// LOCAL SEARCH
@@ -132,29 +143,35 @@ public class Main {
 					System.exit(1); 
 				}
 				
-				//// localSearch = new LocalSearch(initialSolution, n, s);
-			
-				Utilities.startTimer();
+				if(bestPopSolution != null) {
+					
+					localSearch = new LocalSearch(bestPopSolution, n, s);
 				
-				startTimeNano = System.nanoTime();
-				startTime = System.currentTimeMillis();
-				//// Solution bestSolution = localSearch.search();
-				endTimeNano = System.nanoTime();
-				endTime = System.currentTimeMillis();
-				diffSec = ((double) endTime - startTime)/1000;
-				//// System.out.println("LOCAL SEARCH ("+n+" "+s+") TOOK: " + diffSec + " sec " + (endTimeNano - startTimeNano));
-				/*	
-				for(int  i = 0; i < bestSolution.getCrossingsList().size(); i++) {
-					System.out.println("page #"+(i+1)+" : " + bestSolution.getCrossingsList().get(i));
+				
+					Utilities.startTimer();
+				
+					startTimeNano = System.nanoTime();
+					startTime = System.currentTimeMillis();
+					Solution bestSolution = localSearch.search();
+					endTimeNano = System.nanoTime();
+					endTime = System.currentTimeMillis();
+					diffSec = ((double) endTime - startTime)/1000;
+					System.out.println("LOCAL SEARCH ("+n+" "+s+") TOOK: " + diffSec + " sec " + (endTimeNano - startTimeNano));
+					/*	
+					for(int  i = 0; i < bestSolution.getCrossingsList().size(); i++) {
+						System.out.println("page #"+(i+1)+" : " + bestSolution.getCrossingsList().get(i));
+					}
+					 */
+					System.out.println("BEST SOLUTION TOTAL CROSSINGS: "+bestSolution.getTotalCrossings());
+					// System.out.println("BEST SOLUTION RECALCULATED CROSSINGS: "+bestSolution.calculateTotalCrossingArray());
+					// System.out.println("PAGE MATRIX: "+bestSolution);
+					//System.out.println("BEST SOLUTION spine order: "+bestSolution.getSpineOrder());
+				
+					String pathContd = metaType+"/instance-"+instanceN+".txt";
+					writeSolution(bestSolution, pathContd);
+				} else {
+					System.out.println("local search wont start without an input solution!");
 				}
-				*/
-				//// System.out.println("BEST SOLUTION TOTAL CROSSINGS: "+bestSolution.getTotalCrossings());
-				// System.out.println("BEST SOLUTION RECALCULATED CROSSINGS: "+bestSolution.calculateTotalCrossingArray());
-				// System.out.println("PAGE MATRIX: "+bestSolution);
-				//System.out.println("BEST SOLUTION spine order: "+bestSolution.getSpineOrder());
-				
-				//// String pathContd = metaType+"/instance-"+instanceN+".txt";
-				//// writeSolution(bestSolution, pathContd);
 			}
 			
 		} catch (FileNotFoundException e) {

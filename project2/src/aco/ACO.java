@@ -81,7 +81,7 @@ public class ACO implements IConstruction {
 			double pheromoneValue = 1.0/solution_ij.getTotalCrossings();
 			currentPheromoneValues.add(pheromoneValue);
 			
-			System.out.println("solution of ant "+j+" at time "+timeStep+" is: "+solution_ij.getTotalCrossings());
+			// System.out.println("solution of ant "+j+" at time "+timeStep+" is: "+solution_ij.getTotalCrossings());
 			// System.out.println("pheromone trail value: "+currentPheromoneValues);
 		}
 		// System.out.println(phMatrix);
