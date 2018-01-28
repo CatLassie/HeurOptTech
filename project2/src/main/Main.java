@@ -2,6 +2,7 @@ package main;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.util.List;
 
 import aco.ACO;
@@ -97,10 +98,14 @@ public class Main {
 			
 			Utilities.startTimer();
 			
-			//System.out.println("First heuristic is: " + construction);
+			//System.out.println("First heuristic is: " + construction);			
 			long startTimeNano = System.nanoTime();
 			long startTime = System.currentTimeMillis();
+			double acoStartCPU = ManagementFactory.getThreadMXBean().getThreadCpuTime(Thread.currentThread().getId());
 			List<Solution> initialSolution = construction.generateSolutionPopulation(k);
+			double acoEndCPU = ManagementFactory.getThreadMXBean().getThreadCpuTime(Thread.currentThread().getId());
+			double acoDiffCPU = (acoEndCPU - acoStartCPU)/1000000000;
+			System.out.println("ACO CPU time: "+acoDiffCPU);
 			long endTimeNano = System.nanoTime();
 			long endTime = System.currentTimeMillis();
 			double diffSec = ((double) endTime - startTime)/1000;
@@ -154,7 +159,11 @@ public class Main {
 				
 					startTimeNano = System.nanoTime();
 					startTime = System.currentTimeMillis();
+					double localStartCPU = ManagementFactory.getThreadMXBean().getThreadCpuTime(Thread.currentThread().getId());
 					Solution bestSolution = localSearch.search();
+					double localEndCPU = ManagementFactory.getThreadMXBean().getThreadCpuTime(Thread.currentThread().getId());
+					double localDiffCPU = (localEndCPU - localStartCPU)/1000000000;
+					System.out.println("Local CPU time: "+localDiffCPU);
 					endTimeNano = System.nanoTime();
 					endTime = System.currentTimeMillis();
 					diffSec = ((double) endTime - startTime)/1000;
