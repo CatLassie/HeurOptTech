@@ -17,6 +17,9 @@ public class ACO implements IConstruction {
 	List<Solution> population;
 	PheromoneMatrix phMatrix;
 	
+	// just needed for statistics
+	List<Solution> firstPopulation;
+	
 	public ACO(int antN, int timeN, double initialPh, double phWeight, double costWeight, double evapWeight) {
 		this.antN = antN;
 		this.timeN = timeN;
@@ -48,6 +51,10 @@ public class ACO implements IConstruction {
 				break timeLoop;
 			}
 			population = generateOneRound(i);
+			// save first population
+			if(i == 0) {
+				firstPopulation = population;
+			}
 			
 			// sum of crossings of a population
 			/*
@@ -121,7 +128,16 @@ public class ACO implements IConstruction {
 	}
 	
 	public double getFirstPopulationAverage() {
-		return 0.0;
+		if(firstPopulation != null){
+			double sum = 0;
+			for(int i = 0; i < firstPopulation.size(); i++){
+				sum += firstPopulation.get(i).getTotalCrossings();
+			}
+			double average = sum/firstPopulation.size();
+			return average;
+		} else {
+			return 0.0;
+		}
 	}
 	
 	public Solution generateSolution(KPMPInstance kpmpInstance) {

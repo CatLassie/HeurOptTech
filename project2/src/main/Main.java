@@ -107,7 +107,7 @@ public class Main {
 			System.out.println("ACO TOOK: " + diffSec + " sec " + (endTimeNano - startTimeNano)); 
 			
 			Solution bestPopSolution = null;
-			System.out.print("population is: ");
+			System.out.print("last population is: ");
 			if(initialSolution != null) {
 				initialSolution.forEach((s)->{
 					System.out.print(s.getTotalCrossings()+" ");
@@ -118,6 +118,7 @@ public class Main {
 			if(construction.getBestSolution() != null){
 				bestPopSolution = construction.getBestSolution();
 				System.out.println("");
+				System.out.println("first population average is: " + construction.getFirstPopulationAverage());
 				System.out.println("last population average is: " + construction.getLastPopulationAverage());
 				System.out.println("BEST POPULATION SOLUTION IS: " + bestPopSolution.getTotalCrossings()+"\n");
 				String pathContd = constrType+"/instance-"+instanceN+".txt";
