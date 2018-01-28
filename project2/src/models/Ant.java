@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import util.Utilities;
+
 public class Ant {
 	int antID, vertexNumber, pageNumber;
 	double phWeight, costWeight;
@@ -27,8 +29,13 @@ public class Ant {
 		int[][] matrix = currentSolution.getAdjacencyMatrix();
 		int edgeNumber = 0;
 		
+		edgeLoop:
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = i + 1; j < matrix[i].length; j++) {
+				if(Utilities.isTimeOver()){
+					System.out.println("Ant time is up!");
+					break edgeLoop;
+				}
 
 				boolean currentEdge = adjacencyMatrix[i][j];
 				if (currentEdge) {

@@ -95,6 +95,8 @@ public class Main {
 				//// writeSolution(initialSolution, pathContd);
 			}
 			
+			Utilities.startTimer();
+			
 			System.out.println("First heuristic is: " + construction);
 			List<Solution> initialSolution = construction.generateSolutionPopulation(k);
 			System.out.print("population is: ");

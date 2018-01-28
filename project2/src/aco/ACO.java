@@ -8,6 +8,7 @@ import models.Ant;
 import models.PheromoneMatrix;
 import models.Solution;
 import parser.KPMPInstance;
+import util.Utilities;
 
 public class ACO implements IConstruction {
 	int antN, timeN;
@@ -39,11 +40,14 @@ public class ACO implements IConstruction {
 			// System.out.println(ants.get(i));
 		}
 		
-		List<Solution> currentPopulation = null;
-		
 		// it would be cool to make ants start from different edges
+		timeLoop:
 		for(int i = 0; i < timeN; i++){
-			currentPopulation = generateOneRound(i);
+			if(Utilities.isTimeOver()){
+				System.out.println("ACO time is up!");
+				break timeLoop;
+			}
+			population = generateOneRound(i);
 			
 			// sum of crossings of a population
 			/*
@@ -53,18 +57,23 @@ public class ACO implements IConstruction {
 			}
 			System.out.println(s);
 			*/
-			
 		}
 		
-		population = currentPopulation;
-		return currentPopulation;
+		return population;
 	}
 	
 	public List<Solution> generateOneRound(int timeStep) {
 		
 		List<Solution> currentPopulation = new ArrayList<>();
 		List<Double> currentPheromoneValues = new ArrayList<>();
+		antLoop:
 		for(int j = 0; j < ants.size(); j++) {
+			if(Utilities.isTimeOver()){
+				System.out.println("Round time is up!");
+				currentPopulation = population; // last complete population
+				break antLoop;
+			}
+			
 			Ant ant = ants.get(j);
 			Solution solution_ij = ant.generateSolution(phMatrix);
 			currentPopulation.add(solution_ij);
@@ -76,8 +85,10 @@ public class ACO implements IConstruction {
 			// System.out.println("pheromone trail value: "+currentPheromoneValues);
 		}
 		// System.out.println(phMatrix);
-		phMatrix.update(currentPopulation, currentPheromoneValues);
-		phMatrix.evaporate();
+		if(!Utilities.isTimeOver()){
+			phMatrix.update(currentPopulation, currentPheromoneValues);
+			phMatrix.evaporate();
+		}
 		
 		return currentPopulation;
 	}
