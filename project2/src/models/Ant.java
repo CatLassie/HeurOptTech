@@ -51,9 +51,21 @@ public class Ant {
 	private int decidePage(List<Integer> crossingIncrease, double[] pheromones_ij) {
 		int chosenPage = -1;
 		double pSum = 0;
-		for (Integer inc : crossingIncrease) {
+		for (int i = 0; i < crossingIncrease.size(); i++) {
+			int inc = crossingIncrease.get(i);
+			double ph = pheromones_ij[i];
 			pSum += 1.0/(inc+0.1);
 		}
+		
+		/*
+		double x = 0.0;
+		for (int i = 0; i < crossingIncrease.size(); i++) {
+			int inc = crossingIncrease.get(i);
+		    x += (1.0/(inc+0.1))/pSum;
+		}
+		System.out.println(x);
+		*/
+		
 		double p = Math.random();
 		// System.out.println(p);
 		// System.out.println("\n"+pSum);
@@ -68,8 +80,9 @@ public class Ant {
 		    System.out.println("cumul "+cumulativeProbability);
 		    System.out.println("inc "+inc);
 		    */
+		    chosenPage = i;
 		    if (p <= cumulativeProbability) {
-		        chosenPage = i;
+		        // chosenPage = i;
 		        break crossLoop;
 		    }
 		}
