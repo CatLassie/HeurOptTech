@@ -10,7 +10,6 @@ import models.Solution;
 import parser.KPMPInstance;
 
 public class ACO implements IConstruction {
-	
 	int antN, timeN;
 	double initialPh, phWeight, costWeight, evapWeight;
 	List<Ant> ants;
@@ -36,7 +35,7 @@ public class ACO implements IConstruction {
 		
 		phMatrix = new PheromoneMatrix(vertexNumber, pageNumber, initialPh, evapWeight);
 		for(int i = 0; i < antN; i++) {
-			ants.add(new Ant(i, matrix, vertexNumber, pageNumber));
+			ants.add(new Ant(i, matrix, vertexNumber, pageNumber, phWeight, costWeight));
 			// System.out.println(ants.get(i));
 		}
 		

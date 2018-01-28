@@ -5,16 +5,18 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Ant {
-	
 	int antID, vertexNumber, pageNumber;
+	double phWeight, costWeight;
 	boolean[][] adjacencyMatrix;
 	Solution currentSolution;
 	
-	public Ant(int antID, boolean[][] adjacencyMatrix, int vertexNumber, int pageNumber) {
+	public Ant(int antID, boolean[][] adjacencyMatrix, int vertexNumber, int pageNumber, double phWeight, double costWeight) {
 		this.antID = antID;
 		this.vertexNumber = vertexNumber;
 		this.pageNumber = pageNumber;
 		this.adjacencyMatrix = adjacencyMatrix;
+		this.phWeight = phWeight;
+		this.costWeight = costWeight;
 	}
 	
 	public Solution generateSolution(PheromoneMatrix phMatrix){
@@ -50,13 +52,7 @@ public class Ant {
 	
 	private int decidePage(List<Integer> crossingIncrease, double[] pheromones_ij) {
 		int chosenPage = -1;
-		double pSum = 0;
-		for (int i = 0; i < crossingIncrease.size(); i++) {
-			int inc = crossingIncrease.get(i);
-			double ph = pheromones_ij[i];
-			pSum += (1.0/(inc+0.1)) * ph;
-		}
-		
+		double pSum = calculateDivisor(crossingIncrease, pheromones_ij);
 		/*
 		double x = 0.0;
 		for (int i = 0; i < crossingIncrease.size(); i++) {
@@ -66,8 +62,6 @@ public class Ant {
 		}
 		System.out.println(x);
 		*/
-		
-		
 		double p = Math.random();
 		// System.out.println(p);
 		// System.out.println("\n"+pSum);
@@ -91,6 +85,16 @@ public class Ant {
 		}
 		// System.out.println("chosen "+chosenPage);
 		return chosenPage;
+	}
+	
+	public double calculateDivisor(List<Integer> crossingIncrease, double[] pheromones_ij) {
+		double pSum = 0;
+		for (int i = 0; i < crossingIncrease.size(); i++) {
+			int inc = crossingIncrease.get(i);
+			double ph = pheromones_ij[i];
+			pSum += (1.0/(inc+0.1)) * ph;
+		}
+		return pSum;
 	}
 	
 	public int getAntID() {
