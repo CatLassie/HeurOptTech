@@ -54,17 +54,19 @@ public class Ant {
 		for (int i = 0; i < crossingIncrease.size(); i++) {
 			int inc = crossingIncrease.get(i);
 			double ph = pheromones_ij[i];
-			pSum += 1.0/(inc+0.1);
+			pSum += (1.0/(inc+0.1)) * ph;
 		}
 		
 		/*
 		double x = 0.0;
 		for (int i = 0; i < crossingIncrease.size(); i++) {
 			int inc = crossingIncrease.get(i);
-		    x += (1.0/(inc+0.1))/pSum;
+			double ph = pheromones_ij[i];
+		    x += ((1.0/(inc+0.1)) * ph)  /pSum;
 		}
 		System.out.println(x);
 		*/
+		
 		
 		double p = Math.random();
 		// System.out.println(p);
@@ -73,7 +75,8 @@ public class Ant {
 		crossLoop:
 		for (int i = 0; i < crossingIncrease.size(); i++) {
 			int inc = crossingIncrease.get(i);
-		    cumulativeProbability += (1.0/(inc+0.1))/pSum;
+			double ph = pheromones_ij[i];
+		    cumulativeProbability += ((1.0/(inc+0.1)) * ph)/pSum;
 		    /*
 		    System.out.println("page "+i);
 		    System.out.println("prob "+(1/(inc+0.1))/pSum);

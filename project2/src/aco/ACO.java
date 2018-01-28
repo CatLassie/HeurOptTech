@@ -45,6 +45,16 @@ public class ACO implements IConstruction {
 		// it would be cool to make ants start from different edges
 		for(int i = 0; i < timeN; i++){
 			currentPopulation = generateOneRound(i);
+			
+			// sum of crossings of a population
+			/*
+			int s = 0;
+			for(int j = 0; j < currentPopulation.size(); j++) {
+				s += currentPopulation.get(j).getTotalCrossings();
+			}
+			System.out.println(s);
+			*/
+			
 		}
 		
 		population = currentPopulation;
