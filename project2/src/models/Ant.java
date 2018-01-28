@@ -70,7 +70,7 @@ public class Ant {
 		for (int i = 0; i < crossingIncrease.size(); i++) {
 			int inc = crossingIncrease.get(i);
 			double ph = pheromones_ij[i];
-		    cumulativeProbability += ((1.0/(inc+0.1)) * ph)/pSum;
+		    cumulativeProbability += ( Math.pow((1.0/(inc+0.1)), costWeight) * Math.pow(ph, phWeight) )/pSum;
 		    /*
 		    System.out.println("page "+i);
 		    System.out.println("prob "+(1/(inc+0.1))/pSum);
@@ -92,7 +92,7 @@ public class Ant {
 		for (int i = 0; i < crossingIncrease.size(); i++) {
 			int inc = crossingIncrease.get(i);
 			double ph = pheromones_ij[i];
-			pSum += (1.0/(inc+0.1)) * ph;
+			pSum += Math.pow((1.0/(inc+0.1)), costWeight) *  Math.pow(ph, phWeight);
 		}
 		return pSum;
 	}
