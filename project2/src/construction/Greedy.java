@@ -47,6 +47,14 @@ public class Greedy implements IConstruction {
 		return null;
 	}
 	
+	public double getLastPopulationAverage() {
+		return 0.0;
+	}
+	
+	public double getFirstPopulationAverage() {
+		return 0.0;
+	}
+	
 	public Solution getBestSolution(){
 		return null;
 	}

@@ -107,6 +107,23 @@ public class ACO implements IConstruction {
 		}
 	}
 	
+	public double getLastPopulationAverage(){
+		if(population != null){
+			double sum = 0;
+			for(int i = 0; i < population.size(); i++){
+				sum += population.get(i).getTotalCrossings();
+			}
+			double average = sum/population.size();
+			return average;
+		} else {
+			return 0.0;
+		}
+	}
+	
+	public double getFirstPopulationAverage() {
+		return 0.0;
+	}
+	
 	public Solution generateSolution(KPMPInstance kpmpInstance) {
 		return null;
 	}

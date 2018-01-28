@@ -118,6 +118,7 @@ public class Main {
 			if(construction.getBestSolution() != null){
 				bestPopSolution = construction.getBestSolution();
 				System.out.println("");
+				System.out.println("last population average is: " + construction.getLastPopulationAverage());
 				System.out.println("BEST POPULATION SOLUTION IS: " + bestPopSolution.getTotalCrossings()+"\n");
 				String pathContd = constrType+"/instance-"+instanceN+".txt";
 				writeSolution(bestPopSolution, pathContd);

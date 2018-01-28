@@ -13,6 +13,10 @@ public interface IConstruction {
 	
 	public Solution getBestSolution();
 	
+	public double getLastPopulationAverage();
+	
+	public double getFirstPopulationAverage();
+	
 	public String toString();
 	
 }

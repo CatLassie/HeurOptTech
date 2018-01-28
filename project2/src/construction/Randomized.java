@@ -46,6 +46,14 @@ public class Randomized implements IConstruction {
 		return null;
 	}
 	
+	public double getLastPopulationAverage() {
+		return 0.0;
+	}
+	
+	public double getFirstPopulationAverage() {
+		return 0.0;
+	}
+	
 	public String toString(){
 		return "Randomized construction heuristic";
 	}
