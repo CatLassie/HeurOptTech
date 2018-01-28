@@ -100,11 +100,20 @@ public class Main {
 			System.out.println("First heuristic is: " + construction);
 			List<Solution> initialSolution = construction.generateSolutionPopulation(k);
 			System.out.print("population is: ");
-			initialSolution.forEach((s)->{
-				System.out.print(s.getTotalCrossings()+" ");
-			});
-			System.out.println("");
-			System.out.println("Best solution is: " + construction.getBestSolution().getTotalCrossings());
+			if(initialSolution != null) {
+				initialSolution.forEach((s)->{
+					System.out.print(s.getTotalCrossings()+" ");
+				});
+			} else {
+				System.out.print("no population obtained!");
+			}
+			if(construction.getBestSolution() != null){
+				System.out.println("");
+				System.out.println("Best solution is: " + construction.getBestSolution().getTotalCrossings());
+			} else {
+				System.out.println("");
+				System.out.println("no best solution obtained!");
+			}
 			
 			// LOCAL SEARCH
 			if(metaType.equals("local")){

@@ -94,13 +94,17 @@ public class ACO implements IConstruction {
 	}
 	
 	public Solution getBestSolution() {
-		Solution bestSolution = population.get(0);
-		for(int i = 0; i < population.size(); i++) {
-			if(population.get(i).getTotalCrossings() < bestSolution.getTotalCrossings()){
-				bestSolution = population.get(i);
-			}			
-		}
+		if(population != null) {
+			Solution bestSolution = population.get(0);
+			for(int i = 0; i < population.size(); i++) {
+				if(population.get(i).getTotalCrossings() < bestSolution.getTotalCrossings()){
+					bestSolution = population.get(i);
+				}			
+			}
 		return bestSolution;
+		} else {
+			return null;
+		}
 	}
 	
 	public Solution generateSolution(KPMPInstance kpmpInstance) {
